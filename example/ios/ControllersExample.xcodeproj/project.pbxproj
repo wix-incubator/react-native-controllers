@@ -28,6 +28,8 @@
 		CCC9CB3B1BEFE9E5008BB231 /* RCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB361BEFE9E5008BB231 /* RCCViewController.m */; };
 		CCC9CB411BEFF057008BB231 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB401BEFF057008BB231 /* XMLDictionary.m */; };
 		CCC9CB791BF005CF008BB231 /* RCCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB781BF005CF008BB231 /* RCCNavigationController.m */; };
+		D8AFAE611BF0983400A4592D /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManager.m */; };
+		D8AFAE621BF0983400A4592D /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,8 @@
 		CCC9CB401BEFF057008BB231 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ControllersExample/XMLDictionary.m; sourceTree = "<group>"; };
 		CCC9CB771BF005CF008BB231 /* RCCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCNavigationController.h; path = ControllersExample/RCCNavigationController.h; sourceTree = "<group>"; };
 		CCC9CB781BF005CF008BB231 /* RCCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCNavigationController.m; path = ControllersExample/RCCNavigationController.m; sourceTree = "<group>"; };
+		D8AFAE5F1BF0983400A4592D /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
+		D8AFAE601BF0983400A4592D /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,8 @@
 				CCC9CB341BEFE9E5008BB231 /* RCCTabBarController.m */,
 				CCC9CB3F1BEFF057008BB231 /* XMLDictionary.h */,
 				CCC9CB401BEFF057008BB231 /* XMLDictionary.m */,
+				D8AFAE5F1BF0983400A4592D /* RCCManager.h */,
+				D8AFAE601BF0983400A4592D /* RCCManager.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -563,6 +569,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8AFAE621BF0983400A4592D /* RCCManager.m in Sources */,
 				00E356F31AD99517003FC87E /* ControllersExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,6 +580,7 @@
 			files = (
 				CCC9CB3A1BEFE9E5008BB231 /* RCCTabBarController.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				D8AFAE611BF0983400A4592D /* RCCManager.m in Sources */,
 				CCC9CB411BEFF057008BB231 /* XMLDictionary.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				CCC9CB3B1BEFE9E5008BB231 /* RCCViewController.m in Sources */,
