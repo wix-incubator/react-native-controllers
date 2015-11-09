@@ -30,9 +30,14 @@
     // create the tab icon and title
     NSString *title = [itemParams objectForKey:@"_title"];
     UIImage *iconImage = nil;
+    UIImage *iconImageSelected = nil;
     NSString *icon = [itemParams objectForKey:@"_icon"];
+    NSString *iconSelected = [NSString stringWithFormat:@"%@_selected", icon];
+
     if (icon) iconImage = [RCTConvert UIImage:icon];
+    if (iconSelected) iconImageSelected = [RCTConvert UIImage:iconSelected];
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
+    viewController.tabBarItem.selectedImage = iconImageSelected;
     
     [viewControllers addObject:viewController];
   }

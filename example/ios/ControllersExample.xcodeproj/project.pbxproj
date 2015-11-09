@@ -26,6 +26,7 @@
 		26C6787C1BF09E6000A33D48 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678761BF09E6000A33D48 /* MMDrawerController.m */; };
 		26C6787D1BF09E6000A33D48 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678781BF09E6000A33D48 /* MMDrawerVisualState.m */; };
 		26C6787E1BF09E6000A33D48 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C6787A1BF09E6000A33D48 /* UIViewController+MMDrawerController.m */; };
+		26C6788B1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C6788A1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		CCC9CB371BEFE9E5008BB231 /* layout.ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = CCC9CB2E1BEFE9E5008BB231 /* layout.ios.xml */; };
 		CCC9CB391BEFE9E5008BB231 /* RCCRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB321BEFE9E5008BB231 /* RCCRootController.m */; };
@@ -148,6 +149,8 @@
 		26C678781BF09E6000A33D48 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
 		26C678791BF09E6000A33D48 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		26C6787A1BF09E6000A33D48 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		26C678891BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
+		26C6788A1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CCC9CB2E1BEFE9E5008BB231 /* layout.ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = layout.ios.xml; path = ControllersExample/layout.ios.xml; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				26C678721BF09E6000A33D48 /* MMDrawerBarButtonItem.h */,
 				26C678731BF09E6000A33D48 /* MMDrawerBarButtonItem.m */,
 				26C678741BF09E6000A33D48 /* MMDrawerController+Subclass.h */,
+				26C678891BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.h */,
+				26C6788A1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m */,
 				26C678751BF09E6000A33D48 /* MMDrawerController.h */,
 				26C678761BF09E6000A33D48 /* MMDrawerController.m */,
 				26C678771BF09E6000A33D48 /* MMDrawerVisualState.h */,
@@ -596,7 +601,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -621,6 +626,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				D8AFAE611BF0983400A4592D /* RCCManager.m in Sources */,
 				CCC9CB411BEFF057008BB231 /* XMLDictionary.m in Sources */,
+				26C6788B1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				26C6787B1BF09E6000A33D48 /* MMDrawerBarButtonItem.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				26C6787C1BF09E6000A33D48 /* MMDrawerController.m in Sources */,

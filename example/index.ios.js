@@ -62,12 +62,36 @@ var styles = StyleSheet.create({
 AppRegistry.registerComponent('ControllersExample', () => ControllersExample);
 
 var MovieListScreen = React.createClass({
+
+onButtonClick: function(val) {
+  this.underlayColor = "green"
+    RCCManager.SideMenuControllerIOS("mainSideMenu", "changeSideMenuAnimation", {
+      animationType: val,
+    });
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Movie List Screen Screen
         </Text>
+        
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "door") }>
+          <Text style={styles.button}>Door</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "parallax") }>
+          <Text style={styles.button}>Parallax</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "slide") }>
+          <Text style={styles.button}>Slide</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "slideAndScale") }>
+          <Text style={styles.button}>Slide & Scale</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -141,5 +165,5 @@ var SideMenuComponenet = React.createClass({
   }
 });
 
-AppRegistry.registerComponent('SideMenuComponenet', () => SideMenuComponenet);
+AppRegistry.registerComponent('SideMenuComponent', () => SideMenuComponenet);
 

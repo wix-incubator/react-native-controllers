@@ -9,6 +9,7 @@
 #import "RCCSideMenuController.h"
 #import "RCTRootView.h"
 #import "RCCViewController.h"
+#import "MMExampleDrawerVisualStateManager.h"
 
 @implementation RCCSideMenuController
 
@@ -46,6 +47,19 @@
   
   self.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
   self.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
+  
+  
+  
+  [self
+   setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
+
+     MMDrawerControllerDrawerVisualStateBlock block;
+     
+     block = [[MMExampleDrawerVisualStateManager sharedManager] drawerVisualStateBlockForDrawerSide:drawerSide];
+     if(block){
+       block(drawerController, drawerSide, percentVisible);
+     }
+   }];
 
   
   if (!self) return nil;
