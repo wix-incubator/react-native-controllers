@@ -102,20 +102,20 @@ RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(
     
     dispatch_async(dispatch_get_main_queue(), ^
     {
-      RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
-      RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:actionParams[@"component"] initialProperties:nil];
-      UIViewController *viewController = [[UIViewController alloc] init];
-      viewController.view = reactView;
-      viewController.title = actionParams[@"title"];
-      
       BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
       if ([performAction isEqualToString:@"push"])
       {
+        RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
+        RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:actionParams[@"component"] initialProperties:nil];
+        UIViewController *viewController = [[UIViewController alloc] init];
+        viewController.view = reactView;
+        viewController.title = actionParams[@"title"];
+        
         [navigationController pushViewController:viewController animated:animated];
       }
       else if ([performAction isEqualToString:@"pop"])
       {
-        //TODO: implement
+        [navigationController popViewControllerAnimated:animated];
       }
     });
   }
