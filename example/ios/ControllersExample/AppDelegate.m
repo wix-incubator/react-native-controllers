@@ -42,10 +42,6 @@
 
 //   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"ControllersExample"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
   
   NSURL *layoutLocation = [[NSBundle mainBundle] URLForResource:@"layout.ios" withExtension:@"xml"];
   
@@ -55,9 +51,7 @@
                                                                   launchOptions:launchOptions];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [[UIViewController alloc] init];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
+  self.window.rootViewController = rootController;
   [self.window makeKeyAndVisible];
   return YES;
 }
