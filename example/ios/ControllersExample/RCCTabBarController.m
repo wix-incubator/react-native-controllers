@@ -33,6 +33,8 @@
     NSString *icon = [itemParams objectForKey:@"_icon"];
     if (icon) iconImage = [RCTConvert UIImage:icon];
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
+    
+    [viewControllers addObject:viewController];
   }
   
   // replace the tabs
