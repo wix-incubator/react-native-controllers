@@ -1,0 +1,3 @@
+rootProject.name = 'ControllersExample'
+
+include ':app'
