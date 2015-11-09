@@ -16,11 +16,11 @@
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = reactView;
   
+  NSString *title = [params objectForKey:@"_title"];
+  if (title) rootViewController.title = title;
+  
   self = [super initWithRootViewController:rootViewController];
   if (!self) return nil;
-  
-  NSString *title = [params objectForKey:@"_title"];
-  if (title) self.title = title;
   
   return self;
 }
