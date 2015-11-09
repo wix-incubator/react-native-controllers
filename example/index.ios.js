@@ -18,7 +18,11 @@ var {
 
 var subscription = NativeAppEventEmitter.addListener(
   'NavItemClicked',
-  (navItemParams) => { alert(navItemParams.id) }
+  (navItemParams) => { 
+    RCCManager.SideMenuControllerIOS("mainSideMenu", "openSideMenu", {
+      side: "left",
+    }); 
+}
 );
 // Don't forget to unsubscribe, typically in componentWillUnmount
 //subscription.remove();

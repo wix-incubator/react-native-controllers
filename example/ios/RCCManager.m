@@ -126,34 +126,34 @@ RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(
     }
     
     dispatch_async(dispatch_get_main_queue(), ^
-    {
-      BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
-      if ([performAction isEqualToString:@"push"])
-      {
-        //RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
-        RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:[RCControllersRegistry sharedIntance].myBridge
-                                                          moduleName:actionParams[@"component"]
-                                                   initialProperties:nil];
-        UIViewController *viewController = [[UIViewController alloc] init];
-        viewController.view = reactView;
-        viewController.title = actionParams[@"title"];
-        
-        [navigationController pushViewController:viewController animated:animated];
-      }
-      else if ([performAction isEqualToString:@"pop"])
-      {
-        [navigationController popViewControllerAnimated:animated];
-      }
-      else if ([performAction isEqualToString:@"setNavItem"])
-      {
-        if ([actionParams[@"side"] isEqualToString:@"left"])
-        {
-          UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:actionParams[@"title"] style:UIBarButtonItemStylePlain target:self action:@selector(onBarButtonItemAction:)];
-          barButtonItem.tag = [actionParams[@"id"] integerValue];
-          navigationController.visibleViewController.navigationItem.leftBarButtonItem = barButtonItem;
-        }
-      }
-    });
+                   {
+                     BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
+                     if ([performAction isEqualToString:@"push"])
+                     {
+                       //RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
+                       RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:[RCControllersRegistry sharedIntance].myBridge
+                                                                         moduleName:actionParams[@"component"]
+                                                                  initialProperties:nil];
+                       UIViewController *viewController = [[UIViewController alloc] init];
+                       viewController.view = reactView;
+                       viewController.title = actionParams[@"title"];
+                       
+                       [navigationController pushViewController:viewController animated:animated];
+                     }
+                     else if ([performAction isEqualToString:@"pop"])
+                     {
+                       [navigationController popViewControllerAnimated:animated];
+                     }
+                     else if ([performAction isEqualToString:@"setNavItem"])
+                     {
+                       if ([actionParams[@"side"] isEqualToString:@"left"])
+                       {
+                         UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:actionParams[@"title"] style:UIBarButtonItemStylePlain target:self action:@selector(onBarButtonItemAction:)];
+                         barButtonItem.tag = [actionParams[@"id"] integerValue];
+                         navigationController.visibleViewController.navigationItem.leftBarButtonItem = barButtonItem;
+                       }
+                     }
+                   });
   }
 }
 
@@ -163,32 +163,53 @@ RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(
 
 RCT_EXPORT_METHOD(SideMenuControllerIOS:(NSString*)componentID performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams)
 {
-  if (componentID == nil || performAction == nil || actionParams[@"animationType"] == nil)
+  if (componentID == nil || performAction == nil)
   {
     return;
   }
   
-  UIViewController* component = [[RCControllersRegistry sharedIntance] getControllerWithID:componentID componentType:@"SideMenuControllerIOS"];
-  if (component != nil && [component isKindOfClass:[RCCSideMenuController class]])
+  UIViewController* controller = [[RCControllersRegistry sharedIntance] getControllerWithID:componentID componentType:@"SideMenuControllerIOS"];
+  if (controller != nil && [controller isKindOfClass:[RCCSideMenuController class]])
   {
+    
+    RCCSideMenuController *sideMenuController = (RCCSideMenuController*)controller;
     
     dispatch_async(dispatch_get_main_queue(), ^
                    {
-                     MMDrawerAnimationType animationType = MMDrawerAnimationTypeNone;
-                     NSString *animationTypeString = actionParams[@"animationType"];
                      
-                     if ([animationTypeString isEqualToString:@"door"]) animationType = MMDrawerAnimationTypeSwingingDoor;
-                     else if ([animationTypeString isEqualToString:@"parallax"]) animationType = MMDrawerAnimationTypeParallax;
-                     else if ([animationTypeString isEqualToString:@"slide"]) animationType = MMDrawerAnimationTypeSlide;
-                     else if ([animationTypeString isEqualToString:@"slideAndScale"]) animationType = MMDrawerAnimationTypeSlideAndScale;
+                     if ([performAction isEqualToString:@"changeSideMenuAnimation"]) {
+                       if (actionParams[@"animationType"] != nil) {
+                         MMDrawerAnimationType animationType = MMDrawerAnimationTypeNone;
+                         NSString *animationTypeString = actionParams[@"animationType"];
+                         
+                         if ([animationTypeString isEqualToString:@"door"]) animationType = MMDrawerAnimationTypeSwingingDoor;
+                         else if ([animationTypeString isEqualToString:@"parallax"]) animationType = MMDrawerAnimationTypeParallax;
+                         else if ([animationTypeString isEqualToString:@"slide"]) animationType = MMDrawerAnimationTypeSlide;
+                         else if ([animationTypeString isEqualToString:@"slideAndScale"]) animationType = MMDrawerAnimationTypeSlideAndScale;
+                         
+                         [MMExampleDrawerVisualStateManager sharedManager].leftDrawerAnimationType = animationType;
+                         [MMExampleDrawerVisualStateManager sharedManager].rightDrawerAnimationType = animationType;
+                       }
+                     }
                      
-                     [MMExampleDrawerVisualStateManager sharedManager].leftDrawerAnimationType = animationType;
-                     [MMExampleDrawerVisualStateManager sharedManager].rightDrawerAnimationType = animationType;
-                     
+                     else if ([performAction isEqualToString:@"openSideMenu"]){
+                       
+                       if ([actionParams[@"side"] isEqualToString:@"left"]) {
+                         [sideMenuController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+                       }
+                       
+                       else if ([actionParams[@"side"] isEqualToString:@"right"]) {
+                         [sideMenuController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+                       }
+                       
+                     }
                    }
                    );
   }
 }
+
+
+
 
 
 

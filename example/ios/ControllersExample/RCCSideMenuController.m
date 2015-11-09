@@ -69,6 +69,7 @@
   return self;
 }
 
+
 - (UIViewController *)getItemViewController:(NSDictionary *)itemParams
                                      params:(NSDictionary *)params
                                      bridge:(RCTBridge *)bridge
