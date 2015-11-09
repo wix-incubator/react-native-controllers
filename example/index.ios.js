@@ -57,7 +57,7 @@ var MovieListScreen = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Movie List Screen
+          Movie List Screen Screen
         </Text>
       </View>
     );
@@ -93,3 +93,17 @@ var FavoritesScreen = React.createClass({
 });
 
 AppRegistry.registerComponent('FavoritesScreen', () => FavoritesScreen);
+
+var SearchScreen = React.createClass({
+  render: function() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          SideMenuComponenet SideMenuComponenet 
+        </Text>
+      </View>
+    );
+  }
+});
+
+AppRegistry.registerComponent('SideMenuComponenet', () => SearchScreen);

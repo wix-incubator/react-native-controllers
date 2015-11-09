@@ -1,6 +1,7 @@
 #import "RCCViewController.h"
 #import "RCCNavigationController.h"
 #import "RCCTabBarController.h"
+#import "RCCSideMenuController.h"
 #import "RCTRootView.h"
 
 @implementation RCCViewController
@@ -27,6 +28,12 @@
   if ([type isEqualToString:@"TabBarControllerIOS"])
   {
     return [[RCCTabBarController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
+  }
+  
+  // side menu controller
+  if ([type isEqualToString:@"SideMenuControllerIOS"])
+  {
+    return [[RCCSideMenuController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
   }
   
   // unknown, error
