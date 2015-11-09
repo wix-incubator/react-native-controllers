@@ -1,6 +1,7 @@
 #import "RCCRootController.h"
 #import "RCCViewController.h"
 #import "XMLDictionary.h"
+#import "RCCManager.h"
 
 @implementation RCCRootController
 
@@ -20,6 +21,8 @@
                                             moduleProvider:nil
                                              launchOptions:launchOptions];
   
+  [[RCControllersRegistry sharedIntance] setBridge:bridge];
+   
   // parse the layout
   for (NSString *key in layout)
   {

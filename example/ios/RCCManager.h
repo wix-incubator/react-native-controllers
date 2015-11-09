@@ -13,6 +13,10 @@
 @interface RCControllersRegistry : NSObject
 + (instancetype)sharedIntance;
 -(void)registerController:(UIViewController*)controller componentID:(NSString*)componentID componentType:(NSString*)componentType;
+
+-(void)setBridge:(RCTBridge*)bridge;
+-(RCTBridge*)getBridge;
+
 @end
 
 @interface RCCManager : NSObject <RCTBridgeModule>

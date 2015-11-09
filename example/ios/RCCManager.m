@@ -9,11 +9,13 @@
 #import "RCCManager.h"
 #import <UIKit/UIKit.h>
 #import "RCTRootView.h"
+#import "RCTEventDispatcher.h"
 #import "RCCSideMenuController.h"
 #import "MMExampleDrawerVisualStateManager.h"
 
 @interface RCControllersRegistry()
 @property (nonatomic, strong) NSMutableDictionary *modulesRegistry;
+@property (nonatomic, strong) RCTBridge *myBridge;
 @end
 
 @implementation RCControllersRegistry
@@ -79,23 +81,44 @@
   return component;
 }
 
+-(void)setBridge:(RCTBridge*)bridge
+{
+  self.myBridge = bridge;
+}
+
+-(RCTBridge*)getBridge
+{
+  return self.myBridge;
+}
+
 @end
 
 @implementation RCCManager
 
 RCT_EXPORT_MODULE();
 
+-(void)onBarButtonItemAction:(UIBarButtonItem*)barButtonItem
+{
+  [[RCControllersRegistry sharedIntance].myBridge.eventDispatcher sendAppEventWithName:@"NavItemClicked"
+                                                                                  body:@{@"id": @(barButtonItem.tag)}];
+}
+
 RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams)
 {
-  if (componentID == nil || performAction == nil || actionParams[@"component"] == nil)
+  if (componentID == nil || performAction == nil)
   {
     return;
   }
   
-  UIViewController* component = [[RCControllersRegistry sharedIntance] getControllerWithID:componentID componentType:@"NavigationControllerIOS"];
-  if (component != nil && [component isKindOfClass:[UINavigationController class]])
+  if(([performAction isEqualToString:@"push"] || [performAction isEqualToString:@"pop"]) && actionParams[@"component"] == nil)
   {
-    UINavigationController *navigationController = (UINavigationController*)component;
+    return;
+  }
+  
+  UIViewController* controller = [[RCControllersRegistry sharedIntance] getControllerWithID:componentID componentType:@"NavigationControllerIOS"];
+  if (controller != nil && [controller isKindOfClass:[UINavigationController class]])
+  {
+    UINavigationController *navigationController = (UINavigationController*)controller;
     
     if (![navigationController.visibleViewController.view isKindOfClass:[RCTRootView class]])
     {
@@ -107,8 +130,10 @@ RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(
       BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
       if ([performAction isEqualToString:@"push"])
       {
-        RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
-        RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:actionParams[@"component"] initialProperties:nil];
+        //RCTBridge *bridge = ((RCTRootView*)(navigationController.visibleViewController.view)).bridge;
+        RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:[RCControllersRegistry sharedIntance].myBridge
+                                                          moduleName:actionParams[@"component"]
+                                                   initialProperties:nil];
         UIViewController *viewController = [[UIViewController alloc] init];
         viewController.view = reactView;
         viewController.title = actionParams[@"title"];
@@ -118,6 +143,15 @@ RCT_EXPORT_METHOD(NavigationControllerIOS:(NSString*)componentID performAction:(
       else if ([performAction isEqualToString:@"pop"])
       {
         [navigationController popViewControllerAnimated:animated];
+      }
+      else if ([performAction isEqualToString:@"setNavItem"])
+      {
+        if ([actionParams[@"side"] isEqualToString:@"left"])
+        {
+          UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:actionParams[@"title"] style:UIBarButtonItemStylePlain target:self action:@selector(onBarButtonItemAction:)];
+          barButtonItem.tag = [actionParams[@"id"] integerValue];
+          navigationController.visibleViewController.navigationItem.leftBarButtonItem = barButtonItem;
+        }
       }
     });
   }

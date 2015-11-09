@@ -13,7 +13,15 @@ var {
   Text,
   View,
   TouchableHighlight,
+  NativeAppEventEmitter,
 } = React;
+
+var subscription = NativeAppEventEmitter.addListener(
+  'NavItemClicked',
+  (navItemParams) => { alert(navItemParams.id) }
+);
+// Don't forget to unsubscribe, typically in componentWillUnmount
+//subscription.remove();
 
 var ControllersExample = React.createClass({
   render: function() {
@@ -62,6 +70,14 @@ var styles = StyleSheet.create({
 AppRegistry.registerComponent('ControllersExample', () => ControllersExample);
 
 var MovieListScreen = React.createClass({
+
+  componentDidMount: function() {
+    RCCManager.NavigationControllerIOS("movies", "setNavItem", {
+      side: "left",
+      title: "Side",
+      id: 1,
+    });
+  },
 
 onButtonClick: function(val) {
   this.underlayColor = "green"
