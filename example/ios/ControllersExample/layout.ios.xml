@@ -1,13 +1,17 @@
 <AppLayout>
   <TabBarControllerIOS id="main">
+    
     <TabBarControllerIOS.Item title="Movies" icon="./home.png">
       <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
     </TabBarControllerIOS.Item>
+    
     <TabBarControllerIOS.Item title="Search" icon="./search.png">
       <ViewControllerIOS component="SearchScreen" />
     </TabBarControllerIOS.Item>
+    
     <TabBarControllerIOS.Item title="Favorites" icon="./star.png">
-      <NavigationControllerIOS title="Search" component="FavoritesScreen" id="favorites" />
+      <NavigationControllerIOS title="Favorites" component="FavoritesScreen" id="favorites" />
     </TabBarControllerIOS.Item>
+    
   </TabBarControllerIOS>
 </AppLayout>

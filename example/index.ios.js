@@ -85,11 +85,11 @@ var FavoritesScreen = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Favorites Screen
+          Favorites Screen2
         </Text>
       </View>
     );
   }
 });
 
-AppRegistry.registerComponent('FavoritesScreen', () => SearchScreen);
+AppRegistry.registerComponent('FavoritesScreen', () => FavoritesScreen);
