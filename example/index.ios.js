@@ -5,11 +5,14 @@
 'use strict';
 
 var React = require('react-native');
+var RCCManager = React.NativeModules.RCCManager;
+
 var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
+  TouchableHighlight,
 } = React;
 
 var ControllersExample = React.createClass({
@@ -47,6 +50,12 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  button: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginBottom: 10,
+    marginTop:10,
   },
 });
 
@@ -87,23 +96,50 @@ var FavoritesScreen = React.createClass({
         <Text style={styles.welcome}>
           Favorites Screen2
         </Text>
+
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this) }>
+          <Text style={styles.button}>Push</Text>
+        </TouchableHighlight>
       </View>
     );
-  }
+  },
+
+  onButtonClick: function() {
+    RCCManager.NavigationControllerIOS("favorites", "push", {
+      title: "Pushed screen",
+      component: "PushedScreen",
+      animated: true,
+    });
+  },
 });
 
 AppRegistry.registerComponent('FavoritesScreen', () => FavoritesScreen);
 
-var SearchScreen = React.createClass({
+var PushedScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          SideMenuComponenet SideMenuComponenet 
+          Pushed Screen 100% Native
         </Text>
       </View>
     );
   }
 });
 
-AppRegistry.registerComponent('SideMenuComponenet', () => SearchScreen);
+AppRegistry.registerComponent('PushedScreen', () => PushedScreen);
+
+var SideMenuComponenet = React.createClass({
+  render: function() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          SideMenu Screen
+        </Text>
+      </View>
+    );
+  }
+});
+
+AppRegistry.registerComponent('SideMenuComponenet', () => SideMenuComponenet);
+
