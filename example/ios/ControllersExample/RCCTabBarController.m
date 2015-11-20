@@ -4,34 +4,33 @@
 
 @implementation RCCTabBarController
 
-- (instancetype)initWithParams:(NSDictionary *)params
-                        bridge:(RCTBridge *)bridge
-                     bundleURL:(NSURL *)bundleURL
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
 {
-  id tabBarItems = [params objectForKey:@"TabBarControllerIOS.Item"];
-  if (!tabBarItems) return nil;
-  if (![tabBarItems isKindOfClass:[NSArray class]]) tabBarItems = [NSArray arrayWithObject:tabBarItems];
-  
   self = [super init];
   if (!self) return nil;
   
   NSMutableArray *viewControllers = [NSMutableArray array];
-  
+
   // go over all the tab bar items
-  for (NSDictionary *itemParams in tabBarItems)
+  for (NSDictionary *tabItemLayout in children)
   {
-    // create the view controller
-    UIViewController *viewController = [self getItemViewController:itemParams
-                                                            params:params
-                                                            bridge:bridge
-                                                         bundleURL:bundleURL];
+    // make sure the layout is valid
+    if (![tabItemLayout[@"type"] isEqualToString:@"TabBarControllerIOS.Item"]) continue;
+    if (!tabItemLayout[@"props"]) continue;
+    
+    // get the view controller inside
+    if (!tabItemLayout[@"children"]) continue;
+    if (![tabItemLayout[@"children"] isKindOfClass:[NSArray class]]) continue;
+    if ([tabItemLayout[@"children"] count] < 1) continue;
+    NSDictionary *childLayout = tabItemLayout[@"children"][0];
+    UIViewController *viewController = [RCCViewController controllerWithLayout:childLayout bridge:bridge];
     if (!viewController) continue;
     
     // create the tab icon and title
-    NSString *title = [itemParams objectForKey:@"_title"];
+    NSString *title = tabItemLayout[@"props"][@"title"];
     UIImage *iconImage = nil;
     UIImage *iconImageSelected = nil;
-    NSString *icon = [itemParams objectForKey:@"_icon"];
+    NSString *icon = tabItemLayout[@"props"][@"icon"];
     NSString *iconSelected = [NSString stringWithFormat:@"%@_selected", icon];
 
     if (icon) iconImage = [RCTConvert UIImage:icon];
@@ -46,23 +45,6 @@
   self.viewControllers = viewControllers;
   
   return self;
-}
-
-- (UIViewController *)getItemViewController:(NSDictionary *)itemParams
-                                     params:(NSDictionary *)params
-                                     bridge:(RCTBridge *)bridge
-                                  bundleURL:(NSURL *)bundleURL
-{
-  for (NSString *key in itemParams)
-  {
-    if (![key hasPrefix:@"_"]) return [RCCViewController controllerWithType:key
-                                                                     params:[itemParams objectForKey:key]
-                                                                     bridge:bridge
-                                                                  bundleURL:bundleURL];
-  }
-  
-  // none found
-  return nil;
 }
 
 @end

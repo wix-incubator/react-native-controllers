@@ -10,14 +10,14 @@
 #import "RCTBridgeModule.h"
 #import <UIKit/UIKit.h>
 
-@interface RCControllersRegistry : NSObject
-+ (instancetype)sharedIntance;
--(void)registerController:(UIViewController*)controller componentID:(NSString*)componentID componentType:(NSString*)componentType;
+@interface RCCManager : NSObject
 
--(void)setBridge:(RCTBridge*)bridge;
++ (instancetype)sharedIntance;
+
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
 -(RCTBridge*)getBridge;
 
-@end
+-(void)registerController:(UIViewController*)controller componentId:(NSString*)componentId componentType:(NSString*)componentType;
+-(id)getControllerWithId:(NSString*)componentId componentType:(NSString*)componentType;
 
-@interface RCCManager : NSObject <RCTBridgeModule>
 @end

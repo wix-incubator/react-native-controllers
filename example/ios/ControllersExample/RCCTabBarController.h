@@ -3,8 +3,6 @@
 
 @interface RCCTabBarController : UITabBarController
 
-- (instancetype)initWithParams:(NSDictionary *)params
-                        bridge:(RCTBridge *)bridge
-                     bundleURL:(NSURL *)bundleURL;
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge;
 
 @end
