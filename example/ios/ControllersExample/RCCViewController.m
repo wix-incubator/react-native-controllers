@@ -21,24 +21,29 @@
   }
   
   // navigation controller
-  if ([type isEqualToString:@"NavigationControllerIOS"])
+  else if ([type isEqualToString:@"NavigationControllerIOS"])
   {
     controller = [[RCCNavigationController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
   }
   
   // tab bar controller
-  if ([type isEqualToString:@"TabBarControllerIOS"])
+  else if ([type isEqualToString:@"TabBarControllerIOS"])
   {
     controller = [[RCCTabBarController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
   }
   
   // side menu controller
-  if ([type isEqualToString:@"SideMenuControllerIOS"])
+  else if ([type isEqualToString:@"SideMenuControllerIOS"])
   {
     controller = [[RCCSideMenuController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
   }
   
   // unknown, error
+  else {
+    
+    return nil;
+  }
+  
   [[RCControllersRegistry sharedIntance] registerController:controller componentID:params[@"_id"] componentType:type];
   
   return controller;
