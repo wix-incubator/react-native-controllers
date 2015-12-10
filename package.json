@@ -1,0 +1,17 @@
+{
+  "name": "react-native-controllers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wix/react-native-controllers.git"
+  },
+  "version": "1.0.0",
+  "description": "React Native Controllers",
+  "nativePackage": true,
+  "bugs": {
+    "url": "https://github.com/wix/react-native-controllers/issues"
+  },
+  "homepage": "https://github.com/wix/react-native-controllers",
+  "main": "index.js",
+  "author": "Tal Kol <talkol@gmail.com>",
+  "license": "MIT"
+}

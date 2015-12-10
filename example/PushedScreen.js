@@ -9,7 +9,7 @@ var {
   TouchableHighlight,
 } = React;
 
-var Controllers = require('./react-native-controllers.js');
+var Controllers = require('react-native-controllers');
 
 var PushedScreen = React.createClass({
 

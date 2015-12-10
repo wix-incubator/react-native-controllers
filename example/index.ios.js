@@ -1,6 +1,6 @@
 'use strict';
 
-var Controllers = require('./react-native-controllers.js');
+var Controllers = require('react-native-controllers');
 
 var React = Controllers.hijackReact();
 var {
@@ -36,7 +36,7 @@ var MoviesApp = Controllers.createClass({
       </DrawerControllerIOS>
     );
   },
-  
+
 });
 
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
