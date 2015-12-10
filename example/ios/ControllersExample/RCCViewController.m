@@ -1,61 +1,82 @@
 #import "RCCViewController.h"
 #import "RCCNavigationController.h"
 #import "RCCTabBarController.h"
-#import "RCCSideMenuController.h"
+#import "RCCDrawerController.h"
 #import "RCTRootView.h"
 #import "RCCManager.h"
 
 @implementation RCCViewController
 
-+ (UIViewController*)controllerWithType:(NSString *)type
-                                 params:(NSDictionary *)params
-                                 bridge:(RCTBridge *)bridge
-                              bundleURL:(NSURL *)bundleURL
++ (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge
 {
   UIViewController* controller = nil;
+  if (!layout) return nil;
+  
+  // get props
+  if (!layout[@"props"]) return nil;
+  if (![layout[@"props"] isKindOfClass:[NSDictionary class]]) return nil;
+  NSDictionary *props = layout[@"props"];
+  
+  // get children
+  if (!layout[@"children"]) return nil;
+  if (![layout[@"children"] isKindOfClass:[NSArray class]]) return nil;
+  NSArray *children = layout[@"children"];
+  
+  // create according to type
+  NSString *type = layout[@"type"];
+  if (!type) return nil;
   
   // regular view controller
   if ([type isEqualToString:@"ViewControllerIOS"])
   {
-    controller = [[RCCViewController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
+    controller = [[RCCViewController alloc] initWithProps:props children:children bridge:bridge];
   }
   
   // navigation controller
-  else if ([type isEqualToString:@"NavigationControllerIOS"])
+  if ([type isEqualToString:@"NavigationControllerIOS"])
   {
-    controller = [[RCCNavigationController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
+    controller = [[RCCNavigationController alloc] initWithProps:props children:children bridge:bridge];
   }
   
   // tab bar controller
-  else if ([type isEqualToString:@"TabBarControllerIOS"])
+  if ([type isEqualToString:@"TabBarControllerIOS"])
   {
-    controller = [[RCCTabBarController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
+    controller = [[RCCTabBarController alloc] initWithProps:props children:children bridge:bridge];
   }
   
   // side menu controller
-  else if ([type isEqualToString:@"SideMenuControllerIOS"])
+  if ([type isEqualToString:@"DrawerControllerIOS"])
   {
-    controller = [[RCCSideMenuController alloc] initWithParams:params bridge:bridge bundleURL:bundleURL];
+    controller = [[RCCDrawerController alloc] initWithProps:props children:children bridge:bridge];
   }
   
-  // unknown, error
-  else {
-    
-    return nil;
+  // register the controller if we have an id
+  NSString *componentId = props[@"id"];
+  if (controller && componentId)
+  {
+    [[RCCManager sharedIntance] registerController:controller componentId:componentId componentType:type];
   }
-  
-  [[RCControllersRegistry sharedIntance] registerController:controller componentID:params[@"_id"] componentType:type];
   
   return controller;
 }
 
-- (instancetype)initWithParams:(NSDictionary *)params
-                        bridge:(RCTBridge *)bridge
-                     bundleURL:(NSURL *)bundleURL
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
 {
-  NSString *component = [params objectForKey:@"_component"];
+  NSString *component = props[@"component"];
   if (!component) return nil;
   
+  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:nil];
+  if (!reactView) return nil;
+  
+  self = [super init];
+  if (!self) return nil;
+  
+  self.view = reactView;
+  return self;
+}
+
+- (instancetype)initWithComponent:(NSString *)component bridge:(RCTBridge *)bridge
+{
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:nil];
   if (!reactView) return nil;
   

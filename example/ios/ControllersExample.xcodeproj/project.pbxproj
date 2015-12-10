@@ -21,21 +21,19 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		26C678621BF09B6B00A33D48 /* RCCSideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678611BF09B6B00A33D48 /* RCCSideMenuController.m */; };
+		26C678621BF09B6B00A33D48 /* RCCDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678611BF09B6B00A33D48 /* RCCDrawerController.m */; };
 		26C6787B1BF09E6000A33D48 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678731BF09E6000A33D48 /* MMDrawerBarButtonItem.m */; };
 		26C6787C1BF09E6000A33D48 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678761BF09E6000A33D48 /* MMDrawerController.m */; };
 		26C6787D1BF09E6000A33D48 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C678781BF09E6000A33D48 /* MMDrawerVisualState.m */; };
 		26C6787E1BF09E6000A33D48 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C6787A1BF09E6000A33D48 /* UIViewController+MMDrawerController.m */; };
 		26C6788B1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26C6788A1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		CCC9CB371BEFE9E5008BB231 /* layout.ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = CCC9CB2E1BEFE9E5008BB231 /* layout.ios.xml */; };
-		CCC9CB391BEFE9E5008BB231 /* RCCRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB321BEFE9E5008BB231 /* RCCRootController.m */; };
 		CCC9CB3A1BEFE9E5008BB231 /* RCCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB341BEFE9E5008BB231 /* RCCTabBarController.m */; };
 		CCC9CB3B1BEFE9E5008BB231 /* RCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB361BEFE9E5008BB231 /* RCCViewController.m */; };
-		CCC9CB411BEFF057008BB231 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB401BEFF057008BB231 /* XMLDictionary.m */; };
 		CCC9CB791BF005CF008BB231 /* RCCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCC9CB781BF005CF008BB231 /* RCCNavigationController.m */; };
-		D8AFAE611BF0983400A4592D /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManager.m */; };
-		D8AFAE621BF0983400A4592D /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManager.m */; };
+		CCD9650D1BFDD8980024E055 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9650C1BFDD8980024E055 /* RCCManager.m */; };
+		D8AFAE611BF0983400A4592D /* RCCManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManagerModule.m */; };
+		D8AFAE621BF0983400A4592D /* RCCManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D8AFAE601BF0983400A4592D /* RCCManagerModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,8 +136,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ControllersExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ControllersExample/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		26C678601BF09B6B00A33D48 /* RCCSideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCSideMenuController.h; path = ControllersExample/RCCSideMenuController.h; sourceTree = "<group>"; };
-		26C678611BF09B6B00A33D48 /* RCCSideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCSideMenuController.m; path = ControllersExample/RCCSideMenuController.m; sourceTree = "<group>"; };
+		26C678601BF09B6B00A33D48 /* RCCDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCDrawerController.h; path = ControllersExample/RCCDrawerController.h; sourceTree = "<group>"; };
+		26C678611BF09B6B00A33D48 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCDrawerController.m; path = ControllersExample/RCCDrawerController.m; sourceTree = "<group>"; };
 		26C678721BF09E6000A33D48 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		26C678731BF09E6000A33D48 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		26C678741BF09E6000A33D48 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -153,19 +151,16 @@
 		26C6788A1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		CCC9CB2E1BEFE9E5008BB231 /* layout.ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = layout.ios.xml; path = ControllersExample/layout.ios.xml; sourceTree = "<group>"; };
-		CCC9CB311BEFE9E5008BB231 /* RCCRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCRootController.h; path = ControllersExample/RCCRootController.h; sourceTree = "<group>"; };
-		CCC9CB321BEFE9E5008BB231 /* RCCRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCRootController.m; path = ControllersExample/RCCRootController.m; sourceTree = "<group>"; };
 		CCC9CB331BEFE9E5008BB231 /* RCCTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCTabBarController.h; path = ControllersExample/RCCTabBarController.h; sourceTree = "<group>"; };
 		CCC9CB341BEFE9E5008BB231 /* RCCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCTabBarController.m; path = ControllersExample/RCCTabBarController.m; sourceTree = "<group>"; };
 		CCC9CB351BEFE9E5008BB231 /* RCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCViewController.h; path = ControllersExample/RCCViewController.h; sourceTree = "<group>"; };
 		CCC9CB361BEFE9E5008BB231 /* RCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCViewController.m; path = ControllersExample/RCCViewController.m; sourceTree = "<group>"; };
-		CCC9CB3F1BEFF057008BB231 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = ControllersExample/XMLDictionary.h; sourceTree = "<group>"; };
-		CCC9CB401BEFF057008BB231 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = ControllersExample/XMLDictionary.m; sourceTree = "<group>"; };
 		CCC9CB771BF005CF008BB231 /* RCCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCCNavigationController.h; path = ControllersExample/RCCNavigationController.h; sourceTree = "<group>"; };
 		CCC9CB781BF005CF008BB231 /* RCCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCCNavigationController.m; path = ControllersExample/RCCNavigationController.m; sourceTree = "<group>"; };
-		D8AFAE5F1BF0983400A4592D /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
-		D8AFAE601BF0983400A4592D /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; };
+		CCD9650B1BFDD8980024E055 /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
+		CCD9650C1BFDD8980024E055 /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; };
+		D8AFAE5F1BF0983400A4592D /* RCCManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManagerModule.h; sourceTree = "<group>"; };
+		D8AFAE601BF0983400A4592D /* RCCManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManagerModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,19 +267,18 @@
 		13B07FAE1A68108700A75B9A /* ControllersExample */ = {
 			isa = PBXGroup;
 			children = (
-				CCC9CB2E1BEFE9E5008BB231 /* layout.ios.xml */,
+				CCD9650B1BFDD8980024E055 /* RCCManager.h */,
+				CCD9650C1BFDD8980024E055 /* RCCManager.m */,
 				CCC9CB351BEFE9E5008BB231 /* RCCViewController.h */,
 				CCC9CB361BEFE9E5008BB231 /* RCCViewController.m */,
-				CCC9CB311BEFE9E5008BB231 /* RCCRootController.h */,
-				CCC9CB321BEFE9E5008BB231 /* RCCRootController.m */,
 				CCC9CB771BF005CF008BB231 /* RCCNavigationController.h */,
 				CCC9CB781BF005CF008BB231 /* RCCNavigationController.m */,
 				CCC9CB331BEFE9E5008BB231 /* RCCTabBarController.h */,
 				CCC9CB341BEFE9E5008BB231 /* RCCTabBarController.m */,
-				CCC9CB3F1BEFF057008BB231 /* XMLDictionary.h */,
-				CCC9CB401BEFF057008BB231 /* XMLDictionary.m */,
-				D8AFAE5F1BF0983400A4592D /* RCCManager.h */,
-				D8AFAE601BF0983400A4592D /* RCCManager.m */,
+				26C678601BF09B6B00A33D48 /* RCCDrawerController.h */,
+				26C678611BF09B6B00A33D48 /* RCCDrawerController.m */,
+				D8AFAE5F1BF0983400A4592D /* RCCManagerModule.h */,
+				D8AFAE601BF0983400A4592D /* RCCManagerModule.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -292,8 +286,6 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				26C678601BF09B6B00A33D48 /* RCCSideMenuController.h */,
-				26C678611BF09B6B00A33D48 /* RCCSideMenuController.m */,
 			);
 			name = ControllersExample;
 			sourceTree = "<group>";
@@ -582,7 +574,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				CCC9CB371BEFE9E5008BB231 /* layout.ios.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +592,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "#../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -610,7 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8AFAE621BF0983400A4592D /* RCCManager.m in Sources */,
+				D8AFAE621BF0983400A4592D /* RCCManagerModule.m in Sources */,
 				00E356F31AD99517003FC87E /* ControllersExampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,19 +610,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26C678621BF09B6B00A33D48 /* RCCSideMenuController.m in Sources */,
+				26C678621BF09B6B00A33D48 /* RCCDrawerController.m in Sources */,
 				CCC9CB3A1BEFE9E5008BB231 /* RCCTabBarController.m in Sources */,
 				26C6787D1BF09E6000A33D48 /* MMDrawerVisualState.m in Sources */,
 				26C6787E1BF09E6000A33D48 /* UIViewController+MMDrawerController.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				D8AFAE611BF0983400A4592D /* RCCManager.m in Sources */,
-				CCC9CB411BEFF057008BB231 /* XMLDictionary.m in Sources */,
+				D8AFAE611BF0983400A4592D /* RCCManagerModule.m in Sources */,
 				26C6788B1BF0C9C200A33D48 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				CCD9650D1BFDD8980024E055 /* RCCManager.m in Sources */,
 				26C6787B1BF09E6000A33D48 /* MMDrawerBarButtonItem.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				26C6787C1BF09E6000A33D48 /* MMDrawerController.m in Sources */,
 				CCC9CB3B1BEFE9E5008BB231 /* RCCViewController.m in Sources */,
-				CCC9CB391BEFE9E5008BB231 /* RCCRootController.m in Sources */,
 				CCC9CB791BF005CF008BB231 /* RCCNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

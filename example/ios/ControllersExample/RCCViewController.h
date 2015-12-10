@@ -3,13 +3,9 @@
 
 @interface RCCViewController : UIViewController
 
-+ (UIViewController*)controllerWithType:(NSString *)type
-                                 params:(NSDictionary *)params
-                                 bridge:(RCTBridge *)bridge
-                              bundleURL:(NSURL *)bundleURL;
++ (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge;
 
-- (instancetype)initWithParams:(NSDictionary *)params
-                        bridge:(RCTBridge *)bridge
-                     bundleURL:(NSURL *)bundleURL;
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge;
+- (instancetype)initWithComponent:(NSString *)component bridge:(RCTBridge *)bridge;
 
 @end
