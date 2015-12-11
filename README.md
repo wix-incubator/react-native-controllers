@@ -210,6 +210,10 @@ navigationController.setLeftButton({
 });
 ```
 
+#### Examples
+
+[`FavoritesScreen.js`](example/FavoritesScreen.js), [`PushedScreen.js`](example/PushedScreen.js)
+
 ### DrawerControllerIOS
 
 ### TabBarControllerIOS
