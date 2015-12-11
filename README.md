@@ -157,6 +157,59 @@ These wrappers are very simple. You can also add your own if you find missing Re
 
 ### NavigationControllerIOS
 
+Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/). This view controller is a replacement for React Native's [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content) that is no longer maintained by Facebook.
+
+#### JSX Definition
+
+```jsx
+<NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
+```
+
+Attribue | Description
+-------- | -----------
+title | Title displayed on the navigation bar on the root view controller (initial route)
+component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
+id | Unique ID used to reference this view controller in future API calls
+
+#### JS API
+
+Get the instance with `Controllers.NavigationControllerIOS(id)`
+
+```js
+var Controllers = require('react-native-controllers');
+var navigationController = Controllers.NavigationControllerIOS("movies");
+```
+
+ * **push(object)** - push a new screen
+
+```js
+require('./PushedScreen');
+navigationController.push({
+  title: "New Screen",
+  component: "PushedScreen",
+  animated: true
+});
+```
+
+> Note: The pushed component should also be registered with `AppRegistry.registerComponent()` like the top level components and should be required to make sure it's included by the React Native bundler.
+
+ * **pop()** - pop the current screen
+
+```js
+navigationController.pop();
+```
+
+ * **setLeftButton(object)** - set the left button of the navigation bar
+
+```js
+navigationController.setLeftButton({
+  title: "Button Title",
+  onPress: function() {
+    // on press event handler
+  }
+});
+```
+
 ### DrawerControllerIOS
 
 ### TabBarControllerIOS
