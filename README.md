@@ -272,7 +272,7 @@ drawerController.toggle({
 
 ```js
 drawerController.setStyle({
-  animationType: "slide" // slide|slideAndScale|parallax|door
+  animationType: "slide" // // slide, slideAndScale, parallax, door
 });
 ```
 
@@ -282,4 +282,48 @@ drawerController.setStyle({
 
 ### TabBarControllerIOS
 
+Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/). This view controller lets display native tabs in your app, much like React Native's [`TabBarIOS`](https://facebook.github.io/react-native/docs/tabbarios.html#content).
+
+#### JSX Definition
+
+```jsx
+<TabBarControllerIOS id="main">
+  <TabBarControllerIOS.Item title="Movies" icon="home">
+    // view controller here (the body of the tab)
+  </TabBarControllerIOS.Item>
+  <TabBarControllerIOS.Item title="Search" icon="discover">
+    // view controller here (the body of the tab)
+  </TabBarControllerIOS.Item>
+</TabBarControllerIOS>
+```
+
+Attribue | Description
+-------- | -----------
+id | Unique ID used to reference this view controller in future API calls
+
+Item Attribue | Description
+-------- | -----------
+title | Title displayed on the tab label
+icon | Name of the XCode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
+
+#### JS API
+
+Currently not implemented
+
 ### ViewControllerIOS
+
+Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/). This view controller is useful when you need to specify a view controller but you don't want anything special except a holder for your view. For example, a tab body without a navigation controller.
+
+#### JSX Definition
+
+```jsx
+<ViewControllerIOS component="SearchScreen" />
+```
+
+Attribue | Description
+-------- | -----------
+component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for this view controller
+
+#### JS API
+
+Currently not implemented
