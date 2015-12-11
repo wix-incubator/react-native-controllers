@@ -51,6 +51,18 @@ self.window.rootViewController = rootViewController;
 
 The entrire React Native component hierarchy is contained inside a view and this view is wrapped manually in a view controller. That pretty much summed up our problem. App skeletons in iOS are built from view controllers, but it wasn't obvious to us how those fit in within the React Native world.
 
+##### Giving view controllers a prominent seat at the table
+
+If our assumption is correct, then giving view controllers a more prominent seat at the table might make skeleton components easier to implement.
+
+There are many ways to approach this, we've decided to start with a way that won't interfere with the inner-workings of React Native. A good start would be an optional [npm](https://www.npmjs.com/) package that would add this functionality on top.
+
+With the standard way to use React Native, `RCTRootView` starts at the very top of your app hierarchy (filling the content of `rootViewController`). We wanted to move `RCTRootView` a little lower. The top of the app hierarchy will be filled with natively implemented view controllers. Inside every view controller, the content view could be a separate `RCTRootView`.
+
+This means that instead of a single `RCTRootView`, our app will have several ones running in parallel. It turns out that this isn't a probem and is [supported out of the box](https://github.com/facebook/react-native/blob/master/React/Base/RCTRootView.h) by the framework. All you need to do is have a single `RCTBridge` that all of them will share. This gives all of these views the same JS execution context, which means they will easily be able to share variables and singletons.
+
+Let's compare the two approaches with a simple two-tab app. [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/) is a good candiate for a skeleton component since it's based primarily on view controllers:
+
 ## Installation
 
 You need an iOS React Native project ([instructions on how to create one](https://facebook.github.io/react-native/docs/getting-started.html#quick-start))
