@@ -100,7 +100,7 @@ var MoviesApp = Controllers.createClass({
 
 Some of the view controllers in the hierarchy will have to contain your views. These views are the regular React Native components that you're used to. You will normally define these components in a dedicated JS module - where `React` wasn't hijacked and you can use all of its goodness.
 
-To hook up a view, use the `component` attribute of the view controller in the JSX and provide the registered name of the component. Every view that you use has to be registered using `AppRegistry.registerComponent()`. For example, the movie list screen content is defined in `MovieListScreen.js` and there it's also registered with:
+To hook up a view, use the `component` attribute of the view controller in the JSX and provide the registered name of the component. Every view that you use has to be registered using `AppRegistry.registerComponent()`. For example, the movie list screen content is defined in [`MovieListScreen.js`](example/MovieListScreen.js) and there it's also registered with:
 
 ```js
 AppRegistry.registerComponent('MovieListScreen', () => MovieListScreen);
