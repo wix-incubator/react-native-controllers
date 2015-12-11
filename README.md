@@ -6,7 +6,50 @@
 
 ## Why do we need this package?
 
-If you're already convinced you need this package, you can skip straight to [Installation](#installation).
+If you're already convinced you need this package, you can skip straight to [Installation](#installation). If not, brace yourself for a long read.
+
+##### First, what's so great about React Native?
+
+At Wix, we came to React Native from a codebase of two separate fully native stacks - one for iOS (ObjectiveC) and one for Android (Java). The main benefits React Native brings to such an environment are:
+
+ * OTA business logic updates (fix bugs in the JS bundle without going through the app stores)
+ * Sharing business logic between iOS, Android and even web counterparts ([demolishing silos](http://techcrunch.com/2015/08/26/facebook-react-native/))
+ * Improving development velocity and introducing more people in the organization to app development
+ * Maintaining our existing high level of UX since our entire UI is fully native and implemented separately
+
+The last point is critical and what prevented us from adopting many of the other cross-platform mobile technologies that popped up in recent years. One of the premises of React Native is that you can keep using any native UI component and won't be required to make UX compromises.
+
+##### But wait.. the UX compromises did come
+
+After working with React Native we noticed that we were encouraged to make UX compromises in several places. Here are two examples:
+
+ * Navigator - Originally happy to see [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content), we were soon disappointed to see that Facebook [gave up on maintaining it](https://facebook.github.io/react-native/docs/navigator-comparison.html#content) and the recommendation is to use the pure-JS alternative [`Navigator`](https://facebook.github.io/react-native/docs/navigator.html#content). That seemed peculiar since using the native component for such a key element as navigation is obviously the superior UX choice. <br> There's a limit to how well you can fake it with pure JS and the small details like side swipe for back get lost. Also consider what happens if Apple decides to revamp the design of the navigation bar like they did between iOS 6 and 7. Will we really go to the length of providing two separate experiences to owners of different OS versions with the pure JS implementation?
+ * Side menu drawer - The side menu is a popular UI pattern and some of our iOS apps use it. We looked for a React Native wrapper around one of the [many native iOS implementations](https://www.cocoacontrols.com/search?q=drawer). We were surprised to see that we found none, although React Native for iOS has been out at the time for over a year. The React Native component community is [thriving](https://react.parts/native) and there's a native wrapper for everything. There must be some underlying reason why all implementations for such a popular component were pure JS.
+
+It's interesting to see that both examples revolve around components that are parts of the app skeleton. Why are skeleton components so challenging to implement with native elements?
+
+##### Looking for the underlying challenge
+
+Our first instinct for both of the examples listed above was *"Hey, great! Let's make these components ourselves! It's a great void to fill for the community."* 
+
+We dived into the `NavigatorIOS` [implementation](https://github.com/facebook/react-native/blob/master/React/Views/RCTNavigator.m) but things weren't as simple as we've hoped. The implementation is surprisingly complex and seems to have been done by someone very much proficient with the inner workings of the [UIKit](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIKit_Framework/).
+
+We've hit similar walls with the side menu. One of the main problems was that side menus are based on [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) and not [`UIView`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/). React Native steered our component to return a view. 
+
+Furthermore, let's take a look at the standard way React Native hooks into `AppDelegate`:
+
+```objc
+RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                    moduleName:@"DefaultProject"
+                                             initialProperties:nil
+                                                 launchOptions:launchOptions];
+self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+UIViewController *rootViewController = [[UIViewController alloc] init];
+rootViewController.view = rootView;
+self.window.rootViewController = rootViewController;
+```
+
+The entrire React Native component hierarchy is contained inside a view and this view is wrapped manually in a view controller. That pretty much summed up our problem. App skeletons in iOS are built from view controllers, but it wasn't obvious to us how those fit in within the React Native world.
 
 ## Installation
 
@@ -43,7 +86,7 @@ Since `react-native-controllers` takes over the skeleton of your app, we're firs
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
-  // this is your new React Native invokation
+  // this is your new React Native invocation
   [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation];
   
   return YES;
