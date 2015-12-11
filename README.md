@@ -49,7 +49,7 @@ rootViewController.view = rootView;
 self.window.rootViewController = rootViewController;
 ```
 
-The entrire React Native component hierarchy is contained inside a view and this view is wrapped manually in a view controller. That pretty much summed up our problem. App skeletons in iOS are built from view controllers, but it wasn't obvious to us how those fit in within the React Native world.
+The entire React Native component hierarchy is contained inside a view and this view is wrapped manually in a view controller. That pretty much summed up our problem. App skeletons in iOS are built from view controllers, but it wasn't obvious to us how those fit in within the React Native world.
 
 ##### Giving view controllers a prominent seat at the table
 
@@ -59,17 +59,17 @@ There are many ways to approach this, we've decided to start with a way that won
 
 With the standard way to use React Native, `RCTRootView` starts at the very top of your app hierarchy (filling the content of `rootViewController`). We wanted to move `RCTRootView` a little lower. The top of the app hierarchy will be filled with natively implemented view controllers. Inside every view controller, the content view could be a separate `RCTRootView`.
 
-This means that instead of a single `RCTRootView`, our app will have several ones running in parallel. It turns out that this isn't a probem and is [supported out of the box](https://github.com/facebook/react-native/blob/master/React/Base/RCTRootView.h) by the framework. All you need to do is have a single `RCTBridge` that all of them will share. This gives all of these views the same JS execution context, which means they will easily be able to share variables and singletons.
+This means that instead of a single `RCTRootView`, our app will have several ones running in parallel. It turns out that this isn't a problem and is [supported out of the box](https://github.com/facebook/react-native/blob/master/React/Base/RCTRootView.h) by the framework. All you need to do is have a single `RCTBridge` that all of them will share. This gives all of these views the same JS execution context, which means they will easily be able to share variables and singletons.
 
-Let's compare the two approaches with a simple two-tab app. [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/) is a good candiate for a skeleton component since it's based primarily on view controllers:
+Let's compare the two approaches with a simple two-tab app. [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/) is a good candidate for a skeleton component since it's based primarily on view controllers:
 
 ![Comparison Diagram](http://i.imgur.com/Siyx0JU.png)
 
 ##### A few implementation details
 
-The basis of the proposed approach is that the view controller layer is not implemented as traditional React Native components. Instead, they are implemented natively. We also want to make layouting very flexible so instead of having to write native ObjectiveC code inside XCode to specify which view controllers you want, we prefer a declarative way.
+The basis of the proposed approach is that the view controller layer is not implemented as traditional React Native components. Instead, they are implemented natively. We also want to make layouting very flexible so instead of having to write native ObjectiveC code inside Xcode to specify which view controllers you want, we prefer a declarative way.
 
-The natural choice to define layouts is using XML. This implies that we need to add an additional XML layout file to the project that will be saved right next to the React Native JS bundle. The native package code will then parse this XML file and instansiate the native view controllers when the app is loaded.
+The natural choice to define layouts is using XML. This implies that we need to add an additional XML layout file to the project that will be saved right next to the React Native JS bundle. The native package code will then parse this XML file and instantiate the native view controllers when the app is loaded.
 
 The drawbacks of this external XML is that it's more difficult to update. React Native developers are used to updating everything though the JS bundle. This means the natural place for our XML is to be embedded inside the bundle. This makes for another natural choice for the XML flavor. It should be [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) to keep things familiar.
 
@@ -84,9 +84,9 @@ We need this package because it allows us to *easily* wrap native components tha
 You need an iOS React Native project ([instructions on how to create one](https://facebook.github.io/react-native/docs/getting-started.html#quick-start))
 
 1. Run `npm install react-native-controllers` in your project root
-2. In XCode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]` <br> Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))
-3. In XCode, in Project Navigator (left pane), click on your project (top) and select the `Build Phases` tab (right pane) <br> In the `Link Binary With Libraries` section add `libReactNativeControllers.a` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-2))
-4. In XCode, in Project Navigator (left pane), click on your project (top) and select the `Build Settings` tab (right pane) <br> In the `Header Search Paths` section add `$(SRCROOT)/../node_modules/react-native-controllers/ios` <br> Make sure on the right to mark this new path `recursive` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-3))
+2. In Xcode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]` <br> Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))
+3. In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Phases` tab (right pane) <br> In the `Link Binary With Libraries` section add `libReactNativeControllers.a` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-2))
+4. In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Settings` tab (right pane) <br> In the `Header Search Paths` section add `$(SRCROOT)/../node_modules/react-native-controllers/ios` <br> Make sure on the right to mark this new path `recursive` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-3))
 
 ## Usage
 
@@ -94,7 +94,7 @@ Check out the iOS example project under [`./example`](example) to see everything
 
 ### Step 1 - Update AppDelegate
 
-Since `react-native-controllers` takes over the skeleton of your app, we're first going to change how React Native is invoked in `AppDelegate.m`. In XCode, change your AppDelegate to look like this:
+Since `react-native-controllers` takes over the skeleton of your app, we're first going to change how React Native is invoked in `AppDelegate.m`. In Xcode, change your AppDelegate to look like this:
 
 ```objc
 #import "AppDelegate.h"
@@ -236,7 +236,7 @@ Native navigator wrapper around [`UINavigationController`](https://developer.app
 <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
 ```
 
-Attribue | Description
+Attribute | Description
 -------- | -----------
 title | Title displayed on the navigation bar on the root view controller (initial route)
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
@@ -297,7 +297,7 @@ Native side menu drawer wrapper around [`MMDrawerController`](https://github.com
 </DrawerControllerIOS>
 ```
 
-Attribue | Description
+Attribute | Description
 -------- | -----------
 componentLeft | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the left side menu
 componentRight | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the right side menu
@@ -368,15 +368,15 @@ Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/li
 </TabBarControllerIOS>
 ```
 
-Attribue | Description
+Attribute | Description
 -------- | -----------
 id | Unique ID used to reference this view controller in future API calls
 
 
-Item Attribue | Description
+Item Attribute | Description
 -------- | -----------
 title | Title displayed on the tab label
-icon | Name of the XCode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
+icon | Name of the Xcode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
 
 ##### JS API
 
@@ -392,7 +392,7 @@ Generic empty view controller wrapper around [`UIViewController`](https://develo
 <ViewControllerIOS component="SearchScreen" />
 ```
 
-Attribue | Description
+Attribute | Description
 -------- | -----------
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for this view controller
 
