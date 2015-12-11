@@ -63,6 +63,18 @@ This means that instead of a single `RCTRootView`, our app will have several one
 
 Let's compare the two approaches with a simple two-tab app. [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/) is a good candiate for a skeleton component since it's based primarily on view controllers:
 
+![Comparison Diagram](http://i.imgur.com/Siyx0JU.png)
+
+##### A few implementation details
+
+The basis of the proposed approach is that the view controller layer is not implemented as traditional React Native components. Instead, they are implemented natively. We also want to make layouting very flexible so instead of having to write native ObjectiveC code inside XCode to specify which view controllers you want, we prefer a declarative way.
+
+The natural choice to define layouts is using XML. This implies that we need to add an additional XML layout file to the project that will be saved right next to the React Native JS bundle. The native package code will then parse this XML file and instansiate the native view controllers when the app is loaded.
+
+The drawbacks of this external XML is that it's more difficult to update. React Native developers are used to updating everything though the JS bundle. This means the natural place for our XML is to be embedded inside the bundle. This makes for another natural choice for the XML flavor. It should be [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) to keep things familiar.
+
+It isn't straightforward to use JSX for layouting things that aren't React components since JSX is [tightly coupled](https://facebook.github.io/react/docs/jsx-in-depth.html#the-transform) with React. Our somewhat hackish solution was to override `React` in the JS modules dedicated for defining view controllers.
+
 ## Installation
 
 You need an iOS React Native project ([instructions on how to create one](https://facebook.github.io/react-native/docs/getting-started.html#quick-start))
