@@ -19,7 +19,7 @@ You need an iOS React Native project ([instructions on how to create one](https:
 
 ## Usage
 
-Check out the iOS example project under `./example` to see everything in action.
+Check out the iOS example project under [`./example`](example) to see everything in action.
 
 ### Step 1 - Update AppDelegate
 
