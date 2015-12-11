@@ -17,7 +17,7 @@ At Wix, we came to React Native from a codebase of two separate fully native sta
  * Improving development velocity and introducing more people in the organization to app development
  * Maintaining our existing high level of UX since our entire UI is fully native and implemented separately
 
-The last point is critical and what prevented us from adopting many of the other cross-platform mobile technologies that popped up in recent years. One of the premises of React Native is that you can keep using any native UI component and won't be required to make UX compromises.
+The last point is critical and what prevented us from adopting many of the cross-platform mobile technologies that popped up in recent years. One of the premises of React Native is that you can keep using any native UI component and won't be required to make UX compromises.
 
 ##### But wait.. the UX compromises did come
 
