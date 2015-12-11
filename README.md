@@ -1,6 +1,6 @@
 # React Native Controllers
 
-`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension package for for iOS which aims to provide a completely native skeleton to iOS apps. Skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are traditionally challenging to wrap natively with React Native. `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/index.html) into the React Native stack.
+`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension package for for iOS which aims to provide a completely native skeleton to iOS apps. Skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are traditionally challenging to wrap natively with React Native. `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
 
@@ -128,4 +128,37 @@ ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ControllerRegistry.setRootController('MoviesApp');
 ```
 
-The last line is the magic line that bootstraps our entire app. When you set your controller (that you've just defined in JS) as root with `ControllerRegistry.setRootController()`, behind the scenes the native code sets it as `appDelegate.window.rootViewController`. Here you can see that the module that you've just defined is actually a [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/index.html) and not a [`UIView`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/index.html).
+The last line is the magic line that bootstraps our entire app. When you set your controller (that you've just defined in JS) as root with `ControllerRegistry.setRootController()`, behind the scenes the native code sets it as `appDelegate.window.rootViewController`. Here you can see that the module that you've just defined is actually a [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) and not a [`UIView`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/).
+
+### Step 3 - Implement all top level components
+
+The view controller hierarchy we've defined in `index.ios.js` references the top level screens of your app. These screens are regular React Native views. They are the exact same components you've been writing up until now.
+
+In the previous step we've referenced 3 top level components: `SideMenu`, `MovieListScreen`, `SearchScreen`. The best practice is to implement each of them as its own JS module. You can see them implemented here: [`SideMenu.js`](example/SideMenu.js), [`MovieListScreen.js`](example/MovieListScreen.js), [`SearchScreen.js`](example/SearchScreen.js).
+
+As you can see, these are standard React Native components. They don't require any special changes due to our package. The only requirement is that all of them are registered using React Native's `AppRegistry.registerComponent()`. Only top level components referenced by the view controller hierarchy need to be registered. Register them by adding the following line at the end:
+
+```js
+AppRegistry.registerComponent('MovieListScreen', () => MovieListScreen);
+```
+
+When implementing your components, you may need to interact with one of the view controllers. For example, create a button that pushes a new screen to the navigation controller. You have simple JS API for this purpose available by `require('react-native-controllers')`. This API is documented under the list of [available view controllers](#available-view-controllers).
+
+## Available View Controllers
+
+The package contains implementations for the following view controllers that you can use in your app skeleton:
+
+ * [NavigationControllerIOS](#navigationcontrollerios) - Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/)
+ * [DrawerControllerIOS](#drawercontrollerios) - Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController)
+ * [TabBarControllerIOS](#tabbarcontrollerios) - Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/)
+ * [ViewControllerIOS](#viewcontrollerios) - Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/)
+
+These wrappers are very simple. You can also add your own if you find missing React Native components that are based on `UIViewController` instead of `UIView`.
+
+### NavigationControllerIOS
+
+### DrawerControllerIOS
+
+### TabBarControllerIOS
+
+### ViewControllerIOS
