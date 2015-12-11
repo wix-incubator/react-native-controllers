@@ -180,7 +180,7 @@ var Controllers = require('react-native-controllers');
 var navigationController = Controllers.NavigationControllerIOS("movies");
 ```
 
- * **push(object)** - push a new screen
+ * **push(params)** - push a new screen
 
 ```js
 require('./PushedScreen');
@@ -199,7 +199,7 @@ navigationController.push({
 navigationController.pop();
 ```
 
- * **setLeftButton(object)** - set the left button of the navigation bar
+ * **setLeftButton(params)** - set the left button of the navigation bar
 
 ```js
 navigationController.setLeftButton({
@@ -215,6 +215,71 @@ navigationController.setLeftButton({
 [`FavoritesScreen.js`](example/FavoritesScreen.js), [`PushedScreen.js`](example/PushedScreen.js)
 
 ### DrawerControllerIOS
+
+Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController). This view controller lets you add a configurable side menu to your app (either on the left, right or both). Unlike most side menu implementations available for React Native, this side menu isn't implemented in JS and is completely native.
+
+#### JSX Definition
+
+```jsx
+<DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
+  // center view controller here (the body of the app)
+</DrawerControllerIOS>
+```
+
+Attribue | Description
+-------- | -----------
+
+componentLeft | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the left side menu
+componentRight | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the right side menu
+id | Unique ID used to reference this view controller in future API calls
+
+#### JS API
+
+Get the instance with `Controllers.DrawerControllerIOS(id)`
+
+```js
+var Controllers = require('react-native-controllers');
+var drawerController = Controllers.DrawerControllerIOS("drawer");
+```
+
+ * **open(params)** - open the side menu
+
+```js
+drawerController.open({
+  side: "right",
+  animated: true
+});
+```
+
+ * **close(params)** - close the side menu
+
+```js
+drawerController.close({
+  side: "right",
+  animated: true
+});
+```
+
+ * **toggle(params)** - toggle the side menu (open if close, close if open)
+
+```js
+drawerController.toggle({
+  side: "left",
+  animated: true
+});
+```
+
+ * **setStyle(params)** - set the side menu animation type
+
+```js
+drawerController.setStyle({
+  animationType: "slide" // slide|slideAndScale|parallax|door
+});
+```
+
+#### Examples
+
+[`MovieListScreen.js`](example/MovieListScreen.js)
 
 ### TabBarControllerIOS
 
