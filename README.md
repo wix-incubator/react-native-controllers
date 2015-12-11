@@ -272,7 +272,7 @@ drawerController.toggle({
 
 ```js
 drawerController.setStyle({
-  animationType: "slide" // // slide, slideAndScale, parallax, door
+  animationType: "slide" // slide, slideAndScale, parallax, door
 });
 ```
 
