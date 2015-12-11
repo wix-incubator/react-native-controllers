@@ -1,6 +1,6 @@
 # React Native Controllers
 
-`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension package for for iOS which aims to provide a completely native skeleton to iOS apps. Skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are traditionally challenging to wrap natively with React Native. `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
+`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension package for for iOS which aims to provide a completely native skeleton for iOS apps. Skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are traditionally challenging to wrap natively with React Native. `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
 
@@ -60,7 +60,7 @@ Roughly speaking, `ViewControllers` make the skeleton of your app and `Views` ma
 
 You can see a complete example of `index.ios.js` [here](example/index.ios.js). If you don't want the full explanation of what's going on in there, just skip to the next step.
 
-#### Making a module deal with ViewControllers instead of Views
+##### Making a module deal with ViewControllers instead of Views
 
 To allow you to use [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) to define your view controller hierarchy, we're going to have to hijack `React`. Don't worry, this hijack is local to this module only. That's why we don't mix the two types. Your other regular JS modules (that deal with Views) won't have this hijack.
 
@@ -73,7 +73,7 @@ var React = Controllers.hijackReact();
 
 > Note: The React instance here is irregular. It can't do many of the things that the original class can, so keep its usage pretty close to our purpose.
 
-#### Defining the view controller hierarchy
+##### Defining the view controller hierarchy
 
 We tried to keep the syntax familiar. Define your view controller skeleton like this:
 
@@ -106,7 +106,7 @@ To hook up a view, use the `component` attribute of the view controller in the J
 AppRegistry.registerComponent('MovieListScreen', () => MovieListScreen);
 ```
 
-#### Require all the view components that you referenced
+##### Require all the view components that you referenced
 
 We have to tell the React Native bundler that we need the components that we just referenced. The easiest way to do this and make sure their JS files are included in our bundle, is to `require` them. You can add this right before you define your view controller hierarchy:
 
@@ -117,7 +117,7 @@ require('./MovieListScreen');
 require('./SearchScreen');
 ```
 
-#### Register your controller and set it as root
+##### Register your controller and set it as root
 
 Just like we register regular React Native view modules, we'll need to register the view controller module we've just defined. In the end of `index.ios.js` add the following lines:
 
@@ -159,7 +159,7 @@ These wrappers are very simple. You can also add your own if you find missing Re
 
 Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/). This view controller is a replacement for React Native's [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content) that is no longer maintained by Facebook.
 
-#### JSX Definition
+##### JSX Definition
 
 ```jsx
 <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
@@ -171,7 +171,7 @@ title | Title displayed on the navigation bar on the root view controller (initi
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
 id | Unique ID used to reference this view controller in future API calls
 
-#### JS API
+##### JS API
 
 Get the instance with `Controllers.NavigationControllerIOS(id)`
 
@@ -210,7 +210,7 @@ navigationController.setLeftButton({
 });
 ```
 
-#### Examples
+##### Examples
 
 [`FavoritesScreen.js`](example/FavoritesScreen.js), [`PushedScreen.js`](example/PushedScreen.js)
 
@@ -218,7 +218,7 @@ navigationController.setLeftButton({
 
 Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController). This view controller lets you add a configurable side menu to your app (either on the left, right or both). Unlike most side menu implementations available for React Native, this side menu isn't implemented in JS and is completely native.
 
-#### JSX Definition
+##### JSX Definition
 
 ```jsx
 <DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
@@ -232,7 +232,7 @@ componentLeft | [Registered name](https://github.com/wix/react-native-controller
 componentRight | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the right side menu
 id | Unique ID used to reference this view controller in future API calls
 
-#### JS API
+##### JS API
 
 Get the instance with `Controllers.DrawerControllerIOS(id)`
 
@@ -276,7 +276,7 @@ drawerController.setStyle({
 });
 ```
 
-#### Examples
+##### Examples
 
 [`MovieListScreen.js`](example/MovieListScreen.js)
 
@@ -284,7 +284,7 @@ drawerController.setStyle({
 
 Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/). This view controller lets display native tabs in your app, much like React Native's [`TabBarIOS`](https://facebook.github.io/react-native/docs/tabbarios.html#content).
 
-#### JSX Definition
+##### JSX Definition
 
 ```jsx
 <TabBarControllerIOS id="main">
@@ -301,12 +301,13 @@ Attribue | Description
 -------- | -----------
 id | Unique ID used to reference this view controller in future API calls
 
+
 Item Attribue | Description
 -------- | -----------
 title | Title displayed on the tab label
 icon | Name of the XCode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
 
-#### JS API
+##### JS API
 
 Currently not implemented
 
@@ -314,7 +315,7 @@ Currently not implemented
 
 Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/). This view controller is useful when you need to specify a view controller but you don't want anything special except a holder for your view. For example, a tab body without a navigation controller.
 
-#### JSX Definition
+##### JSX Definition
 
 ```jsx
 <ViewControllerIOS component="SearchScreen" />
@@ -324,6 +325,6 @@ Attribue | Description
 -------- | -----------
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for this view controller
 
-#### JS API
+##### JS API
 
 Currently not implemented
