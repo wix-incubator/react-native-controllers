@@ -1,11 +1,3 @@
-//
-//  RCCManager.m
-//  ControllersExample
-//
-//  Created by Artal Druk on 11/9/15.
-//  Copyright © 2015 Facebook. All rights reserved.
-//
-
 #import "RCCManager.h"
 #import "RCTBridge.h"
 #import <Foundation/Foundation.h>
@@ -21,14 +13,14 @@
 {
   static RCCManager *sharedIntance = nil;
   static dispatch_once_t onceToken = 0;
-  
+
   dispatch_once(&onceToken,^{
     if (sharedIntance == nil)
     {
       sharedIntance = [[RCCManager alloc] init];
     }
   });
-  
+
   return sharedIntance;
 }
 
@@ -48,14 +40,14 @@
   {
     return;
   }
-  
+
   NSMutableDictionary *componentsDic = self.modulesRegistry[componentType];
   if (componentsDic == nil)
   {
     componentsDic = [@{} mutableCopy];
     self.modulesRegistry[componentType] = componentsDic;
   }
-  
+
   componentsDic[componentId] = controller;
 }
 
@@ -65,15 +57,15 @@
   {
     return nil;
   }
-  
+
   id component = nil;
-  
+
   NSMutableDictionary *componentsDic = self.modulesRegistry[componentType];
   if (componentsDic != nil)
   {
     component = componentsDic[componentId];
   }
-  
+
   return component;
 }
 

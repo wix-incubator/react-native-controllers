@@ -1,11 +1,3 @@
-//
-//  RCCManager.m
-//  ControllersExample
-//
-//  Created by Artal Druk on 11/9/15.
-//  Copyright © 2015 Facebook. All rights reserved.
-//
-
 #import "RCCManagerModule.h"
 #import "RCCManager.h"
 #import <UIKit/UIKit.h>
@@ -22,16 +14,16 @@ RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout)
 {
   dispatch_async(dispatch_get_main_queue(), ^{
-    
+
     // create the new controller
     UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
     if (controller == nil) return;
-    
+
     // set this new controller as the root
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     appDelegate.window.rootViewController = controller;
     [appDelegate.window makeKeyAndVisible];
-    
+
   });
 }
 
