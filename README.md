@@ -4,6 +4,14 @@
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
 
+## Table of contents
+
+* [Why do we need this package?](#why-do-we-need-this-package)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Available view controllers](#available-view-controllers)
+* [Credits](#credits)
+
 ## Why do we need this package?
 
 If you're already convinced you need this package, you can skip straight to [Installation](#installation). If not, brace yourself for a long read.
@@ -399,3 +407,14 @@ component | [Registered name](https://github.com/wix/react-native-controllers#st
 ##### JS API
 
 Currently not implemented
+
+## Credits
+
+* [React Native](https://github.com/facebook/react-native) framework by Facebook
+* [MMDrawerController](https://github.com/mutualmobile/MMDrawerController) component by mutualmobile
+
+## License
+
+The MIT License.
+
+See [LICENSE](LICENSE)
