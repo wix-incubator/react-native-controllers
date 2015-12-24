@@ -7,6 +7,7 @@
 ## Table of contents
 
 * [Why do we need this package?](#why-do-we-need-this-package)
+* [What sacrifices did we make?](#what-sacrifices-did-we-make)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Available view controllers](#available-view-controllers)
@@ -86,6 +87,15 @@ It isn't straightforward to use JSX for layouting things that aren't React compo
 ##### TLDR
 
 We need this package because it allows us to *easily* wrap native components that are part of the app skeleton and rely on `UIViewController` instead of `UIView`. Some examples of these skeleton components are navigation, tabs and side menu drawer. Using this package we are able to use the original native components instead of compromising on pure JS alternatives.
+
+## What sacrifices did we make?
+
+By using the proposed approach, we made several scarifices that you should be aware of:
+
+* **Predictable state leaks outside the JS realm** - One of the powerful concepts of React is that components can rely only on `props` and `state` and render themselves accordingly. This means the entire app state can be made predictable and contained within these inputs. Pushing this concept further, using frameworks like [Redux](https://github.com/rackt/redux) you can [time travel](https://www.youtube.com/watch?v=xsSnOQynTHs) to previous states - a supercharged debugging tool.<br><br>This concept holds as long as the entire app state is located in the JS realm. As you can guess, what we're doing is "leaking" crucial app state - like the entire navigation stack - into native components like `UINavigationController`. Since this state is not owned anymore by JS, you will not be able to time travel.<br><br>In our defense, time travel is a very foreign concept to native mobile development. State is expected to be held by native OS components, that's how the entire world of native mobile development works.
+
+* **Lack of state synchronization between JS and native** - The other side of the same coin is whether we go to the trouble of synchronizing this state between the JS and native realms. This is theoretically possible, see the locking mechanism implemented in [NavigatorIOS](https://github.com/facebook/react-native/blob/master/React/Views/RCTNavigator.m). We chose in favor of simplifying the implementation and ignored this problem altogether.<br><br>In our defense, we're not sure how big of an issue this actually is. The standard native API for navigation changes in [UINavigationController](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/#//apple_ref/occ/instm/UINavigationController/pushViewController:animated:) is asynchronous due to transition animations. When a controller pushes another, the point in time when the second controller is mounted isn't very well defined. The standard API doesn't provide a completion handler for this event.<br><br>We believe this decision can hold well for most common straightforward cases of in-app navigation. If we face more complicated cases, adding a completion handler to our components' push/pop JS interface may be an elegant solution.
+
 
 ## Installation
 
