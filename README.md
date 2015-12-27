@@ -12,6 +12,7 @@
 * [Usage](#usage)
 * [Available view controllers](#available-view-controllers)
 * [Credits](#credits)
+* [License](#license)
 
 ## Why do we need this package?
 
