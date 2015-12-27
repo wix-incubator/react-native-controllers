@@ -84,7 +84,7 @@ The drawbacks of this external XML is that it's more difficult to update. React 
 
 It isn't straightforward to use JSX for layouting things that aren't React components since JSX is [tightly coupled](https://facebook.github.io/react/docs/jsx-in-depth.html#the-transform) with React. Our somewhat hackish solution was to override `React` in the JS modules dedicated for defining view controllers.
 
-##### TLDR
+##### TL;DR
 
 We need this package because it allows us to *easily* wrap native components that are part of the app skeleton and rely on `UIViewController` instead of `UIView`. Some examples of these skeleton components are navigation, tabs and side menu drawer. Using this package we are able to use the original native components instead of compromising on pure JS alternatives.
 
