@@ -1,8 +1,15 @@
 # React Native Controllers
 
-`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension package for iOS which aims to provide a completely native skeleton for iOS apps, allowing you to easily wrap core native UI compenents without compromising on the native experience.
+`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) extension for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI compenents without compromising on the native experience. Key benefits: 
 
-iOS skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are traditionally challenging to wrap natively with React Native. `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
+* Truly native navigation and side menu drawer
+  * Better performance
+  * Smoother animations
+* Look and feel matches the OS for all iOS versions
+* Ability to tap into the iOS navigation lifecycle
+
+Without `react-native-controllers`, iOS skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are challenging to implement natively. This forces developers to compromise on user experience to use React Native. 
+`react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
 
