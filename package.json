@@ -1,10 +1,13 @@
 {
   "name": "react-native-controllers",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/wix/react-native-controllers.git"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native Controllers",
   "nativePackage": true,
   "bugs": {
