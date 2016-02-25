@@ -20,7 +20,7 @@ var PushedScreen = React.createClass({
           Pushed Screen 100% Native
         </Text>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this) }>
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick }>
           <Text style={styles.button}>Pop</Text>
         </TouchableHighlight>
       </View>

@@ -20,7 +20,7 @@ var FavoritesScreen = React.createClass({
           Favorites Screen
         </Text>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this) }>
+        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick }>
           <Text style={styles.button}>Push</Text>
         </TouchableHighlight>
       </View>

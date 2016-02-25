@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-controllers.git"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native Controllers",
   "nativePackage": true,
   "bugs": {
@@ -13,5 +13,8 @@
   "homepage": "https://github.com/wix/react-native-controllers",
   "main": "index.js",
   "author": "Tal Kol <talkol@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.16.0"
+  }
 }

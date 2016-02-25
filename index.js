@@ -1,6 +1,8 @@
 var OriginalReact = require('react-native');
 var RCCManager = OriginalReact.NativeModules.RCCManager;
 var NativeAppEventEmitter = OriginalReact.NativeAppEventEmitter;
+var utils = require('./utils');
+var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
 var _controllerRegistry = {};
 
@@ -17,10 +19,18 @@ var Controllers = {
   hijackReact: function () {
     return {
       createElement: function(type, props) {
+        var children = Array.prototype.slice.call(arguments, 2);
+        var flatChildren = utils.flattenDeep(children);
+        if (props['icon']) {
+          props['icon'] = resolveAssetSource(props['icon']);
+        }
+        if (props['selectedIcon']) {
+          props['selectedIcon'] = resolveAssetSource(props['selectedIcon']);
+        }
         return {
           'type': type.name,
           'props': props,
-          'children': Array.prototype.slice.call(arguments, 2)
+          'children': flatChildren
         };
       },
 

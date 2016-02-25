@@ -1,12 +1,12 @@
 # React Native Controllers
 
-`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) npm extension package for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI compenents without compromising on the native experience. Key benefits: 
+`react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) npm extension package for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI components without compromising on the native experience. Key benefits:
 
 * Truly native navigation (instead of the JS-based [`Navigator`](https://facebook.github.io/react-native/docs/navigator-comparison.html))
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
-Without `react-native-controllers`, iOS skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are challenging to implement natively. This forces developers to compromise on user experience to use React Native. 
+Without `react-native-controllers`, iOS skeleton components such as [`UINavigatorController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are challenging to implement natively. This forces developers to compromise on user experience to use React Native.
 `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
@@ -47,11 +47,11 @@ It's interesting to see that both examples revolve around components that are pa
 
 ##### Looking for the underlying challenge
 
-Our first instinct for both of the examples listed above was *"Hey, great! Let's make these components ourselves! It's a great void to fill for the community."* 
+Our first instinct for both of the examples listed above was *"Hey, great! Let's make these components ourselves! It's a great void to fill for the community."*
 
 We dived into the `NavigatorIOS` [implementation](https://github.com/facebook/react-native/blob/master/React/Views/RCTNavigator.m) but things weren't as simple as we've hoped. The implementation is surprisingly complex and seems to have been done by someone very much proficient with the inner workings of the [UIKit](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIKit_Framework/).
 
-We've hit similar walls with the side menu. One of the main problems was that side menus are based on [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) and not [`UIView`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/). React Native steered our component to return a view. 
+We've hit similar walls with the side menu. One of the main problems was that side menus are based on [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) and not [`UIView`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/). React Native steered our component to return a view.
 
 Furthermore, let's take a look at the standard way React Native hooks into `AppDelegate`:
 
@@ -139,10 +139,10 @@ Since `react-native-controllers` takes over the skeleton of your app, we're firs
   // jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  
+
   // this is your new React Native invocation
   [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation];
-  
+
   return YES;
 }
 
@@ -256,7 +256,7 @@ These wrappers are very simple. You can also add your own if you find missing Re
 
 Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/). This view controller is a replacement for React Native's [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content) that is no longer maintained by Facebook.
 
-##### JSX Definition
+##### Props
 
 ```jsx
 <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
@@ -268,7 +268,7 @@ title | Title displayed on the navigation bar on the root view controller (initi
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
 id | Unique ID used to reference this view controller in future API calls
 
-##### JS API
+##### Methods
 
 Get the instance with `Controllers.NavigationControllerIOS(id)`
 
@@ -315,7 +315,7 @@ navigationController.setLeftButton({
 
 Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController). This view controller lets you add a configurable side menu to your app (either on the left, right or both). Unlike most side menu implementations available for React Native, this side menu isn't implemented in JS and is completely native.
 
-##### JSX Definition
+##### Props
 
 ```jsx
 <DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
@@ -329,7 +329,7 @@ componentLeft | [Registered name](https://github.com/wix/react-native-controller
 componentRight | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the right side menu
 id | Unique ID used to reference this view controller in future API calls
 
-##### JS API
+##### Methods
 
 Get the instance with `Controllers.DrawerControllerIOS(id)`
 
@@ -381,7 +381,7 @@ drawerController.setStyle({
 
 Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/). This view controller lets display native tabs in your app, much like React Native's [`TabBarIOS`](https://facebook.github.io/react-native/docs/tabbarios.html#content).
 
-##### JSX Definition
+##### Props
 
 ```jsx
 <TabBarControllerIOS id="main">
@@ -404,7 +404,7 @@ Item Attribute | Description
 title | Title displayed on the tab label
 icon | Name of the Xcode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
 
-##### JS API
+##### Methods
 
 Currently not implemented
 
@@ -412,7 +412,7 @@ Currently not implemented
 
 Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/). This view controller is useful when you need to specify a view controller but you don't want anything special except a holder for your view. For example, a tab body without a navigation controller.
 
-##### JSX Definition
+##### Props
 
 ```jsx
 <ViewControllerIOS component="SearchScreen" />
@@ -422,7 +422,7 @@ Attribute | Description
 -------- | -----------
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for this view controller
 
-##### JS API
+##### Methods
 
 Currently not implemented
 

@@ -8,7 +8,7 @@
 {
   self = [super init];
   if (!self) return nil;
-  
+
   NSMutableArray *viewControllers = [NSMutableArray array];
 
   // go over all the tab bar items
@@ -17,7 +17,7 @@
     // make sure the layout is valid
     if (![tabItemLayout[@"type"] isEqualToString:@"TabBarControllerIOS.Item"]) continue;
     if (!tabItemLayout[@"props"]) continue;
-    
+
     // get the view controller inside
     if (!tabItemLayout[@"children"]) continue;
     if (![tabItemLayout[@"children"] isKindOfClass:[NSArray class]]) continue;
@@ -25,25 +25,25 @@
     NSDictionary *childLayout = tabItemLayout[@"children"][0];
     UIViewController *viewController = [RCCViewController controllerWithLayout:childLayout bridge:bridge];
     if (!viewController) continue;
-    
+
     // create the tab icon and title
     NSString *title = tabItemLayout[@"props"][@"title"];
     UIImage *iconImage = nil;
-    UIImage *iconImageSelected = nil;
-    NSString *icon = tabItemLayout[@"props"][@"icon"];
-    NSString *iconSelected = [NSString stringWithFormat:@"%@_selected", icon];
-
+    id icon = tabItemLayout[@"props"][@"icon"];
     if (icon) iconImage = [RCTConvert UIImage:icon];
-    if (iconSelected) iconImageSelected = [RCTConvert UIImage:iconSelected];
+    UIImage *iconImageSelected = nil;
+    id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
+    if (selectedIcon) iconImageSelected = [RCTConvert UIImage:selectedIcon];
+
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
     viewController.tabBarItem.selectedImage = iconImageSelected;
-    
+
     [viewControllers addObject:viewController];
   }
-  
+
   // replace the tabs
   self.viewControllers = viewControllers;
-  
+
   return self;
 }
 

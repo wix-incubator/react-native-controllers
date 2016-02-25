@@ -6,6 +6,6 @@
 + (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge;
 
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge;
-- (instancetype)initWithComponent:(NSString *)component bridge:(RCTBridge *)bridge;
+- (instancetype)initWithComponent:(NSString *)component passProps:(NSDictionary *)passProps bridge:(RCTBridge *)bridge;
 
 @end
