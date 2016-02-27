@@ -2,7 +2,7 @@
 
 `react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) npm extension package for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI components without compromising on the native experience. Key benefits:
 
-* Truly native navigation (instead of the JS-based [`Navigator`](https://facebook.github.io/react-native/docs/navigator-comparison.html))
+* Truly native navigation (instead of the JS-based [`Navigator`](https://facebook.github.io/react-native/docs/navigator-comparison.html) or the [deprecated `NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html))
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
