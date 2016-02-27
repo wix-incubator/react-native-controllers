@@ -180,10 +180,10 @@ var MoviesApp = Controllers.createClass({
     return (
       <DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
         <TabBarControllerIOS id="main">
-          <TabBarControllerIOS.Item title="Movies" icon="home">
+          <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')}>
             <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
           </TabBarControllerIOS.Item>
-          <TabBarControllerIOS.Item title="Search" icon="discover">
+          <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')}>
             <ViewControllerIOS component="SearchScreen" />
           </TabBarControllerIOS.Item>
         </TabBarControllerIOS>
@@ -267,6 +267,7 @@ Attribute | Description
 title | Title displayed on the navigation bar on the root view controller (initial route)
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
 id | Unique ID used to reference this view controller in future API calls
+passProps | Simple serializable object that will pass as props to the pushed component
 
 ##### Methods
 
@@ -282,18 +283,21 @@ var navigationController = Controllers.NavigationControllerIOS("movies");
 ```js
 require('./PushedScreen');
 navigationController.push({
-  title: "New Screen",
-  component: "PushedScreen",
-  animated: true
+  title: "New Screen", // nav bar title of the pushed screen (optional)
+  component: "PushedScreen", // the unique ID registered with AppRegistry.registerComponent (required)
+  passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
+  animated: true // does the push have a transition animation (optional, default true)
 });
 ```
 
-> Note: The pushed component should also be registered with `AppRegistry.registerComponent()` like the top level components and should be required to make sure it's included by the React Native bundler.
+> Important Note: Every pushed component should be registered with `AppRegistry.registerComponent()` like the top level component in a tradition React Native app. This is because every pushed component is actually a new React root under the hood.
 
  * **pop()** - pop the current screen
 
 ```js
-navigationController.pop();
+navigationController.pop({
+  animated: true // does the pop have a transition animation (optional, default true)
+);
 ```
 
  * **setLeftButton(params)** - set the left button of the navigation bar
@@ -385,10 +389,10 @@ Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/li
 
 ```jsx
 <TabBarControllerIOS id="main">
-  <TabBarControllerIOS.Item title="Movies" icon="home">
+  <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')}>
     // view controller here (the body of the tab)
   </TabBarControllerIOS.Item>
-  <TabBarControllerIOS.Item title="Search" icon="discover">
+  <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')}>
     // view controller here (the body of the tab)
   </TabBarControllerIOS.Item>
 </TabBarControllerIOS>
@@ -402,7 +406,10 @@ id | Unique ID used to reference this view controller in future API calls
 Item Attribute | Description
 -------- | -----------
 title | Title displayed on the tab label
-icon | Name of the Xcode image asset with the icon for this tab <br> `_selected` suffix is added for the selected version of the icon
+icon | Local asset image for the tab icon (unselected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
+selectedIcon | Local asset image for the tab icon (selected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
+
+> Note: For best results on iOS, supply icon images that are 50x50 pixels for retina screen, make sure you add the `@2x` suffix for the filename on disk (eg. `home@2x.png`)
 
 ##### Methods
 
