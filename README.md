@@ -332,6 +332,8 @@ Attribute | Description
 componentLeft | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the left side menu
 componentRight | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the right side menu
 id | Unique ID used to reference this view controller in future API calls
+passPropsLeft | Simple serializable object that will pass as props to the left component
+passPropsRight | Simple serializable object that will pass as props to the right component
 
 ##### Methods
 
