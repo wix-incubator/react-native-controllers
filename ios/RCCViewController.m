@@ -65,17 +65,21 @@
   NSString *component = props[@"component"];
   if (!component) return nil;
 
-  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:nil];
+  NSDictionary *passProps = props[@"passProps"];
+  NSDictionary *navigatorStyle = props[@"style"];
+
+  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:passProps];
   if (!reactView) return nil;
 
   self = [super init];
   if (!self) return nil;
 
-  self.view = reactView;
+  [self commonInit:reactView navigatorStyle:navigatorStyle];
+
   return self;
 }
 
-- (instancetype)initWithComponent:(NSString *)component passProps:(NSDictionary *)passProps bridge:(RCTBridge *)bridge
+- (instancetype)initWithComponent:(NSString *)component passProps:(NSDictionary *)passProps navigatorStyle:(NSDictionary*)navigatorStyle bridge:(RCTBridge *)bridge
 {
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:passProps];
   if (!reactView) return nil;
@@ -83,11 +87,60 @@
   self = [super init];
   if (!self) return nil;
 
-  self.edgesForExtendedLayout = UIRectEdgeNone;
-  self.automaticallyAdjustsScrollViewInsets = YES;
+  [self commonInit:reactView navigatorStyle:navigatorStyle];
+
+  return self;
+}
+
+- (void)commonInit:(RCTRootView*)reactView navigatorStyle:(NSDictionary*)navigatorStyle
+{
+  self.navBarHidden = NO;
+
+  self.edgesForExtendedLayout = UIRectEdgeBottom;
+  //self.automaticallyAdjustsScrollViewInsets = NO;
 
   self.view = reactView;
-  return self;
+
+  if (navigatorStyle)
+  {
+    NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
+    if (navBarBlur && [navBarBlur boolValue])
+    {
+      self.edgesForExtendedLayout = UIRectEdgeAll;
+    }
+
+    NSNumber *statusBarBlur = navigatorStyle[@"statusBarBlur"];
+    if (statusBarBlur)
+    {
+      if (!navBarBlur || ![navBarBlur boolValue])
+      {
+        UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+        blur.frame = [[UIApplication sharedApplication] statusBarFrame];
+        [reactView addSubview:blur];
+      }
+    }
+
+    NSNumber *navBarHidden = navigatorStyle[@"navBarHidden"];
+    if (navBarHidden)
+    {
+      self.navBarHidden = [navBarHidden boolValue];
+    }
+  }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+
+  if (self.navigationController.navigationBarHidden != self.navBarHidden)
+  {
+    [self.navigationController setNavigationBarHidden:self.navBarHidden animated:YES];
+  }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
 }
 
 @end

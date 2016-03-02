@@ -2,6 +2,7 @@
 #import "RCCViewController.h"
 #import "RCCManager.h"
 #import "RCTEventDispatcher.h"
+#import "RCTConvert.h"
 
 
 @implementation RCCNavigationController
@@ -12,7 +13,9 @@
   if (!component) return nil;
 
   NSDictionary *passProps = props[@"passProps"];
-  UIViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps bridge:bridge];
+  NSDictionary *navigatorStyle = props[@"style"];
+
+  RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
   if (!viewController) return nil;
 
   NSString *title = props[@"title"];
@@ -21,15 +24,47 @@
   self = [super initWithRootViewController:viewController];
   if (!self) return nil;
 
-  /*
-  // blur background
-  [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  self.navigationBar.shadowImage = [UIImage new];
+  if (navigatorStyle)
+  {
+    NSNumber *navBarTranslucent = navigatorStyle[@"navBarTranslucent"];
+    if (navBarTranslucent)
+    {
+      self.navigationBar.translucent = [navBarTranslucent boolValue];
+    }
 
-  UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-  blur.frame = CGRectMake(0, -20, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height + 20);
-  [self.navigationBar insertSubview:blur atIndex:0];
-  */
+    NSString *navBarBackgroundColor = navigatorStyle[@"navBarBackgroundColor"];
+    if (navBarBackgroundColor)
+    {
+      UIColor *color = [RCTConvert UIColor:navBarBackgroundColor];
+      self.navigationBar.barTintColor = color;
+    }
+
+    NSString *navBarButtonColor = navigatorStyle[@"navBarButtonColor"];
+    if (navBarButtonColor)
+    {
+      UIColor *color = [RCTConvert UIColor:navBarButtonColor];
+      self.navigationBar.tintColor = color;
+    }
+
+    NSString *navBarTextColor = navigatorStyle[@"navBarTextColor"];
+    if (navBarTextColor)
+    {
+      UIColor *color = [RCTConvert UIColor:navBarTextColor];
+      [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : color}];
+    }
+
+    NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
+    if (navBarBlur && [navBarBlur boolValue])
+    {
+      [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+      self.navigationBar.shadowImage = [UIImage new];
+
+      UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+      CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+      blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height + statusBarFrame.size.height);
+      [self.navigationBar insertSubview:blur atIndex:0];
+    }
+  }
 
   return self;
 }
@@ -45,8 +80,11 @@
 
       NSString *component = actionParams[@"component"];
       if (!component) return;
+
       NSDictionary *passProps = actionParams[@"passProps"];
-      UIViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps bridge:bridge];
+      NSDictionary *navigatorStyle = actionParams[@"style"];
+
+      RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
 
       NSString *title = actionParams[@"title"];
       if (title) viewController.title = title;

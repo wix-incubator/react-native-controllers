@@ -3,6 +3,7 @@ var RCCManager = OriginalReact.NativeModules.RCCManager;
 var NativeAppEventEmitter = OriginalReact.NativeAppEventEmitter;
 var utils = require('./utils');
 var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
+var processColor = require('react-native/Libraries/StyleSheet/processColor');
 
 var _controllerRegistry = {};
 
@@ -26,6 +27,18 @@ var Controllers = {
         }
         if (props['selectedIcon']) {
           props['selectedIcon'] = resolveAssetSource(props['selectedIcon']);
+        }
+        if (props['style']) {
+          const style = props['style'];
+          if (style['navBarBackgroundColor']) {
+            style['navBarBackgroundColor'] = processColor(style['navBarBackgroundColor']);
+          }
+          if (style['navBarTextColor']) {
+            style['navBarTextColor'] = processColor(style['navBarTextColor']);
+          }
+          if (style['navBarButtonColor']) {
+            style['navBarButtonColor'] = processColor(style['navBarButtonColor']);
+          }
         }
         return {
           'type': type.name,
