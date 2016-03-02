@@ -14,13 +14,13 @@
   UIViewController *leftViewController = nil;
   NSString *componentLeft = props[@"componentLeft"];
   NSDictionary *passPropsLeft = props[@"passPropsLeft"];
-  if (componentLeft) leftViewController = [[RCCViewController alloc] initWithComponent:componentLeft passProps:passPropsLeft bridge:bridge];
+  if (componentLeft) leftViewController = [[RCCViewController alloc] initWithComponent:componentLeft passProps:passPropsLeft navigatorStyle:nil bridge:bridge];
 
   // right
   UIViewController *rightViewController = nil;
   NSString *componentRight = props[@"componentRight"];
   NSDictionary *passPropsRight = props[@"passPropsRight"];
-  if (componentRight) rightViewController = [[RCCViewController alloc] initWithComponent:componentRight passProps:passPropsRight bridge:bridge];
+  if (componentRight) rightViewController = [[RCCViewController alloc] initWithComponent:componentRight passProps:passPropsRight navigatorStyle:nil bridge:bridge];
 
   self = [super initWithCenterViewController:centerViewController
                     leftDrawerViewController:leftViewController
