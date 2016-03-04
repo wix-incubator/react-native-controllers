@@ -6,7 +6,7 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity
 } = React;
 
 var SearchScreen = React.createClass({
@@ -14,8 +14,12 @@ var SearchScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Search Screen
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
+          No NavBar Example
+        </Text>
+
+        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+          This screen isn't wrapped with a UINavigationController at all, so there's no NavBar
         </Text>
       </View>
     );
@@ -26,26 +30,8 @@ var SearchScreen = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  button: {
-    textAlign: 'center',
-    fontSize: 18,
-    marginBottom: 10,
-    marginTop:10,
-  },
+    backgroundColor: '#F5FCFF'
+  }
 });
 
 AppRegistry.registerComponent('SearchScreen', () => SearchScreen);

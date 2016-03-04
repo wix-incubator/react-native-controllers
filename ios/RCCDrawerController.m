@@ -36,6 +36,8 @@
       block(drawerController, drawerSide, percentVisible);
     }
   }];
+  
+  self.view.backgroundColor = [UIColor clearColor];
 
   if (!self) return nil;
   return self;

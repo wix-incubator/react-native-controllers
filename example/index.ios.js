@@ -24,13 +24,23 @@ var MoviesApp = Controllers.createClass({
       <DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
         <TabBarControllerIOS id="main">
           <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')} selectedIcon={require('./img/home_selected.png')}>
-            <NavigationControllerIOS title="Welcome" component="MovieListScreen" id="movies" />
+            <NavigationControllerIOS
+              title="Red Title"
+              component="MovieListScreen"
+              id="movies"
+              style={{navBarTextColor: '#ff0000'}}
+            />
+          </TabBarControllerIOS.Item>
+          <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
+            <NavigationControllerIOS
+              title="Favorites"
+              component="FavoritesScreen"
+              id="favorites"
+              passProps={{hidePop: true}}
+            />
           </TabBarControllerIOS.Item>
           <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')} selectedIcon={require('./img/discover_selected.png')}>
             <ViewControllerIOS component="SearchScreen" />
-          </TabBarControllerIOS.Item>
-          <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
-            <NavigationControllerIOS title="Favorites" component="FavoritesScreen" id="favorites" />
           </TabBarControllerIOS.Item>
         </TabBarControllerIOS>
       </DrawerControllerIOS>

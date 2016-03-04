@@ -8,6 +8,8 @@
 {
   self = [super init];
   if (!self) return nil;
+  
+  self.tabBar.translucent = YES; // default
 
   NSMutableArray *viewControllers = [NSMutableArray array];
 

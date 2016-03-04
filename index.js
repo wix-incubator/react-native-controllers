@@ -11,6 +11,19 @@ function _getRandomId() {
   return (Math.random()*1e20).toString(36);
 }
 
+function _processProperties(properties) {
+  for (var property in properties) {
+    if (properties.hasOwnProperty(property)) {
+      if (property === 'icon' || property.endsWith('Icon')) {
+        properties[property] = resolveAssetSource(properties[property]);
+      }
+      if (property === 'color' || property.endsWith('Color')) {
+        properties[property] = processColor(properties[property]);
+      }
+    }
+  }
+}
+
 var Controllers = {
 
   createClass: function (app) {
@@ -22,23 +35,9 @@ var Controllers = {
       createElement: function(type, props) {
         var children = Array.prototype.slice.call(arguments, 2);
         var flatChildren = utils.flattenDeep(children);
-        if (props['icon']) {
-          props['icon'] = resolveAssetSource(props['icon']);
-        }
-        if (props['selectedIcon']) {
-          props['selectedIcon'] = resolveAssetSource(props['selectedIcon']);
-        }
+        _processProperties(props);
         if (props['style']) {
-          const style = props['style'];
-          if (style['navBarBackgroundColor']) {
-            style['navBarBackgroundColor'] = processColor(style['navBarBackgroundColor']);
-          }
-          if (style['navBarTextColor']) {
-            style['navBarTextColor'] = processColor(style['navBarTextColor']);
-          }
-          if (style['navBarButtonColor']) {
-            style['navBarButtonColor'] = processColor(style['navBarButtonColor']);
-          }
+          _processProperties(props['style']);
         }
         return {
           'type': type.name,
@@ -69,6 +68,9 @@ var Controllers = {
   NavigationControllerIOS: function (id) {
     return {
       push: function (params) {
+        if (params['style']) {
+          _processProperties(params['style']);
+        }
         return RCCManager.NavigationControllerIOS(id, "push", params);
       },
       pop: function (params) {

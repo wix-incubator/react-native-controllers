@@ -4,6 +4,9 @@
 #import "RCCDrawerController.h"
 #import "RCTRootView.h"
 #import "RCCManager.h"
+#import "RCTConvert.h"
+
+const NSInteger BLUR_STATUS_TAG = 78264801;
 
 @implementation RCCViewController
 
@@ -94,48 +97,113 @@
 
 - (void)commonInit:(RCTRootView*)reactView navigatorStyle:(NSDictionary*)navigatorStyle
 {
-  self.navBarHidden = NO;
-
-  self.edgesForExtendedLayout = UIRectEdgeBottom;
-  //self.automaticallyAdjustsScrollViewInsets = NO;
-
   self.view = reactView;
+  
+  self.edgesForExtendedLayout = UIRectEdgeNone; // default
+  self.automaticallyAdjustsScrollViewInsets = NO; // default
+  
+  self.navigatorStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
+}
 
-  if (navigatorStyle)
+- (void)syncStyle
+{
+  NSString *navBarBackgroundColor = self.navigatorStyle[@"navBarBackgroundColor"];
+  if (navBarBackgroundColor)
   {
-    NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
-    if (navBarBlur && [navBarBlur boolValue])
+    UIColor *color = [RCTConvert UIColor:navBarBackgroundColor];
+    self.navigationController.navigationBar.barTintColor = color;
+  }
+  else
+  {
+    self.navigationController.navigationBar.barTintColor = nil;
+  }
+  
+  NSString *navBarTextColor = self.navigatorStyle[@"navBarTextColor"];
+  if (navBarTextColor)
+  {
+    UIColor *color = [RCTConvert UIColor:navBarTextColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : color}];
+  }
+  else
+  {
+    [self.navigationController.navigationBar setTitleTextAttributes:nil];
+  }
+  
+  NSString *navBarButtonColor = self.navigatorStyle[@"navBarButtonColor"];
+  if (navBarButtonColor)
+  {
+    UIColor *color = [RCTConvert UIColor:navBarButtonColor];
+    self.navigationController.navigationBar.tintColor = color;
+  }
+  else
+  {
+    self.navigationController.navigationBar.tintColor = nil;
+  }
+  
+  NSNumber *navBarHidden = self.navigatorStyle[@"navBarHidden"];
+  BOOL navBarHiddenBool = navBarHidden ? [navBarHidden boolValue] : NO;
+  if (self.navigationController.navigationBarHidden != navBarHiddenBool)
+  {
+    [self.navigationController setNavigationBarHidden:navBarHiddenBool animated:YES];
+  }
+  
+  NSNumber *drawUnderNavBar = self.navigatorStyle[@"drawUnderNavBar"];
+  BOOL drawUnderNavBarBool = drawUnderNavBar ? [drawUnderNavBar boolValue] : NO;
+  if (drawUnderNavBarBool)
+  {
+    self.navigationController.navigationBar.translucent = YES;
+    self.edgesForExtendedLayout |= UIRectEdgeTop;
+  }
+  else
+  {
+    self.navigationController.navigationBar.translucent = NO;
+    self.edgesForExtendedLayout &= ~UIRectEdgeTop;
+  }
+  
+  NSNumber *drawUnderTabBar = self.navigatorStyle[@"drawUnderTabBar"];
+  BOOL drawUnderTabBarBool = drawUnderTabBar ? [drawUnderTabBar boolValue] : NO;
+  if (drawUnderTabBarBool)
+  {
+    self.edgesForExtendedLayout |= UIRectEdgeBottom;
+  }
+  else
+  {
+    self.edgesForExtendedLayout &= ~UIRectEdgeBottom;
+  }
+  
+  NSNumber *statusBarBlur = self.navigatorStyle[@"statusBarBlur"];
+  BOOL statusBarBlurBool = statusBarBlur ? [statusBarBlur boolValue] : NO;
+  if (statusBarBlurBool)
+  {
+    if (![self.view viewWithTag:BLUR_STATUS_TAG])
     {
-      self.edgesForExtendedLayout = UIRectEdgeAll;
-    }
-
-    NSNumber *statusBarBlur = navigatorStyle[@"statusBarBlur"];
-    if (statusBarBlur)
-    {
-      if (!navBarBlur || ![navBarBlur boolValue])
-      {
-        UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-        blur.frame = [[UIApplication sharedApplication] statusBarFrame];
-        [reactView addSubview:blur];
-      }
-    }
-
-    NSNumber *navBarHidden = navigatorStyle[@"navBarHidden"];
-    if (navBarHidden)
-    {
-      self.navBarHidden = [navBarHidden boolValue];
+      UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+      blur.frame = [[UIApplication sharedApplication] statusBarFrame];
+      blur.tag = BLUR_STATUS_TAG;
+      [self.view addSubview:blur];
     }
   }
+  
+  /*
+   NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
+   if (navBarBlur && [navBarBlur boolValue])
+   {
+   [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+   self.navigationBar.shadowImage = [UIImage new];
+   
+   UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+   CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+   blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height + statusBarFrame.size.height);
+   [self.navigationBar insertSubview:blur atIndex:0];
+   }
+  */
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-
-  if (self.navigationController.navigationBarHidden != self.navBarHidden)
-  {
-    [self.navigationController setNavigationBarHidden:self.navBarHidden animated:YES];
-  }
+  
+  [self syncStyle];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

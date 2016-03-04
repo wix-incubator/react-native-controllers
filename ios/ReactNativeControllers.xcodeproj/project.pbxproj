@@ -34,17 +34,17 @@
 
 /* Begin PBXFileReference section */
 		CC84A1911C1A0C4E00B3A6A2 /* RCCDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerController.h; sourceTree = "<group>"; };
-		CC84A1921C1A0C4E00B3A6A2 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerController.m; sourceTree = "<group>"; };
+		CC84A1921C1A0C4E00B3A6A2 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
 		CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; };
 		CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManagerModule.h; sourceTree = "<group>"; };
 		CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCManagerModule.m; sourceTree = "<group>"; };
 		CC84A1971C1A0C4E00B3A6A2 /* RCCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCNavigationController.h; sourceTree = "<group>"; };
-		CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCNavigationController.m; sourceTree = "<group>"; };
+		CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCNavigationController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1991C1A0C4E00B3A6A2 /* RCCTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTabBarController.h; sourceTree = "<group>"; };
-		CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCTabBarController.m; sourceTree = "<group>"; };
+		CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCTabBarController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCViewController.h; sourceTree = "<group>"; };
-		CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCViewController.m; sourceTree = "<group>"; };
+		CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCViewController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1C71C1A103200B3A6A2 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawerBarButtonItem.h; path = MMDrawerController/MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		CC84A1C81C1A103200B3A6A2 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDrawerBarButtonItem.m; path = MMDrawerController/MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		CC84A1C91C1A103200B3A6A2 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawerController.h; path = MMDrawerController/MMDrawerController.h; sourceTree = "<group>"; };

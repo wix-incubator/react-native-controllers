@@ -6,7 +6,7 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity
 } = React;
 
 var Controllers = require('react-native-controllers');
@@ -31,25 +31,29 @@ var MovieListScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Movie List Screen Screen
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
+          Side Menu Example
         </Text>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "door") }>
+        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+          There's a right and a left side menu in this example. Control the side menu animation using the options below:
+        </Text>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, "door") }>
           <Text style={styles.button}>Door</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "parallax") }>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, "parallax") }>
           <Text style={styles.button}>Parallax</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "slide") }>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, "slide") }>
           <Text style={styles.button}>Slide</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick.bind(this, "slideAndScale") }>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, "slideAndScale") }>
           <Text style={styles.button}>Slide & Scale</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -59,26 +63,15 @@ var MovieListScreen = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: '#F5FCFF'
   },
   button: {
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
     marginTop:10,
-  },
+    color: 'blue'
+  }
 });
 
 AppRegistry.registerComponent('MovieListScreen', () => MovieListScreen);

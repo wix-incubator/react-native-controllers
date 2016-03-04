@@ -6,7 +6,7 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity
 } = React;
 
 var Controllers = require('react-native-controllers');
@@ -16,46 +16,39 @@ var PushedScreen = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Pushed Screen 100% Native
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
+          Simple Pushed Screen
         </Text>
 
-        <TouchableHighlight underlayColor="#cccccc" onPress={ this.onButtonClick }>
+        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+          Notice how the push was 100% native. This screen doesn't have any special styles applied.
+        </Text>
+
+        <TouchableOpacity onPress={ this.onButtonClick }>
           <Text style={styles.button}>Pop</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   },
 
   onButtonClick: function() {
     Controllers.NavigationControllerIOS("favorites").pop();
-  },
+  }
 
 });
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: '#F5FCFF'
   },
   button: {
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 10,
-    marginTop:10,
-  },
+    marginTop: 10,
+    color: 'blue'
+  }
 });
 
 AppRegistry.registerComponent('PushedScreen', () => PushedScreen);

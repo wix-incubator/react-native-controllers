@@ -23,48 +23,8 @@
 
   self = [super initWithRootViewController:viewController];
   if (!self) return nil;
-
-  if (navigatorStyle)
-  {
-    NSNumber *navBarTranslucent = navigatorStyle[@"navBarTranslucent"];
-    if (navBarTranslucent)
-    {
-      self.navigationBar.translucent = [navBarTranslucent boolValue];
-    }
-
-    NSString *navBarBackgroundColor = navigatorStyle[@"navBarBackgroundColor"];
-    if (navBarBackgroundColor)
-    {
-      UIColor *color = [RCTConvert UIColor:navBarBackgroundColor];
-      self.navigationBar.barTintColor = color;
-    }
-
-    NSString *navBarButtonColor = navigatorStyle[@"navBarButtonColor"];
-    if (navBarButtonColor)
-    {
-      UIColor *color = [RCTConvert UIColor:navBarButtonColor];
-      self.navigationBar.tintColor = color;
-    }
-
-    NSString *navBarTextColor = navigatorStyle[@"navBarTextColor"];
-    if (navBarTextColor)
-    {
-      UIColor *color = [RCTConvert UIColor:navBarTextColor];
-      [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : color}];
-    }
-
-    NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
-    if (navBarBlur && [navBarBlur boolValue])
-    {
-      [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-      self.navigationBar.shadowImage = [UIImage new];
-
-      UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-      CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-      blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height + statusBarFrame.size.height);
-      [self.navigationBar insertSubview:blur atIndex:0];
-    }
-  }
+  
+  self.navigationBar.translucent = NO; // default
 
   return self;
 }
@@ -83,6 +43,15 @@
 
       NSDictionary *passProps = actionParams[@"passProps"];
       NSDictionary *navigatorStyle = actionParams[@"style"];
+      
+      // merge the navigatorStyle of our parent
+      if ([self.topViewController isKindOfClass:[RCCViewController class]])
+      {
+        RCCViewController *parent = (RCCViewController*)self.topViewController;
+        NSMutableDictionary *mergedStyle = [NSMutableDictionary dictionaryWithDictionary:parent.navigatorStyle];
+        [mergedStyle addEntriesFromDictionary:navigatorStyle];
+        navigatorStyle = mergedStyle;
+      }
 
       RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
 
