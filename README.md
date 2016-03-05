@@ -268,6 +268,7 @@ title | Title displayed on the navigation bar on the root view controller (initi
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
 id | Unique ID used to reference this view controller in future API calls
 passProps | Simple serializable object that will pass as props to the pushed component
+style | Style the navigation bar, see [Styling Navigation](#styling-navigation) below for all available styles
 
 ##### Methods
 
@@ -286,7 +287,9 @@ navigationController.push({
   title: "New Screen", // nav bar title of the pushed screen (optional)
   component: "PushedScreen", // the unique ID registered with AppRegistry.registerComponent (required)
   passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
-  animated: true // does the push have a transition animation (optional, default true)
+  style: {}, // style the navigation bar for the pushed screen (optional, see "Styling Navigation" below)
+  animated: true, // does the push have a transition animation (optional, default true)
+  backButtonTitle: "Back" // override the nav bar back button title for the pushed screen (optional) 
 });
 ```
 
@@ -310,6 +313,32 @@ navigationController.setLeftButton({
   }
 });
 ```
+
+##### Styling Navigation
+
+You can apply styling to the navigation bar appearance and behavior by setting the `style` property when defining your `NavigationControllerIOS` or by passing the `style` object when pushing a new screen. 
+
+Please note that styles are remembered for future pushed screens. For example, if you change the navigation bar color, all future pushed screens will keep this style and have the same changed colors. If you wish to have different colors in a pushed screen, simply override the style by passing the `style` object when calling `push()`.
+
+All styles are optional, this is the format of the style object:
+
+```js
+{
+  navBarTextColor: '#000000', // change the text color of the title
+  navBarBackgroundColor: '#f7f7f7', // change the background color of the nav bar
+  navBarButtonColor: '#007aff', // change the button colors of the nav bar (eg. the back button)
+  navBarHidden: false, // make the nav bar hidden
+  navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
+  drawUnderNavBar: false, // make the nav bar translucent and draw the screen content under it
+  drawUnderTabBar: false, // make the tab bar translucent and draw the screen content under it
+  statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true
+  navBarBlur: false, // blur the entire nav bar, works best with drawUnderNavBar:true
+  tabBarHidden: false, // make the screen content hide the tab bar
+  statusBarHideWithNavBar: false // hide the status bar if the nav bar is also hidden, useful for navBarHidden:true
+}
+```
+
+See all the styles in action by running the [example](example) project in Xcode (under the "Favorites" tab).
 
 ##### Examples
 
