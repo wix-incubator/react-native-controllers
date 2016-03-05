@@ -44,12 +44,16 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>NavBar Colors</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navhidden') }>
-          <Text style={styles.button}>NavBar Hidden</Text>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'underboth') }>
+          <Text style={styles.button}>Draw Under NavBar & TabBar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navnothidden') }>
-          <Text style={styles.button}>NavBar Not Hidden</Text>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurstatus') }>
+          <Text style={styles.button}>Blur StatusBar (& hide NavBar)</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurnav') }>
+          <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
         </TouchableOpacity>
 
         <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
@@ -66,12 +70,40 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Draw Under TabBar Only</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'underboth') }>
-          <Text style={styles.button}>Draw Under Both</Text>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navhidden') }>
+          <Text style={styles.button}>NavBar Hidden</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurstatus') }>
-          <Text style={styles.button}>Blur StatusBar (& hide NavBar)</Text>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navnothidden') }>
+          <Text style={styles.button}>NavBar Not Hidden</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatushidden') }>
+          <Text style={styles.button}>NavBar & StatusBar Hidden</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navscrollhidden') }>
+          <Text style={styles.button}>NavBar Hide On Scroll</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatusscrollhidden') }>
+          <Text style={styles.button}>NavBar & StatusBar Hide On Scroll</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabhidden') }>
+          <Text style={styles.button}>TabBar Hidden</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabnothidden') }>
+          <Text style={styles.button}>TabBar Not Hidden</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backnotext') }>
+          <Text style={styles.button}>Empty Back Button Text</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backcustomtext') }>
+          <Text style={styles.button}>Custom Back Button Text</Text>
         </TouchableOpacity>
 
         <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
@@ -114,12 +146,59 @@ var FavoritesScreen = React.createClass({
           }
         });
         break;
+      case 'navstatushidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarHidden: true,
+            statusBarHideWithNavBar: true
+          }
+        });
+        break;
       case 'navnothidden':
         Controllers.NavigationControllerIOS("favorites").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
             navBarHidden: false
+          }
+        });
+        break;
+      case 'navscrollhidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarHideOnScroll: true
+          }
+        });
+        break;
+      case 'navstatusscrollhidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarHideOnScroll: true,
+            statusBarHideWithNavBar: true
+          }
+        });
+        break;
+      case 'tabhidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            tabBarHidden: true
+          }
+        });
+        break;
+      case 'tabnothidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            tabBarHidden: false
           }
         });
         break;
@@ -161,6 +240,30 @@ var FavoritesScreen = React.createClass({
             statusBarBlur: true,
             navBarHidden: true
           }
+        });
+        break;
+      case 'blurnav':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarBlur: true,
+            drawUnderNavBar: true
+          }
+        });
+        break;
+      case 'backnotext':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          backButtonTitle: ""
+        });
+        break;
+      case 'backcustomtext':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          backButtonTitle: "Hello"
         });
         break;
     }

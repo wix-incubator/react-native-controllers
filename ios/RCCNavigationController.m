@@ -57,6 +57,21 @@
 
       NSString *title = actionParams[@"title"];
       if (title) viewController.title = title;
+      
+      NSString *backButtonTitle = actionParams[@"backButtonTitle"];
+      if (backButtonTitle)
+      {
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:backButtonTitle
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:nil
+                                                                    action:nil];
+        
+        self.topViewController.navigationItem.backBarButtonItem = backItem;
+      }
+      else
+      {
+        self.topViewController.navigationItem.backBarButtonItem = nil;
+      }
 
       [self pushViewController:viewController animated:animated];
 

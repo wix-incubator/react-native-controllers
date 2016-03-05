@@ -7,6 +7,12 @@
 #import "RCTConvert.h"
 
 const NSInteger BLUR_STATUS_TAG = 78264801;
+const NSInteger BLUR_NAVBAR_TAG = 78264802;
+
+@interface RCCViewController()
+@property (nonatomic) BOOL _hidesBottomBarWhenPushed;
+@property (nonatomic) BOOL _statusBarHideWithNavBar;
+@end
 
 @implementation RCCViewController
 
@@ -103,9 +109,25 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
   self.automaticallyAdjustsScrollViewInsets = NO; // default
   
   self.navigatorStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
+  
+  [self setStyleOnInit];
 }
 
-- (void)syncStyle
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  [self setStyleOnAppear];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+}
+
+// most styles should be set here since when we pop a view controller that changed them
+// we want to reset the style to what we expect (so we need to reset on every willAppear)
+- (void)setStyleOnAppear
 {
   NSString *navBarBackgroundColor = self.navigatorStyle[@"navBarBackgroundColor"];
   if (navBarBackgroundColor)
@@ -147,6 +169,17 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
     [self.navigationController setNavigationBarHidden:navBarHiddenBool animated:YES];
   }
   
+  NSNumber *navBarHideOnScroll = self.navigatorStyle[@"navBarHideOnScroll"];
+  BOOL navBarHideOnScrollBool = navBarHideOnScroll ? [navBarHideOnScroll boolValue] : NO;
+  if (navBarHideOnScrollBool)
+  {
+    self.navigationController.hidesBarsOnSwipe = YES;
+  }
+  else
+  {
+    self.navigationController.hidesBarsOnSwipe = NO;
+  }
+  
   NSNumber *drawUnderNavBar = self.navigatorStyle[@"drawUnderNavBar"];
   BOOL drawUnderNavBarBool = drawUnderNavBar ? [drawUnderNavBar boolValue] : NO;
   if (drawUnderNavBarBool)
@@ -184,31 +217,75 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
     }
   }
   
-  /*
-   NSNumber *navBarBlur = navigatorStyle[@"navBarBlur"];
-   if (navBarBlur && [navBarBlur boolValue])
-   {
-   [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-   self.navigationBar.shadowImage = [UIImage new];
-   
-   UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-   CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-   blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationBar.frame.size.width, self.navigationBar.frame.size.height + statusBarFrame.size.height);
-   [self.navigationBar insertSubview:blur atIndex:0];
-   }
-  */
+  NSNumber *navBarBlur = self.navigatorStyle[@"navBarBlur"];
+  BOOL navBarBlurBool = navBarBlur ? [navBarBlur boolValue] : NO;
+  if (navBarBlurBool)
+  {
+    if (![self.navigationController.navigationBar viewWithTag:BLUR_NAVBAR_TAG])
+    {
+      [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+      self.navigationController.navigationBar.shadowImage = [UIImage new];
+      UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+      CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+      blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height + statusBarFrame.size.height);
+      blur.userInteractionEnabled = NO;
+      [self.navigationController.navigationBar insertSubview:blur atIndex:0];
+    }
+  }
+  else
+  {
+    UIView *blur = [self.navigationController.navigationBar viewWithTag:BLUR_NAVBAR_TAG];
+    if (blur)
+    {
+      [blur removeFromSuperview];
+      [self.navigationController.navigationBar setShadowImage:nil];
+      [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    }
+  }
 }
 
-- (void)viewWillAppear:(BOOL)animated
+// only styles that can't be set on willAppear should be set here
+- (void)setStyleOnInit
 {
-  [super viewWillAppear:animated];
+  NSNumber *tabBarHidden = self.navigatorStyle[@"tabBarHidden"];
+  BOOL tabBarHiddenBool = tabBarHidden ? [tabBarHidden boolValue] : NO;
+  if (tabBarHiddenBool)
+  {
+    self._hidesBottomBarWhenPushed = YES;
+  }
+  else
+  {
+    self._hidesBottomBarWhenPushed = NO;
+  }
   
-  [self syncStyle];
+  NSNumber *statusBarHideWithNavBar = self.navigatorStyle[@"statusBarHideWithNavBar"];
+  BOOL statusBarHideWithNavBarBool = statusBarHideWithNavBar ? [statusBarHideWithNavBar boolValue] : NO;
+  if (statusBarHideWithNavBarBool)
+  {
+    self._statusBarHideWithNavBar = YES;
+  }
+  else
+  {
+    self._statusBarHideWithNavBar = NO;
+  }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (BOOL)hidesBottomBarWhenPushed
 {
-  [super viewWillDisappear:animated];
+  if (!self._hidesBottomBarWhenPushed) return NO;
+  return (self.navigationController.topViewController == self);
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+  if (self._statusBarHideWithNavBar)
+  {
+    return self.navigationController.isNavigationBarHidden;
+  }
+  else
+  {
+    return NO;
+  }
 }
 
 @end
