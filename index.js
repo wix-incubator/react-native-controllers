@@ -106,6 +106,24 @@ var Controllers = {
     };
   },
 
+  Modal: {
+    showLightBox: function(componentId) {
+      RCCManager.showLightBox(componentId);
+    },
+    dismissLightBox: function() {
+      RCCManager.dismissLightBox();
+    },
+    showController: function(appKey, animated) {
+      var controller = _controllerRegistry[appKey];
+      if (controller === undefined) return;
+      var layout = controller.render();
+      RCCManager.showController(layout, animated);
+    },
+    dismissController: function(animated) {
+      RCCManager.dismissController(animated);
+    }
+  },
+
 };
 
 module.exports = Controllers;

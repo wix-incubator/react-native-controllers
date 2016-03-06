@@ -46,12 +46,26 @@ var MoviesApp = Controllers.createClass({
       </DrawerControllerIOS>
     );
   },
+});
 
+var ModalScreenTester = Controllers.createClass({
+  render: function() {
+    return (
+      <NavigationControllerIOS
+              title="Favorites"
+              component="FavoritesScreen"
+              id="favorites"
+              passProps={{hidePop: true}}
+      />
+    );
+  },
 });
 
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
+ControllerRegistry.registerController('ModalScreenTester', () => ModalScreenTester);
 
 // this line makes the app actually start and initialize
 ControllerRegistry.setRootController('MoviesApp');
 
 module.exports = MoviesApp;
+module.exports = ModalScreenTester;

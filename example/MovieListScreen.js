@@ -9,7 +9,12 @@ var {
   TouchableOpacity
 } = React;
 
+require('./LightBox');
+
 var Controllers = require('react-native-controllers');
+var {
+  Modal,
+} = Controllers;
 
 var MovieListScreen = React.createClass({
 
@@ -26,6 +31,14 @@ var MovieListScreen = React.createClass({
     Controllers.DrawerControllerIOS("drawer").setStyle({
       animationType: val
     });
+  },
+
+  onShowLightBoxClick: function() {
+    Modal.showLightBox('LightBox');
+  },
+
+  onShowModalVcClick: async function() {
+    Modal.showController('ModalScreenTester', true);
   },
 
   render: function() {
@@ -53,6 +66,14 @@ var MovieListScreen = React.createClass({
 
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, "slideAndScale") }>
           <Text style={styles.button}>Slide & Scale</Text>
+        </TouchableOpacity>
+
+	      <TouchableOpacity onPress={ this.onShowLightBoxClick }>
+          <Text style={styles.button}>Show LightBox</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowModalVcClick }>
+          <Text style={styles.button}>Show Modal ViewController</Text>
         </TouchableOpacity>
       </View>
     );
