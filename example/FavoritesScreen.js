@@ -8,7 +8,8 @@ var {
   View,
   Image,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  AlertIOS
 } = React;
 
 var Controllers = require('react-native-controllers');
@@ -104,6 +105,14 @@ var FavoritesScreen = React.createClass({
 
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backcustomtext') }>
           <Text style={styles.button}>Custom Back Button Text</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttons') }>
+          <Text style={styles.button}>Right NavBar Text Buttons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'righticonbuttons') }>
+          <Text style={styles.button}>Right NavBar Icon Buttons</Text>
         </TouchableOpacity>
 
         <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
@@ -264,6 +273,46 @@ var FavoritesScreen = React.createClass({
           title: "More",
           component: "FavoritesScreen",
           backButtonTitle: "Hello"
+        });
+        break;
+      case 'rightbuttons':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              title: "Edit",
+              onPress: function() {
+                AlertIOS.alert('Button', 'Edit pressed');
+              }
+            },
+            {
+              title: "Save",
+              onPress: function() {
+                AlertIOS.alert('Button', 'Save pressed');
+              }
+            }
+          ]
+        });
+        break;
+      case 'righticonbuttons':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              icon: require('./img/navicon_edit.png'),
+              onPress: function() {
+                AlertIOS.alert('Button', 'Edit pressed');
+              }
+            },
+            {
+              icon: require('./img/navicon_add.png'),
+              onPress: function() {
+                AlertIOS.alert('Button', 'Add pressed');
+              }
+            }
+          ]
         });
         break;
     }

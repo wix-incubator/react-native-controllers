@@ -14,12 +14,12 @@ var Controllers = require('react-native-controllers');
 var MovieListScreen = React.createClass({
 
   componentDidMount: function() {
-    Controllers.NavigationControllerIOS("movies").setLeftButton({
+    Controllers.NavigationControllerIOS("movies").setLeftButtons([{
       title: "Burger",
       onPress: function() {
         Controllers.DrawerControllerIOS("drawer").toggle();
       }
-    });
+    }]);
   },
 
   onButtonClick: function(val) {

@@ -24,6 +24,30 @@ function _processProperties(properties) {
   }
 }
 
+function _setListener(callbackId, func) {
+  return NativeAppEventEmitter.addListener(callbackId, (event) => func(event));
+}
+
+function _processButtons(buttons) {
+  var unsubscribes = [];
+  for (var i = 0 ; i < buttons.length ; i++) {
+    var button = buttons[i];
+    if (typeof button.onPress === "function") {
+      var onPressId = _getRandomId();
+      var onPressFunc = button.onPress;
+      button.onPress = onPressId;
+      var unsubscribe = _setListener(onPressId, onPressFunc);
+      unsubscribes.push(unsubscribe);
+      _processProperties(button);
+    }
+  }
+  return function () {
+    for (var i = 0 ; i < unsubscribes.length ; i++) {
+      if (unsubscribes[i]) { unsubscribes[i](); }
+    }
+  };
+}
+
 var Controllers = {
 
   createClass: function (app) {
@@ -68,23 +92,40 @@ var Controllers = {
   NavigationControllerIOS: function (id) {
     return {
       push: function (params) {
+        var unsubscribes = [];
         if (params['style']) {
           _processProperties(params['style']);
         }
-        return RCCManager.NavigationControllerIOS(id, "push", params);
+        if (params['leftButtons']) {
+          var unsubscribe = _processButtons(params['leftButtons']);
+          unsubscribes.push(unsubscribe);
+        }
+        if (params['rightButtons']) {
+          var unsubscribe = _processButtons(params['rightButtons']);
+          unsubscribes.push(unsubscribe);
+        }
+        RCCManager.NavigationControllerIOS(id, "push", params);
+        return function() {
+          for (var i = 0 ; i < unsubscribes.length ; i++) {
+            if (unsubscribes[i]) { unsubscribes[i](); }
+          }
+        };
       },
       pop: function (params) {
-        return RCCManager.NavigationControllerIOS(id, "pop", params);
+        RCCManager.NavigationControllerIOS(id, "pop", params);
       },
-      setLeftButton: function (params) {
-        if (typeof params.onPress === "function") {
-          var onPressId = _getRandomId();
-          var onPressFunc = params.onPress;
-          params.onPress = onPressId;
-          // where do we unsubscribe?
-          NativeAppEventEmitter.addListener(onPressId, (event) => onPressFunc(event));
-        }
-        return RCCManager.NavigationControllerIOS(id, "setLeftButton", params);
+      setLeftButton: function () {
+        console.error('setLeftButton is deprecated, see setLeftButtons');
+      },
+      setLeftButtons: function (buttons, animated = false) {
+        var unsubscribe = _processButtons(buttons);
+        RCCManager.NavigationControllerIOS(id, "setButtons", {buttons: buttons, side: "left", animated: animated});
+        return unsubscribe;
+      },
+      setRightButtons: function (buttons, animated = false) {
+        var unsubscribe = _processButtons(buttons);
+        RCCManager.NavigationControllerIOS(id, "setButtons", {buttons: buttons, side: "right", animated: animated});
+        return unsubscribe;
       }
     };
   },
