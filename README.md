@@ -290,6 +290,14 @@ navigationController.push({
   style: {}, // style the navigation bar for the pushed screen (optional, see "Styling Navigation" below)
   animated: true, // does the push have a transition animation (optional, default true)
   backButtonTitle: "Back" // override the nav bar back button title for the pushed screen (optional) 
+  leftButtons: [{ // buttons in the nav bar of the pushed screen (optional)
+    title: "Button Title", // optional, title for a textual button
+    icon: require('./img/navicon_camera.png'), // optional, image for an icon button
+    onPress: function() {
+      // on press event handler
+    }
+  }],
+  rightButtons: [] // similar format to leftButtons
 });
 ```
 
@@ -303,15 +311,24 @@ navigationController.pop({
 );
 ```
 
- * **setLeftButton(params)** - set the left button of the navigation bar
+ * **setLeftButtons(buttons, animated = false)** - set the left buttons of the navigation bar
+ * **setRightButtons(buttons, animated = false)** - set the right buttons of the navigation bar
 
 ```js
-navigationController.setLeftButton({
-  title: "Button Title",
-  onPress: function() {
-    // on press event handler
+navigationController.setRightButtons([
+  {
+    title: "Button Title", // title for a textual button
+    onPress: function() {
+      // on press event handler
+    }
+  },
+  {
+    icon: require('./img/navicon_camera.png'), // image for an icon button
+    onPress: function() {
+      // on press event handler
+    }
   }
-});
+  ]);
 ```
 
 ##### Styling Navigation
