@@ -106,12 +106,23 @@ var Controllers = {
     };
   },
 
+  TabBarControllerIOS: function (id) {
+    return {
+      setHidden: function (params) {
+        return RCCManager.TabBarControllerIOS(id, "setTabBarHidden", params);
+      }
+    };
+  },
+
   Modal: {
-    showLightBox: function(componentId) {
-      RCCManager.showLightBox(componentId);
+    showLightBox: function(componentId, style) {
+      if (style.backgroundColor !== undefined) {
+        style.backgroundColor = processColor(style.backgroundColor);
+      }
+      RCCManager.modalShowLightBox(componentId, style);
     },
     dismissLightBox: function() {
-      RCCManager.dismissLightBox();
+      RCCManager.modalDismissLightBox();
     },
     showController: function(appKey, animated) {
       var controller = _controllerRegistry[appKey];
@@ -124,6 +135,14 @@ var Controllers = {
     }
   },
 
+  Root: {
+    setRootControllerAnimated: function (appKey, animationType) {
+      var controller = _controllerRegistry[appKey];
+      if (controller === undefined) return;
+      var layout = controller.render();
+      RCCManager.setRootControllerAnimated(layout, animationType);
+    }
+  }
 };
 
 module.exports = Controllers;

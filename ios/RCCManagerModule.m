@@ -5,10 +5,49 @@
 #import "RCCViewController.h"
 #import "RCCDrawerController.h"
 #import "RCCLightBox.h"
+#import "RCTConvert.h"
+#import "RCCTabBarController.h"
+
+typedef NS_ENUM(NSInteger, RCCManagerModuleErrorCode)
+{
+    RCCManagerModuleCantCreateControllerErrorCode   = -100,
+    RCCManagerModuleCantFindTabControllerErrorCode  = -200,
+    RCCManagerModuleMissingParamsErrorCode          = -300
+};
+
+@implementation RCTConvert (RCCManagerModuleErrorCode)
+
+RCT_ENUM_CONVERTER(RCCManagerModuleErrorCode,
+                   (@{@"RCCManagerModuleCantCreateControllerErrorCode": @(RCCManagerModuleCantCreateControllerErrorCode),
+                      @"RCCManagerModuleCantFindTabControllerErrorCode": @(RCCManagerModuleCantFindTabControllerErrorCode),
+                      }), RCCManagerModuleCantCreateControllerErrorCode, integerValue)
+@end
 
 @implementation RCCManagerModule
 
 RCT_EXPORT_MODULE(RCCManager);
+
+#pragma mark - constatnts export
+
+- (NSDictionary *)constantsToExport
+{
+    return @{
+             //Error codes
+             @"RCCManagerModuleCantCreateControllerErrorCode" : @(RCCManagerModuleCantCreateControllerErrorCode),
+             @"RCCManagerModuleCantFindTabControllerErrorCode" : @(RCCManagerModuleCantFindTabControllerErrorCode),
+             };
+}
+
++(UIViewController*)appRootViewController
+{
+    return [UIApplication sharedApplication].delegate.window.rootViewController;
+}
+
++(NSError*)rccErrorWithCode:(NSInteger)code description:(NSString*)description
+{
+    NSString *safeDescription = (description == nil) ? @"" : description;
+    return [NSError errorWithDomain:@"RCCControllers" code:code userInfo:@{NSLocalizedDescriptionKey: safeDescription}];
+}
 
 - (dispatch_queue_t)methodQueue
 {
@@ -26,6 +65,45 @@ setRootController:(NSDictionary*)layout)
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     appDelegate.window.rootViewController = controller;
     [appDelegate.window makeKeyAndVisible];
+}
+
+RCT_EXPORT_METHOD(
+setRootControllerAnimated:(NSDictionary*)layout animationType:(NSString*)animationType)
+{
+    // create the new controller
+    UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
+    if (controller == nil) return;
+    
+    // set this new controller as the root
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    
+    UIViewController *presentedViewController = nil;
+    if(appDelegate.window.rootViewController.presentedViewController != nil)
+        presentedViewController = appDelegate.window.rootViewController.presentedViewController;
+    else
+        presentedViewController = appDelegate.window.rootViewController;
+    
+    UIView *snapshot = [presentedViewController.view snapshotViewAfterScreenUpdates:NO];
+    appDelegate.window.rootViewController = controller;
+    [appDelegate.window.rootViewController.view addSubview:snapshot];
+    [presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
+     {
+         if (animationType == nil || [animationType isEqualToString:@"slideDown"])
+         {
+             snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
+         }
+         else if ([animationType isEqualToString:@"fade"])
+         {
+             snapshot.alpha = 0;
+         }
+         
+     }
+                     completion:^(BOOL finished)
+     {
+         [snapshot removeFromSuperview];
+     }];
 }
 
 RCT_EXPORT_METHOD(
@@ -47,13 +125,31 @@ DrawerControllerIOS:(NSString*)controllerId performAction:(NSString*)performActi
 }
 
 RCT_EXPORT_METHOD(
-showLightBox:(NSString*)componentId)
+TabBarControllerIOS:(NSString*)controllerId performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [RCCLightBox showWithComponentId:componentId];
+    if (!controllerId || !performAction)
+    {
+        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleMissingParamsErrorCode description:@"missing params"]);
+        return;
+    }
+    
+    RCCTabBarController* controller = [[RCCManager sharedIntance] getControllerWithId:controllerId componentType:@"TabBarControllerIOS"];
+    if (!controller || ![controller isKindOfClass:[RCCTabBarController class]])
+    {
+        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleCantFindTabControllerErrorCode description:@"could not find UITabBarController"]);
+        return;
+    }
+    [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedIntance] getBridge] completion:^(){ resolve(nil); }];
 }
 
 RCT_EXPORT_METHOD(
-dismissLightBox)
+modalShowLightBox:(NSString*)componentId style:(NSDictionary*)style)
+{
+    [RCCLightBox showWithComponentId:componentId style:style];
+}
+
+RCT_EXPORT_METHOD(
+modalDismissLightBox)
 {
     [RCCLightBox dismiss];
 }
@@ -64,19 +160,17 @@ showController:(NSDictionary*)layout animated:(BOOL)animated resolver:(RCTPromis
     UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
     if (controller == nil)
     {
-        reject([NSError errorWithDomain:@"RCCControllers" code:-100 userInfo:@{NSLocalizedDescriptionKey: @"could not create controller"}]);
+        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]);
         return;
     }
     
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController presentViewController:controller animated:animated completion:^(){ resolve(nil); }];
+    [[RCCManagerModule appRootViewController] presentViewController:controller animated:animated completion:^(){ resolve(nil); }];
 }
 
 RCT_EXPORT_METHOD(
 dismissController:(BOOL)animated resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    [rootViewController dismissViewControllerAnimated:animated completion:^(){ resolve(nil); }];
+    [[RCCManagerModule appRootViewController] dismissViewControllerAnimated:animated completion:^(){ resolve(nil); }];
 }
-                  
+
 @end

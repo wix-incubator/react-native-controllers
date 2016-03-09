@@ -10,6 +10,7 @@
 #import "RCCManager.h"
 #import "RCTRootView.h"
 #import "RCTRootViewDelegate.h"
+#import "RCTConvert.h"
 #import <objc/runtime.h>
 
 const NSInteger kLightBoxTag = 0x101010;
@@ -17,18 +18,40 @@ const NSInteger kLightBoxTag = 0x101010;
 @interface RCCLightBoxView : UIView
 @property (nonatomic, strong) RCTRootView *reactView;
 @property (nonatomic, strong) UIVisualEffectView *visualEffectView;
+@property (nonatomic, strong) UIView *overlayColorView;
+@property (nonatomic, strong) NSDictionary *style;
 @end
 
 @implementation RCCLightBoxView
 
--(instancetype)initWithFrame:(CGRect)frame componentId:(NSString*)componentId
+-(instancetype)initWithFrame:(CGRect)frame componentId:(NSString*)componentId style:(NSDictionary*)style
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.visualEffectView = [[UIVisualEffectView alloc] init];
-        self.visualEffectView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        [self addSubview:self.visualEffectView];
+        self.style = style;
+        
+        if (self.style != nil)
+        {
+            if (self.style[@"backgroundBlur"] != nil && ![self.style[@"backgroundBlur"] isEqualToString:@"none"])
+            {
+                self.visualEffectView = [[UIVisualEffectView alloc] init];
+                self.visualEffectView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+                [self addSubview:self.visualEffectView];
+            }
+            
+            if (self.style[@"backgroundColor"] != nil)
+            {
+                UIColor *backgroundColor = [RCTConvert UIColor:self.style[@"backgroundColor"]];
+                if (backgroundColor != nil)
+                {
+                    self.overlayColorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+                    self.overlayColorView.backgroundColor = backgroundColor;
+                    self.overlayColorView.alpha = 0;
+                    [self addSubview:self.overlayColorView];
+                }
+            }
+        }
         
         self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedIntance] getBridge] moduleName:componentId initialProperties:nil];
         self.reactView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
@@ -76,12 +99,41 @@ const NSInteger kLightBoxTag = 0x101010;
     }
 }
 
+-(UIBlurEffect*)blurEfectForCurrentStyle
+{
+    NSString *backgroundBlur = self.style[@"backgroundBlur"];
+    if ([backgroundBlur isEqualToString:@"none"])
+    {
+        return nil;
+    }
+    
+    UIBlurEffectStyle blurEffectStyle = UIBlurEffectStyleDark;
+    if ([backgroundBlur isEqualToString:@"light"])
+        blurEffectStyle = UIBlurEffectStyleLight;
+    else if ([backgroundBlur isEqualToString:@"xlight"])
+        blurEffectStyle = UIBlurEffectStyleExtraLight;
+    else if ([backgroundBlur isEqualToString:@"dark"])
+        blurEffectStyle = UIBlurEffectStyleDark;
+    return [UIBlurEffect effectWithStyle:blurEffectStyle];
+}
+
 -(void)showAnimated
 {
-    [UIView animateWithDuration:0.3 animations:^()
+    if (self.visualEffectView != nil || self.overlayColorView != nil)
     {
-        self.visualEffectView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    }];
+        [UIView animateWithDuration:0.3 animations:^()
+         {
+             if (self.visualEffectView != nil)
+             {
+                 self.visualEffectView.effect = [self blurEfectForCurrentStyle];
+             }
+             
+             if (self.overlayColorView != nil)
+             {
+                 self.overlayColorView.alpha = 1;
+             }
+         }];
+    }
     
     self.reactView.transform = CGAffineTransformMakeTranslation(0, 100);
     self.reactView.alpha = 0;
@@ -94,19 +146,40 @@ const NSInteger kLightBoxTag = 0x101010;
 
 -(void)dismissAnimated
 {
+    BOOL hasOverlayViews = (self.visualEffectView != nil || self.overlayColorView != nil);
+    
     [UIView animateWithDuration:0.2 animations:^()
     {
         self.reactView.transform = CGAffineTransformMakeTranslation(0, 80);
         self.reactView.alpha = 0;
+    }
+                     completion:^(BOOL finished)
+    {
+        if (!hasOverlayViews)
+        {
+            [self removeFromSuperview];
+        }
     }];
     
-    [UIView animateWithDuration:0.25 delay:0.15 options:UIViewAnimationOptionCurveEaseOut animations:^()
-     {
-         self.visualEffectView.effect = nil;
-     } completion:^(BOOL finished)
+    if (hasOverlayViews)
     {
-        [self removeFromSuperview];
-    }];
+        [UIView animateWithDuration:0.25 delay:0.15 options:UIViewAnimationOptionCurveEaseOut animations:^()
+         {
+             if (self.visualEffectView != nil)
+             {
+                 self.visualEffectView.effect = nil;
+             }
+             
+             if (self.overlayColorView != nil)
+             {
+                 self.overlayColorView.alpha = 0;
+             }
+             
+         } completion:^(BOOL finished)
+         {
+             [self removeFromSuperview];
+         }];
+    }
 }
 
 @end
@@ -120,7 +193,7 @@ const NSInteger kLightBoxTag = 0x101010;
     return window;
 }
 
-+(void)showWithComponentId:(NSString*)componentId
++(void)showWithComponentId:(NSString*)componentId style:(NSDictionary*)style
 {
     UIWindow *window = [RCCLightBox getWindow];
     if ([window viewWithTag:kLightBoxTag] != nil)
@@ -128,7 +201,7 @@ const NSInteger kLightBoxTag = 0x101010;
         return;
     }
     
-    RCCLightBoxView *lightBox = [[RCCLightBoxView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) componentId:componentId];
+    RCCLightBoxView *lightBox = [[RCCLightBoxView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) componentId:componentId style:style];
     lightBox.tag = kLightBoxTag;
     [window addSubview:lightBox];
     [lightBox showAnimated];

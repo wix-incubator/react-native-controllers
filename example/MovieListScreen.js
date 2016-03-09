@@ -14,11 +14,13 @@ require('./LightBox');
 var Controllers = require('react-native-controllers');
 var {
   Modal,
+  Root
 } = Controllers;
 
 var MovieListScreen = React.createClass({
 
   componentDidMount: function() {
+    this.setState({tabBarHidden: false});
     Controllers.NavigationControllerIOS("movies").setLeftButton({
       title: "Burger",
       onPress: function() {
@@ -34,11 +36,20 @@ var MovieListScreen = React.createClass({
   },
 
   onShowLightBoxClick: function() {
-    Modal.showLightBox('LightBox');
+    Modal.showLightBox('LightBox', {backgroundBlur: 'light'});
   },
 
   onShowModalVcClick: async function() {
     Modal.showController('ModalScreenTester', true);
+  },
+
+  onToggleTabBarClick: async function() {
+    this.state.tabBarHidden = !this.state.tabBarHidden;
+    Controllers.TabBarControllerIOS("main").setHidden({hidden: this.state.tabBarHidden, animated: true});
+  },
+
+  onReplaceRootAnimatedClick: function() {
+    Root.setRootControllerAnimated('ModalScreenTester', 'slideDown');
   },
 
   render: function() {
@@ -74,6 +85,14 @@ var MovieListScreen = React.createClass({
 
         <TouchableOpacity onPress={ this.onShowModalVcClick }>
           <Text style={styles.button}>Show Modal ViewController</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleTabBarClick }>
+          <Text style={styles.button}>Toggle tab-bar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onReplaceRootAnimatedClick }>
+          <Text style={styles.button}>Replace root animated</Text>
         </TouchableOpacity>
       </View>
     );
