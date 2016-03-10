@@ -1,11 +1,3 @@
-//
-//  RCCModal.m
-//  ReactNativeControllers
-//
-//  Created by Artal Druk on 3/2/16.
-//  Copyright © 2016 artal. All rights reserved.
-//
-
 #import "RCCLightBox.h"
 #import "RCCManager.h"
 #import "RCTRootView.h"
