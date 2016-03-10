@@ -2,6 +2,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RCCLightBox : NSObject
-+(void)showWithComponentId:(NSString*)componentId style:(NSDictionary*)style;
++(void)showWithParams:(NSDictionary*)params;
 +(void)dismiss;
 @end

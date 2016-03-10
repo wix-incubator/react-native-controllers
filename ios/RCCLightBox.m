@@ -19,30 +19,32 @@ const NSInteger kLightBoxTag = 0x101010;
 @property (nonatomic, strong) RCTRootView *reactView;
 @property (nonatomic, strong) UIVisualEffectView *visualEffectView;
 @property (nonatomic, strong) UIView *overlayColorView;
-@property (nonatomic, strong) NSDictionary *style;
+@property (nonatomic, strong) NSDictionary *params;
 @end
 
 @implementation RCCLightBoxView
 
--(instancetype)initWithFrame:(CGRect)frame componentId:(NSString*)componentId style:(NSDictionary*)style
+-(instancetype)initWithFrame:(CGRect)frame params:(NSDictionary*)params
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.style = style;
+        self.params = params;
         
-        if (self.style != nil)
+        NSDictionary *style = self.params[@"style"];
+        if (self.params != nil && style != nil)
         {
-            if (self.style[@"backgroundBlur"] != nil && ![self.style[@"backgroundBlur"] isEqualToString:@"none"])
+            
+            if (style[@"backgroundBlur"] != nil && ![style[@"backgroundBlur"] isEqualToString:@"none"])
             {
                 self.visualEffectView = [[UIVisualEffectView alloc] init];
                 self.visualEffectView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
                 [self addSubview:self.visualEffectView];
             }
             
-            if (self.style[@"backgroundColor"] != nil)
+            if (style[@"backgroundColor"] != nil)
             {
-                UIColor *backgroundColor = [RCTConvert UIColor:self.style[@"backgroundColor"]];
+                UIColor *backgroundColor = [RCTConvert UIColor:style[@"backgroundColor"]];
                 if (backgroundColor != nil)
                 {
                     self.overlayColorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
@@ -53,7 +55,7 @@ const NSInteger kLightBoxTag = 0x101010;
             }
         }
         
-        self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedIntance] getBridge] moduleName:componentId initialProperties:nil];
+        self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedIntance] getBridge] moduleName:self.params[@"component"] initialProperties:nil];
         self.reactView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
         self.reactView.center = self.center;
         [self addSubview:self.reactView];
@@ -101,7 +103,8 @@ const NSInteger kLightBoxTag = 0x101010;
 
 -(UIBlurEffect*)blurEfectForCurrentStyle
 {
-    NSString *backgroundBlur = self.style[@"backgroundBlur"];
+    NSDictionary *style = self.params[@"style"];
+    NSString *backgroundBlur = style[@"backgroundBlur"];
     if ([backgroundBlur isEqualToString:@"none"])
     {
         return nil;
@@ -193,7 +196,7 @@ const NSInteger kLightBoxTag = 0x101010;
     return window;
 }
 
-+(void)showWithComponentId:(NSString*)componentId style:(NSDictionary*)style
++(void)showWithParams:(NSDictionary*)params
 {
     UIWindow *window = [RCCLightBox getWindow];
     if ([window viewWithTag:kLightBoxTag] != nil)
@@ -201,7 +204,7 @@ const NSInteger kLightBoxTag = 0x101010;
         return;
     }
     
-    RCCLightBoxView *lightBox = [[RCCLightBoxView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) componentId:componentId style:style];
+    RCCLightBoxView *lightBox = [[RCCLightBoxView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) params:params];
     lightBox.tag = kLightBoxTag;
     [window addSubview:lightBox];
     [lightBox showAnimated];

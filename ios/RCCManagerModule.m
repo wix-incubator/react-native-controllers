@@ -55,55 +55,49 @@ RCT_EXPORT_MODULE(RCCManager);
 }
 
 RCT_EXPORT_METHOD(
-setRootController:(NSDictionary*)layout)
+setRootController:(NSDictionary*)layout animationType:(NSString*)animationType)
 {
     // create the new controller
     UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
     if (controller == nil) return;
 
-    // set this new controller as the root
-    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
-    appDelegate.window.rootViewController = controller;
-    [appDelegate.window makeKeyAndVisible];
-}
-
-RCT_EXPORT_METHOD(
-setRootControllerAnimated:(NSDictionary*)layout animationType:(NSString*)animationType)
-{
-    // create the new controller
-    UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
-    if (controller == nil) return;
-    
-    // set this new controller as the root
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     
-    UIViewController *presentedViewController = nil;
-    if(appDelegate.window.rootViewController.presentedViewController != nil)
-        presentedViewController = appDelegate.window.rootViewController.presentedViewController;
+    if ([animationType isEqualToString:@"none"])
+    {
+        // set this new controller as the root
+        appDelegate.window.rootViewController = controller;
+        [appDelegate.window makeKeyAndVisible];
+    }
     else
-        presentedViewController = appDelegate.window.rootViewController;
-    
-    UIView *snapshot = [presentedViewController.view snapshotViewAfterScreenUpdates:NO];
-    appDelegate.window.rootViewController = controller;
-    [appDelegate.window.rootViewController.view addSubview:snapshot];
-    [presentedViewController dismissViewControllerAnimated:NO completion:nil];
-    
-    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
-     {
-         if (animationType == nil || [animationType isEqualToString:@"slideDown"])
+    {
+        UIViewController *presentedViewController = nil;
+        if(appDelegate.window.rootViewController.presentedViewController != nil)
+            presentedViewController = appDelegate.window.rootViewController.presentedViewController;
+        else
+            presentedViewController = appDelegate.window.rootViewController;
+        
+        UIView *snapshot = [presentedViewController.view snapshotViewAfterScreenUpdates:NO];
+        appDelegate.window.rootViewController = controller;
+        [appDelegate.window.rootViewController.view addSubview:snapshot];
+        [presentedViewController dismissViewControllerAnimated:NO completion:nil];
+        
+        [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
          {
-             snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
+             if (animationType == nil || [animationType isEqualToString:@"slide-down"])
+             {
+                 snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
+             }
+             else if ([animationType isEqualToString:@"fade"])
+             {
+                 snapshot.alpha = 0;
+             }
          }
-         else if ([animationType isEqualToString:@"fade"])
+                         completion:^(BOOL finished)
          {
-             snapshot.alpha = 0;
-         }
-         
-     }
-                     completion:^(BOOL finished)
-     {
-         [snapshot removeFromSuperview];
-     }];
+             [snapshot removeFromSuperview];
+         }];
+    }
 }
 
 RCT_EXPORT_METHOD(
@@ -143,9 +137,9 @@ TabBarControllerIOS:(NSString*)controllerId performAction:(NSString*)performActi
 }
 
 RCT_EXPORT_METHOD(
-modalShowLightBox:(NSString*)componentId style:(NSDictionary*)style)
+modalShowLightBox:(NSDictionary*)params)
 {
-    [RCCLightBox showWithComponentId:componentId style:style];
+    [RCCLightBox showWithParams:params];
 }
 
 RCT_EXPORT_METHOD(
@@ -155,7 +149,7 @@ modalDismissLightBox)
 }
 
 RCT_EXPORT_METHOD(
-showController:(NSDictionary*)layout animated:(BOOL)animated resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+showController:(NSDictionary*)layout animationType:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
     if (controller == nil)
@@ -164,13 +158,16 @@ showController:(NSDictionary*)layout animated:(BOOL)animated resolver:(RCTPromis
         return;
     }
     
-    [[RCCManagerModule appRootViewController] presentViewController:controller animated:animated completion:^(){ resolve(nil); }];
+    [[RCCManagerModule appRootViewController] presentViewController:controller
+                                                           animated:![animationType isEqualToString:@"none"]
+                                                         completion:^(){ resolve(nil); }];
 }
 
 RCT_EXPORT_METHOD(
-dismissController:(BOOL)animated resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [[RCCManagerModule appRootViewController] dismissViewControllerAnimated:animated completion:^(){ resolve(nil); }];
+    [[RCCManagerModule appRootViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
+                                                                 completion:^(){ resolve(nil); }];
 }
 
 @end

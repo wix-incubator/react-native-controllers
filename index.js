@@ -46,23 +46,24 @@ var Controllers = {
         };
       },
 
-      ControllerRegistry: {
-        registerController: function (appKey, getControllerFunc) {
-          _controllerRegistry[appKey] = getControllerFunc();
-        },
-        setRootController: function (appKey) {
-          var controller = _controllerRegistry[appKey];
-          if (controller === undefined) return;
-          var layout = controller.render();
-          RCCManager.setRootController(layout);
-        }
-      },
-
+      ControllerRegistry: Controllers.ControllerRegistry,
       TabBarControllerIOS: {name: 'TabBarControllerIOS', Item: {name: 'TabBarControllerIOS.Item'}},
       NavigationControllerIOS: {name: 'NavigationControllerIOS'},
       ViewControllerIOS: {name: 'ViewControllerIOS'},
       DrawerControllerIOS: {name: 'DrawerControllerIOS'},
     };
+  },
+
+  ControllerRegistry: {
+    registerController: function (appKey, getControllerFunc) {
+      _controllerRegistry[appKey] = getControllerFunc();
+    },
+    setRootController: function (appKey, animationType = 'none') {
+      var controller = _controllerRegistry[appKey];
+      if (controller === undefined) return;
+      var layout = controller.render();
+      RCCManager.setRootController(layout, animationType);
+    }
   },
 
   NavigationControllerIOS: function (id) {
@@ -115,34 +116,25 @@ var Controllers = {
   },
 
   Modal: {
-    showLightBox: function(componentId, style) {
-      if (style.backgroundColor !== undefined) {
-        style.backgroundColor = processColor(style.backgroundColor);
+    showLightBox: function(params) {
+      if (params.style.backgroundColor !== undefined) {
+        params.style.backgroundColor = processColor(params.style.backgroundColor);
       }
-      RCCManager.modalShowLightBox(componentId, style);
+      RCCManager.modalShowLightBox(params);
     },
     dismissLightBox: function() {
       RCCManager.modalDismissLightBox();
     },
-    showController: function(appKey, animated) {
+    showController: function(appKey, animationType = 'slide-down') {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
-      RCCManager.showController(layout, animated);
+      RCCManager.showController(layout, animationType);
     },
-    dismissController: function(animated) {
-      RCCManager.dismissController(animated);
+    dismissController: function(animationType = 'slide-down') {
+      RCCManager.dismissController(animationType);
     }
   },
-
-  Root: {
-    setRootControllerAnimated: function (appKey, animationType) {
-      var controller = _controllerRegistry[appKey];
-      if (controller === undefined) return;
-      var layout = controller.render();
-      RCCManager.setRootControllerAnimated(layout, animationType);
-    }
-  }
 };
 
 module.exports = Controllers;
