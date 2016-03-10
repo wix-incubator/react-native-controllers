@@ -269,6 +269,8 @@ component | [Registered name](https://github.com/wix/react-native-controllers#st
 id | Unique ID used to reference this view controller in future API calls
 passProps | Simple serializable object that will pass as props to the pushed component
 style | Style the navigation bar, see [Styling Navigation](#styling-navigation) below for all available styles
+leftButtons | Array of left buttons to add in the nav bar, see `setLeftButtons` below for array format
+righttButtons | Array of right buttons to add in the nav bar, see `setRightButtons` below for array format
 
 ##### Methods
 
