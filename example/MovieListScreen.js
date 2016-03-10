@@ -20,8 +20,13 @@ var {
 
 var MovieListScreen = React.createClass({
 
+  getInitialState: function() {
+    return {
+      tabBarHidden: false
+    }
+  },
+
   componentDidMount: function() {
-    this.setState({tabBarHidden: false});
     Controllers.NavigationControllerIOS("movies").setLeftButtons([{
       title: "Burger",
       onPress: function() {
@@ -51,7 +56,9 @@ var MovieListScreen = React.createClass({
   },
 
   onToggleTabBarClick: async function() {
-    this.state.tabBarHidden = !this.state.tabBarHidden;
+    this.setState({
+      tabBarHidden: !this.state.tabBarHidden
+    });
     Controllers.TabBarControllerIOS("main").setHidden({hidden: this.state.tabBarHidden, animated: true});
   },
 
@@ -117,6 +124,14 @@ var MovieListScreen = React.createClass({
         <TouchableOpacity onPress={ this.onReplaceRootAnimatedClick }>
           <Text style={styles.button}>Replace root animated</Text>
         </TouchableOpacity>
+
+        <View style={{height: 50}}>
+          {
+            this.state.tabBarHidden ?
+            <Text style={{height: 50, color: 'red', backgroundColor: 'green', textAlign: 'center'}}>Wink wink</Text>
+            : false
+          }
+        </View>
       </ScrollView>
     );
   },

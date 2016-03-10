@@ -28,7 +28,9 @@ var MoviesApp = Controllers.createClass({
               title="Red Title"
               component="MovieListScreen"
               id="movies"
-              style={{navBarTextColor: '#ff0000'}}
+              style={{navBarTextColor: '#ff0000', 
+              drawUnderNavBar: false,
+              drawUnderTabBar: true}}
             />
           </TabBarControllerIOS.Item>
           <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
