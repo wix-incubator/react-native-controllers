@@ -38,83 +38,72 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   // push
   if ([performAction isEqualToString:@"push"])
   {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    NSString *component = actionParams[@"component"];
+    if (!component) return;
 
-      NSString *component = actionParams[@"component"];
-      if (!component) return;
+    NSDictionary *passProps = actionParams[@"passProps"];
+    NSDictionary *navigatorStyle = actionParams[@"style"];
+    
+    // merge the navigatorStyle of our parent
+    if ([self.topViewController isKindOfClass:[RCCViewController class]])
+    {
+      RCCViewController *parent = (RCCViewController*)self.topViewController;
+      NSMutableDictionary *mergedStyle = [NSMutableDictionary dictionaryWithDictionary:parent.navigatorStyle];
+      [mergedStyle addEntriesFromDictionary:navigatorStyle];
+      navigatorStyle = mergedStyle;
+    }
 
-      NSDictionary *passProps = actionParams[@"passProps"];
-      NSDictionary *navigatorStyle = actionParams[@"style"];
+    RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
+
+    NSString *title = actionParams[@"title"];
+    if (title) viewController.title = title;
+    
+    NSString *backButtonTitle = actionParams[@"backButtonTitle"];
+    if (backButtonTitle)
+    {
+      UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:backButtonTitle
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:nil
+                                                                  action:nil];
       
-      // merge the navigatorStyle of our parent
-      if ([self.topViewController isKindOfClass:[RCCViewController class]])
-      {
-        RCCViewController *parent = (RCCViewController*)self.topViewController;
-        NSMutableDictionary *mergedStyle = [NSMutableDictionary dictionaryWithDictionary:parent.navigatorStyle];
-        [mergedStyle addEntriesFromDictionary:navigatorStyle];
-        navigatorStyle = mergedStyle;
-      }
+      self.topViewController.navigationItem.backBarButtonItem = backItem;
+    }
+    else
+    {
+      self.topViewController.navigationItem.backBarButtonItem = nil;
+    }
+    
+    NSArray *leftButtons = actionParams[@"leftButtons"];
+    if (leftButtons)
+    {
+      [self setButtons:leftButtons viewController:viewController side:@"left" animated:NO];
+    }
+    
+    NSArray *rightButtons = actionParams[@"rightButtons"];
+    if (rightButtons)
+    {
+      [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
+    }
 
-      RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
-
-      NSString *title = actionParams[@"title"];
-      if (title) viewController.title = title;
-      
-      NSString *backButtonTitle = actionParams[@"backButtonTitle"];
-      if (backButtonTitle)
-      {
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:backButtonTitle
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:nil
-                                                                    action:nil];
-        
-        self.topViewController.navigationItem.backBarButtonItem = backItem;
-      }
-      else
-      {
-        self.topViewController.navigationItem.backBarButtonItem = nil;
-      }
-      
-      NSArray *leftButtons = actionParams[@"leftButtons"];
-      if (leftButtons)
-      {
-        [self setButtons:leftButtons viewController:viewController side:@"left" animated:NO];
-      }
-      
-      NSArray *rightButtons = actionParams[@"rightButtons"];
-      if (rightButtons)
-      {
-        [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
-      }
-
-      [self pushViewController:viewController animated:animated];
-
-    });
+    [self pushViewController:viewController animated:animated];
     return;
   }
 
   // pop
   if ([performAction isEqualToString:@"pop"])
   {
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-      [self popViewControllerAnimated:animated];
-
-    });
+    [self popViewControllerAnimated:animated];
     return;
   }
 
   // setButtons
   if ([performAction isEqualToString:@"setButtons"])
   {
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-      NSArray *buttons = actionParams[@"buttons"];
-      BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
-      NSString *side = actionParams[@"side"] ? actionParams[@"side"] : @"left";
-    
-      [self setButtons:buttons viewController:self.topViewController side:side animated:animated];
-    });
+    NSArray *buttons = actionParams[@"buttons"];
+    BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
+    NSString *side = actionParams[@"side"] ? actionParams[@"side"] : @"left";
+  
+    [self setButtons:buttons viewController:self.topViewController side:side animated:animated];
     return;
   }
 
