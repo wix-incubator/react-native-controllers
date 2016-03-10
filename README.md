@@ -6,6 +6,8 @@
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
+![Screenshots](http://i.imgur.com/2QyOm9a.png)
+
 Without `react-native-controllers`, iOS skeleton components such as [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are challenging to implement natively. This forces developers to compromise on user experience to use React Native.
 `react-native-controllers` simplifies this by re-introducing [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/) into the React Native stack.
 
