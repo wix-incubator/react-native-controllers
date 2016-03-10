@@ -158,9 +158,7 @@ var Controllers = {
 
   Modal: {
     showLightBox: function(params) {
-      if (params.style.backgroundColor !== undefined) {
-        params.style.backgroundColor = processColor(params.style.backgroundColor);
-      }
+      _processProperties(params.style);
       RCCManager.modalShowLightBox(params);
     },
     dismissLightBox: function() {
