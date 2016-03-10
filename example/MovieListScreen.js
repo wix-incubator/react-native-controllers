@@ -128,7 +128,7 @@ var MovieListScreen = React.createClass({
         <View style={{height: 50}}>
           {
             this.state.tabBarHidden ?
-            <Text style={{height: 50, color: 'red', backgroundColor: 'green', textAlign: 'center'}}>Wink wink</Text>
+            <Text style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 30, color: 'red', backgroundColor: '#ffcccc', textAlign: 'center'}}>Wink wink</Text>
             : false
           }
         </View>

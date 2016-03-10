@@ -16,6 +16,7 @@ require('./SideMenu');
 require('./MovieListScreen');
 require('./SearchScreen');
 require('./FavoritesScreen');
+require('./ModalScreen');
 
 var MoviesApp = Controllers.createClass({
 
@@ -28,9 +29,7 @@ var MoviesApp = Controllers.createClass({
               title="Red Title"
               component="MovieListScreen"
               id="movies"
-              style={{navBarTextColor: '#ff0000', 
-              drawUnderNavBar: false,
-              drawUnderTabBar: true}}
+              style={{navBarTextColor: '#ff0000', drawUnderNavBar: false, drawUnderTabBar: true}}
             />
           </TabBarControllerIOS.Item>
           <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
@@ -54,10 +53,15 @@ var ModalScreenTester = Controllers.createClass({
   render: function() {
     return (
       <NavigationControllerIOS
-              title="Favorites"
-              component="FavoritesScreen"
-              id="favorites"
-              passProps={{hidePop: true}}
+        title="Modal"
+        component="ModalScreen"
+        id="modal"
+        leftButtons={[{
+          title: "Close",
+          onPress: function() {
+            Controllers.Modal.dismissController();
+          }
+        }]}
       />
     );
   },

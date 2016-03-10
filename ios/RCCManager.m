@@ -1,5 +1,6 @@
 #import "RCCManager.h"
 #import "RCTBridge.h"
+#import "RCTRedBox.h"
 #import <Foundation/Foundation.h>
 
 @interface RCCManager()
@@ -30,8 +31,15 @@
   if (self)
   {
     self.modulesRegistry = [@{} mutableCopy];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
   }
   return self;
+}
+
+-(void)onRNReload
+{
+  [self.modulesRegistry removeAllObjects];
 }
 
 -(void)registerController:(UIViewController*)controller componentId:(NSString*)componentId componentType:(NSString*)componentType
@@ -48,6 +56,10 @@
     self.modulesRegistry[componentType] = componentsDic;
   }
 
+  if (componentsDic[componentId])
+  {
+    [self.sharedBridge.redBox showErrorMessage:[NSString stringWithFormat:@"Controllers: controller with id %@ is already registered. Make sure all of the controller id's you use are unique.", componentId]];
+  }
   componentsDic[componentId] = controller;
 }
 

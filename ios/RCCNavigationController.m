@@ -22,6 +22,18 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 
   NSString *title = props[@"title"];
   if (title) viewController.title = title;
+  
+  NSArray *leftButtons = props[@"leftButtons"];
+  if (leftButtons)
+  {
+    [self setButtons:leftButtons viewController:viewController side:@"left" animated:NO];
+  }
+  
+  NSArray *rightButtons = props[@"rightButtons"];
+  if (rightButtons)
+  {
+    [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
+  }
 
   self = [super initWithRootViewController:viewController];
   if (!self) return nil;
