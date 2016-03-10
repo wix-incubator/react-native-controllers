@@ -22,12 +22,12 @@ var MovieListScreen = React.createClass({
 
   componentDidMount: function() {
     this.setState({tabBarHidden: false});
-    Controllers.NavigationControllerIOS("movies").setLeftButton({
+    Controllers.NavigationControllerIOS("movies").setLeftButtons([{
       title: "Burger",
       onPress: function() {
         Controllers.DrawerControllerIOS("drawer").toggle();
       }
-    });
+    }]);
   },
 
   onButtonClick: function(val) {
@@ -38,7 +38,7 @@ var MovieListScreen = React.createClass({
 
   onShowLightBoxClick: function(backgroundBlur, backgroundColor = undefined) {
     Modal.showLightBox({
-      component: 'LightBox', 
+      component: 'LightBox',
       style: {
         backgroundBlur: backgroundBlur,
         backgroundColor: backgroundColor

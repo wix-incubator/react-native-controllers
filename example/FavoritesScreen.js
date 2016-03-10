@@ -8,7 +8,9 @@ var {
   View,
   Image,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  AlertIOS,
+  NativeAppEventEmitter
 } = React;
 
 var Controllers = require('react-native-controllers');
@@ -21,7 +23,7 @@ var FavoritesScreen = React.createClass({
 
         <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
 
-        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
           Styling Example
         </Text>
 
@@ -104,6 +106,18 @@ var FavoritesScreen = React.createClass({
 
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backcustomtext') }>
           <Text style={styles.button}>Custom Back Button Text</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttons') }>
+          <Text style={styles.button}>Right NavBar Text Buttons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'righticonbuttons') }>
+          <Text style={styles.button}>Right NavBar Icon Buttons</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'eventbuttons') }>
+          <Text style={styles.button}>Event Based NavBar Buttons</Text>
         </TouchableOpacity>
 
         <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
@@ -264,6 +278,75 @@ var FavoritesScreen = React.createClass({
           title: "More",
           component: "FavoritesScreen",
           backButtonTitle: "Hello"
+        });
+        break;
+      case 'rightbuttons':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              title: "Edit",
+              onPress: function() {
+                AlertIOS.alert('Button', 'Edit pressed');
+              }
+            },
+            {
+              title: "Save",
+              onPress: function() {
+                AlertIOS.alert('Button', 'Save pressed');
+              }
+            }
+          ]
+        });
+        break;
+      case 'righticonbuttons':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              icon: require('./img/navicon_edit.png'),
+              onPress: function() {
+                AlertIOS.alert('Button', 'Edit pressed');
+              }
+            },
+            {
+              icon: require('./img/navicon_add.png'),
+              onPress: function() {
+                AlertIOS.alert('Button', 'Add pressed');
+              }
+            }
+          ]
+        });
+        break;
+      case 'eventbuttons':
+        const eventId = 'MY_UNIQUE_EVENT_ID';
+        NativeAppEventEmitter.addListener(eventId, function (event) {
+          switch (event.id) {
+            case 'edit':
+              AlertIOS.alert('Button', 'Edit pressed');
+              break;
+            case 'add':
+              AlertIOS.alert('Button', 'Add pressed');
+              break;
+          }
+        });
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              icon: require('./img/navicon_edit.png'),
+              id: 'edit',
+              onPress: eventId
+            },
+            {
+              icon: require('./img/navicon_add.png'),
+              id: 'add',
+              onPress: eventId
+            }
+          ]
         });
         break;
     }

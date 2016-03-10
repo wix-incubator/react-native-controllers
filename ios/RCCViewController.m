@@ -132,7 +132,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   NSString *navBarBackgroundColor = self.navigatorStyle[@"navBarBackgroundColor"];
   if (navBarBackgroundColor)
   {
-    UIColor *color = navBarBackgroundColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarBackgroundColor] : nil;
+    UIColor *color = [RCTConvert UIColor:navBarBackgroundColor];
     self.navigationController.navigationBar.barTintColor = color;
   }
   else
@@ -143,7 +143,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   NSString *navBarTextColor = self.navigatorStyle[@"navBarTextColor"];
   if (navBarTextColor)
   {
-    UIColor *color = navBarTextColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarTextColor] : nil;
+    UIColor *color = [RCTConvert UIColor:navBarTextColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : color}];
   }
   else
@@ -154,7 +154,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   NSString *navBarButtonColor = self.navigatorStyle[@"navBarButtonColor"];
   if (navBarButtonColor)
   {
-    UIColor *color = navBarButtonColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarButtonColor] : nil;
+    UIColor *color = [RCTConvert UIColor:navBarButtonColor];
     self.navigationController.navigationBar.tintColor = color;
   }
   else
