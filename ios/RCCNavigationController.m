@@ -4,8 +4,10 @@
 #import "RCTEventDispatcher.h"
 #import "RCTConvert.h"
 
-
 @implementation RCCNavigationController
+
+NSString const *CALLBACK_ASSOCIATED_KEY = @"RCCNavigationController.CALLBACK_ASSOCIATED_KEY";
+NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSOCIATED_ID";
 
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
 {
@@ -72,6 +74,18 @@
       {
         self.topViewController.navigationItem.backBarButtonItem = nil;
       }
+      
+      NSArray *leftButtons = actionParams[@"leftButtons"];
+      if (leftButtons)
+      {
+        [self setButtons:leftButtons viewController:viewController side:@"left" animated:NO];
+      }
+      
+      NSArray *rightButtons = actionParams[@"rightButtons"];
+      if (rightButtons)
+      {
+        [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
+      }
 
       [self pushViewController:viewController animated:animated];
 
@@ -90,28 +104,69 @@
     return;
   }
 
-  // setLeftButton
-  if ([performAction isEqualToString:@"setLeftButton"])
+  // setButtons
+  if ([performAction isEqualToString:@"setButtons"])
   {
     dispatch_async(dispatch_get_main_queue(), ^{
 
-      NSString *title = actionParams[@"title"];
-      if (!title) return;
-
-      UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(onLeftButtonPresss:)];
-      barButtonItem.accessibilityIdentifier = actionParams[@"onPress"];
-      self.visibleViewController.navigationItem.leftBarButtonItem = barButtonItem;
-
+      NSArray *buttons = actionParams[@"buttons"];
+      BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
+      NSString *side = actionParams[@"side"] ? actionParams[@"side"] : @"left";
+    
+      [self setButtons:buttons viewController:self.topViewController side:side animated:animated];
     });
     return;
   }
 
 }
 
--(void)onLeftButtonPresss:(UIBarButtonItem*)barButtonItem
+-(void)onButtonPress:(UIBarButtonItem*)barButtonItem
 {
-  if (!barButtonItem.accessibilityIdentifier) return;
-  [[[RCCManager sharedIntance] getBridge].eventDispatcher sendAppEventWithName:barButtonItem.accessibilityIdentifier body:@{}];
+  NSString *callbackId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_KEY);
+  if (!callbackId) return;
+  NSString *buttonId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID);
+  [[[RCCManager sharedIntance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@{@"id": buttonId ? buttonId : [NSNull null]}];
+}
+
+-(void)setButtons:(NSArray*)buttons viewController:(UIViewController*)viewController side:(NSString*)side animated:(BOOL)animated
+{
+  NSMutableArray *barButtonItems = [NSMutableArray new];
+  for (NSDictionary *button in buttons)
+  {
+    NSString *title = button[@"title"];
+    UIImage *iconImage = nil;
+    id icon = button[@"icon"];
+    if (icon) iconImage = [RCTConvert UIImage:icon];
+    
+    UIBarButtonItem *barButtonItem;
+    if (iconImage)
+    {
+      barButtonItem = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(onButtonPress:)];
+    }
+    else if (title)
+    {
+      barButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:self action:@selector(onButtonPress:)];
+    }
+    else continue;
+    objc_setAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_KEY, button[@"onPress"], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [barButtonItems addObject:barButtonItem];
+    
+    NSString *buttonId = button[@"id"];
+    if (buttonId)
+    {
+      objc_setAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID, buttonId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+  }
+  
+  if ([side isEqualToString:@"left"])
+  {
+    [viewController.navigationItem setLeftBarButtonItems:barButtonItems animated:animated];
+  }
+  
+  if ([side isEqualToString:@"right"])
+  {
+    [viewController.navigationItem setRightBarButtonItems:barButtonItems animated:animated];
+  }
 }
 
 @end

@@ -25,20 +25,20 @@ function _processProperties(properties) {
 }
 
 function _setListener(callbackId, func) {
-  return NativeAppEventEmitter.addListener(callbackId, (event) => func(event));
+  return NativeAppEventEmitter.addListener(callbackId, (...args) => func(...args));
 }
 
 function _processButtons(buttons) {
   var unsubscribes = [];
   for (var i = 0 ; i < buttons.length ; i++) {
     var button = buttons[i];
+    _processProperties(button);
     if (typeof button.onPress === "function") {
       var onPressId = _getRandomId();
       var onPressFunc = button.onPress;
       button.onPress = onPressId;
       var unsubscribe = _setListener(onPressId, onPressFunc);
       unsubscribes.push(unsubscribe);
-      _processProperties(button);
     }
   }
   return function () {
