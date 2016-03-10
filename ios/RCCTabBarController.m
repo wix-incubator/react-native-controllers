@@ -49,4 +49,29 @@
   return self;
 }
 
+- (void)performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams bridge:(RCTBridge *)bridge completion:(void (^)(void))completion
+{
+    if ([performAction isEqualToString:@"setTabBarHidden"])
+    {
+        BOOL hidden = [actionParams[@"hidden"] boolValue];
+        [UIView animateWithDuration: ([actionParams[@"animated"] boolValue] ? 0.45 : 0)
+                              delay: 0
+             usingSpringWithDamping: 0.75
+              initialSpringVelocity: 0
+                            options: (hidden ? UIViewAnimationOptionCurveEaseIn : UIViewAnimationOptionCurveEaseOut)
+                         animations:^()
+         {
+             self.tabBar.transform = hidden ? CGAffineTransformMakeTranslation(0, self.tabBar.frame.size.height) : CGAffineTransformIdentity;
+         }
+                         completion:^(BOOL finished)
+        {
+            if (completion != nil)
+            {
+                completion();
+            }
+        }];
+        return;
+    }
+}
+
 @end

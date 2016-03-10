@@ -6,14 +6,22 @@ var {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TouchableOpacity
 } = React;
 
+require('./LightBox');
+
 var Controllers = require('react-native-controllers');
+var {
+  Modal,
+  ControllerRegistry
+} = Controllers;
 
 var MovieListScreen = React.createClass({
 
   componentDidMount: function() {
+    this.setState({tabBarHidden: false});
     Controllers.NavigationControllerIOS("movies").setLeftButton({
       title: "Burger",
       onPress: function() {
@@ -28,10 +36,33 @@ var MovieListScreen = React.createClass({
     });
   },
 
+  onShowLightBoxClick: function(backgroundBlur, backgroundColor = undefined) {
+    Modal.showLightBox({
+      component: 'LightBox', 
+      style: {
+        backgroundBlur: backgroundBlur,
+        backgroundColor: backgroundColor
+      }
+    });
+  },
+
+  onShowModalVcClick: async function() {
+    Modal.showController('ModalScreenTester');
+  },
+
+  onToggleTabBarClick: async function() {
+    this.state.tabBarHidden = !this.state.tabBarHidden;
+    Controllers.TabBarControllerIOS("main").setHidden({hidden: this.state.tabBarHidden, animated: true});
+  },
+
+  onReplaceRootAnimatedClick: function() {
+    ControllerRegistry.setRootController('ModalScreenTester', 'slide-down');
+  },
+
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
+      <ScrollView style={styles.container}>
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
           Side Menu Example
         </Text>
 
@@ -54,7 +85,39 @@ var MovieListScreen = React.createClass({
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, "slideAndScale") }>
           <Text style={styles.button}>Slide & Scale</Text>
         </TouchableOpacity>
-      </View>
+
+        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
+          Modal Example
+        </Text>
+
+        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+          Use the various options below to bring up modal screens:
+        </Text>
+
+        <TouchableOpacity onPress={ this.onShowLightBoxClick.bind(this, "dark") }>
+          <Text style={styles.button}>LightBox (dark blur)</Text>
+        </TouchableOpacity>
+
+	      <TouchableOpacity onPress={ this.onShowLightBoxClick.bind(this, "light") }>
+          <Text style={styles.button}>LightBox (light blur)</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowLightBoxClick.bind(this, "light", "rgba(66, 141, 200, 0.2)") }>
+          <Text style={styles.button}>LightBox (light blur + color overlay)</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowModalVcClick }>
+          <Text style={styles.button}>Show Modal ViewController</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onToggleTabBarClick }>
+          <Text style={styles.button}>Toggle tab-bar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onReplaceRootAnimatedClick }>
+          <Text style={styles.button}>Replace root animated</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   },
 
