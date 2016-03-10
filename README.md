@@ -17,6 +17,7 @@ Without `react-native-controllers`, iOS skeleton components such as [`UINavigati
 * [What sacrifices did we make?](#what-sacrifices-did-we-make)
 * [Installation](#installation)
 * [Usage](#usage)
+* [API](#api)
 * [Available view controllers](#available-view-controllers)
 * [Credits](#credits)
 * [License](#license)
@@ -116,7 +117,7 @@ You need an iOS React Native project ([instructions on how to create one](https:
 
 ## Usage
 
-Check out the iOS example project under [`./example`](example) to see everything in action.
+Check out the iOS example project under [`./example`](example) to see everything in action. For a detailed explanation of how to modify your project, follow the 3 steps below:
 
 ### Step 1 - Update AppDelegate
 
@@ -241,6 +242,81 @@ AppRegistry.registerComponent('MovieListScreen', () => MovieListScreen);
 
 When implementing your components, you may need to interact with one of the view controllers. For example, create a button that pushes a new screen to the navigation controller. You have simple JS API for this purpose available by `require('react-native-controllers')`. This API is documented under the list of [available view controllers](#available-view-controllers).
 
+## API
+
+### `ControllerRegistry`
+
+```js
+var Controllers = require('react-native-controllers');
+var { ControllerRegistry } = Controllers;
+```
+
+ * **registerController(controllerId, generator)** - register a unique id for a controller
+ 
+```js
+ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
+```
+
+ * **setRootController(controllerId, animationType = 'none')** - start the app with a root controller
+
+```js
+// example without animation
+// controllerId: a string id previously registered with ControllerRegistry.registerController
+ControllerRegistry.setRootController('MoviesApp');
+
+// example with animation, useful for changing your app root during runtime (from a different controller) 
+// animationType: 'none', 'slide-down'
+ControllerRegistry.setRootController('LoginApp', 'slide-down');
+```
+
+### `Modal`
+
+```js
+var Controllers = require('react-native-controllers');
+var { Modal } = Controllers;
+```
+
+ * **showController(controllerId, animationType = 'slide-up')** - display a controller modally
+
+```js
+// example with default slide up animation
+// controllerId: a string id previously registered with ControllerRegistry.registerController
+Modal.showController('MoviesApp');
+
+// example without animation
+// animationType: 'none', 'slide-up'
+Modal.showController('LoginApp', 'none');
+```
+
+ * **dismissController(animationType = 'slide-down')** - dismiss the current modal controller
+
+```js
+// example with default slide down animation
+Modal.dismissController();
+
+// example without animation
+// animationType: 'none', 'slide-down'
+Modal.dismissController('none');
+```
+
+ * **showLightBox(params)** - display a component as a light box
+
+```js
+Modal.showLightBox({
+  component: "LightBoxScreen", // the unique ID registered with AppRegistry.registerComponent (required)
+  style: {
+    backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
+    backgroundColor: "#ff0000" // tint color for the background (optional)
+  }
+});
+```
+
+ * **dismissLightBox()** - dismiss the current light box
+
+```js
+Modal.dismissLightBox();
+```
+
 ## Available View Controllers
 
 The package contains implementations for the following view controllers that you can use in your app skeleton:
@@ -252,7 +328,7 @@ The package contains implementations for the following view controllers that you
 
 These wrappers are very simple. You can also add your own if you find missing React Native components that are based on `UIViewController` instead of `UIView`.
 
-### NavigationControllerIOS
+### `NavigationControllerIOS`
 
 Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/). This view controller is a replacement for React Native's [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content) that is no longer maintained by Facebook.
 
@@ -299,7 +375,7 @@ navigationController.push({
       // on press event handler
     }
   }],
-  rightButtons: [] // similar format to leftButtons
+  rightButtons: [] // similar format to leftButtons (optional)
 });
 ```
 
@@ -363,7 +439,7 @@ See all the styles in action by running the [example](example) project in Xcode 
 
 [`FavoritesScreen.js`](example/FavoritesScreen.js), [`PushedScreen.js`](example/PushedScreen.js)
 
-### DrawerControllerIOS
+### `DrawerControllerIOS`
 
 Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController). This view controller lets you add a configurable side menu to your app (either on the left, right or both). Unlike most side menu implementations available for React Native, this side menu isn't implemented in JS and is completely native.
 
@@ -431,7 +507,7 @@ drawerController.setStyle({
 
 [`MovieListScreen.js`](example/MovieListScreen.js)
 
-### TabBarControllerIOS
+### `TabBarControllerIOS`
 
 Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/). This view controller lets display native tabs in your app, much like React Native's [`TabBarIOS`](https://facebook.github.io/react-native/docs/tabbarios.html#content).
 
@@ -463,9 +539,23 @@ selectedIcon | Local asset image for the tab icon (selected state), use `require
 
 ##### Methods
 
-Currently not implemented
+Get the instance with `Controllers.TabBarControllerIOS(id)`
 
-### ViewControllerIOS
+```js
+var Controllers = require('react-native-controllers');
+var tabController = Controllers.TabBarControllerIOS("main");
+```
+
+ * **setHidden(params)** - manually hide/show the tab bar
+
+```js
+tabController.setHidden({
+  hidden: true, // the new state of the tab bar
+  animated: true
+});
+```
+
+### `ViewControllerIOS`
 
 Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/). This view controller is useful when you need to specify a view controller but you don't want anything special except a holder for your view. For example, a tab body without a navigation controller.
 
