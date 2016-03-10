@@ -244,7 +244,41 @@ When implementing your components, you may need to interact with one of the view
 
 ## API
 
-### `ControllerRegistry`
+#### `Controllers`
+
+```js
+var Controllers = require('react-native-controllers');
+```
+
+ * **hijackReact()** - change the React instance in this file so controllers can be defined (see explanation above)
+ 
+```js
+var React = Controllers.hijackReact();
+var {
+  TabBarControllerIOS,
+  NavigationControllerIOS,
+  ViewControllerIOS,
+  DrawerControllerIOS
+} = React;
+```
+
+ * **createClass(controllerClass)** - define a new controller using JSX (see explanation above)
+
+```js
+var MoviesApp = Controllers.createClass({
+  render: function() {
+    return (
+      <DrawerControllerIOS id="drawer" componentLeft="SideMenu" componentRight="SideMenu">
+      ...
+      </DrawerControllerIOS>
+    );
+  }
+});
+```
+
+> Note: Your render function can only contain supported controllers, see the full list under [available view controllers](#available-view-controllers).
+
+#### `ControllerRegistry`
 
 ```js
 var Controllers = require('react-native-controllers');
@@ -269,7 +303,7 @@ ControllerRegistry.setRootController('MoviesApp');
 ControllerRegistry.setRootController('LoginApp', 'slide-down');
 ```
 
-### `Modal`
+#### `Modal`
 
 ```js
 var Controllers = require('react-native-controllers');
@@ -328,7 +362,7 @@ The package contains implementations for the following view controllers that you
 
 These wrappers are very simple. You can also add your own if you find missing React Native components that are based on `UIViewController` instead of `UIView`.
 
-### `NavigationControllerIOS`
+#### `NavigationControllerIOS`
 
 Native navigator wrapper around [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/). This view controller is a replacement for React Native's [`NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html#content) that is no longer maintained by Facebook.
 
@@ -439,7 +473,7 @@ See all the styles in action by running the [example](example) project in Xcode 
 
 [`FavoritesScreen.js`](example/FavoritesScreen.js), [`PushedScreen.js`](example/PushedScreen.js)
 
-### `DrawerControllerIOS`
+#### `DrawerControllerIOS`
 
 Native side menu drawer wrapper around [`MMDrawerController`](https://github.com/mutualmobile/MMDrawerController). This view controller lets you add a configurable side menu to your app (either on the left, right or both). Unlike most side menu implementations available for React Native, this side menu isn't implemented in JS and is completely native.
 
@@ -507,7 +541,7 @@ drawerController.setStyle({
 
 [`MovieListScreen.js`](example/MovieListScreen.js)
 
-### `TabBarControllerIOS`
+#### `TabBarControllerIOS`
 
 Native tabs wrapper around [`UITabBarController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/). This view controller lets display native tabs in your app, much like React Native's [`TabBarIOS`](https://facebook.github.io/react-native/docs/tabbarios.html#content).
 
@@ -555,7 +589,7 @@ tabController.setHidden({
 });
 ```
 
-### `ViewControllerIOS`
+#### `ViewControllerIOS`
 
 Generic empty view controller wrapper around [`UIViewController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/). This view controller is useful when you need to specify a view controller but you don't want anything special except a holder for your view. For example, a tab body without a navigation controller.
 
