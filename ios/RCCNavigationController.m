@@ -107,6 +107,38 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     [self popViewControllerAnimated:animated];
     return;
   }
+  
+  // setRootController
+  if ([performAction isEqualToString:@"setRootController"])
+  {
+    NSString *component = actionParams[@"component"];
+    if (!component) return;
+    
+    NSDictionary *passProps = actionParams[@"passProps"];
+    NSDictionary *navigatorStyle = actionParams[@"style"];
+    
+    RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle bridge:bridge];
+    
+    NSString *title = actionParams[@"title"];
+    if (title) viewController.title = title;
+    
+    NSArray *leftButtons = actionParams[@"leftButtons"];
+    if (leftButtons)
+    {
+      [self setButtons:leftButtons viewController:viewController side:@"left" animated:NO];
+    }
+    
+    NSArray *rightButtons = actionParams[@"rightButtons"];
+    if (rightButtons)
+    {
+      [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
+    }
+    
+    BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
+    
+    [self setViewControllers:@[viewController] animated:animated];
+    return;
+  }
 
   // setButtons
   if ([performAction isEqualToString:@"setButtons"])
