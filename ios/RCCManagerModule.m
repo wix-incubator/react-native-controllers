@@ -49,6 +49,11 @@ RCT_EXPORT_MODULE(RCCManager);
     return [NSError errorWithDomain:@"RCCControllers" code:code userInfo:@{NSLocalizedDescriptionKey: safeDescription}];
 }
 
++(void)handleRCTPromiseRejectBlock:(RCTPromiseRejectBlock)reject error:(NSError*)error
+{
+    reject([NSString stringWithFormat: @"%lu", (long)error.code], error.localizedDescription, error);
+}
+
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
@@ -123,14 +128,16 @@ TabBarControllerIOS:(NSString*)controllerId performAction:(NSString*)performActi
 {
     if (!controllerId || !performAction)
     {
-        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleMissingParamsErrorCode description:@"missing params"]);
+        [RCCManagerModule handleRCTPromiseRejectBlock:reject
+                                                error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleMissingParamsErrorCode description:@"missing params"]];
         return;
     }
     
     RCCTabBarController* controller = [[RCCManager sharedIntance] getControllerWithId:controllerId componentType:@"TabBarControllerIOS"];
     if (!controller || ![controller isKindOfClass:[RCCTabBarController class]])
     {
-        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleCantFindTabControllerErrorCode description:@"could not find UITabBarController"]);
+        [RCCManagerModule handleRCTPromiseRejectBlock:reject
+                                                error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantFindTabControllerErrorCode description:@"could not find UITabBarController"]];
         return;
     }
     [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedIntance] getBridge] completion:^(){ resolve(nil); }];
@@ -154,7 +161,8 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType reso
     UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedIntance] getBridge]];
     if (controller == nil)
     {
-        reject([RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]);
+        [RCCManagerModule handleRCTPromiseRejectBlock:reject
+                                                error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
     }
     
