@@ -6,7 +6,7 @@
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
-*Supports react-native 0.19.0+ (due to breaking change in native promise API)*
+*Versions 1.2.0+ support react-native 0.19.0+ (due to breaking change in native promise API)*
 
 ![Screenshots](http://i.imgur.com/2QyOm9a.png)
 
