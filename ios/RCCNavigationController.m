@@ -61,6 +61,18 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     {
       RCCViewController *parent = (RCCViewController*)self.topViewController;
       NSMutableDictionary *mergedStyle = [NSMutableDictionary dictionaryWithDictionary:parent.navigatorStyle];
+      
+      // there are a few styles that we don't want to remember from our parent (they should be local)
+      [mergedStyle removeObjectForKey:@"navBarHidden"];
+      [mergedStyle removeObjectForKey:@"statusBarHidden"];
+      [mergedStyle removeObjectForKey:@"navBarHideOnScroll"];
+      [mergedStyle removeObjectForKey:@"drawUnderNavBar"];
+      [mergedStyle removeObjectForKey:@"drawUnderTabBar"];
+      [mergedStyle removeObjectForKey:@"statusBarBlur"];
+      [mergedStyle removeObjectForKey:@"navBarBlur"];
+      [mergedStyle removeObjectForKey:@"navBarTranslucent"];
+      [mergedStyle removeObjectForKey:@"statusBarHideWithNavBar"];
+      
       [mergedStyle addEntriesFromDictionary:navigatorStyle];
       navigatorStyle = mergedStyle;
     }

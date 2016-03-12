@@ -80,6 +80,18 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>NavBar Not Hidden</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'statushidden') }>
+          <Text style={styles.button}>StatusBar Hidden</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'lightstatus') }>
+          <Text style={styles.button}>Light StatusBar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'darkstatus') }>
+          <Text style={styles.button}>Dark StatusBar</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatushidden') }>
           <Text style={styles.button}>NavBar & StatusBar Hidden</Text>
         </TouchableOpacity>
@@ -160,6 +172,33 @@ var FavoritesScreen = React.createClass({
           }
         });
         break;
+      case 'statushidden':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            statusBarHidden: true
+          }
+        });
+        break;
+      case 'lightstatus':
+        Controllers.NavigationControllerIOS("favorites").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            statusBarTextColorScheme: 'light'
+          }
+        });
+        break;
+        case 'darkstatus':
+          Controllers.NavigationControllerIOS("favorites").push({
+            title: "More",
+            component: "FavoritesScreen",
+            style: {
+              statusBarTextColorScheme: 'dark'
+            }
+          });
+          break;
       case 'navstatushidden':
         Controllers.NavigationControllerIOS("favorites").push({
           title: "More",
@@ -222,6 +261,7 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen",
           style: {
             drawUnderNavBar: true,
+            navBarTranslucent: true,
             drawUnderTabBar: false
           }
         });
@@ -242,6 +282,7 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen",
           style: {
             drawUnderNavBar: true,
+            navBarTranslucent: true,
             drawUnderTabBar: true
           }
         });
