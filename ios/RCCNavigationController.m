@@ -138,7 +138,11 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   NSString *callbackId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_KEY);
   if (!callbackId) return;
   NSString *buttonId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID);
-  [[[RCCManager sharedIntance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@{@"id": buttonId ? buttonId : [NSNull null]}];
+  [[[RCCManager sharedIntance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@
+  {
+    @"type": @"NavBarButtonPress",
+    @"id": buttonId ? buttonId : [NSNull null]
+  }];
 }
 
 -(void)setButtons:(NSArray*)buttons viewController:(UIViewController*)viewController side:(NSString*)side animated:(BOOL)animated
