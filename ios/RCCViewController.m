@@ -14,6 +14,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 @property (nonatomic) BOOL _statusBarHideWithNavBar;
 @property (nonatomic) BOOL _statusBarHidden;
 @property (nonatomic) BOOL _statusBarTextColorSchemeLight;
+@property (nonatomic, strong) NSDictionary *originalNavBarImages;
 @end
 
 @implementation RCCViewController
@@ -125,6 +126,8 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
+  
+  [self setStyleOnDisappear];
 }
 
 // most styles should be set here since when we pop a view controller that changed them
@@ -213,6 +216,19 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     if (![self.navigationController.navigationBar viewWithTag:BLUR_NAVBAR_TAG])
     {
+      NSMutableDictionary *originalNavBarImages = [@{} mutableCopy];
+      UIImage *bgImage = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
+      if (bgImage != nil)
+      {
+        originalNavBarImages[@"bgImage"] = bgImage;
+      }
+      UIImage *shadowImage = self.navigationController.navigationBar.shadowImage;
+      if (shadowImage != nil)
+      {
+        originalNavBarImages[@"shadowImage"] = shadowImage;
+      }
+      self.originalNavBarImages = originalNavBarImages;
+      
       [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
       self.navigationController.navigationBar.shadowImage = [UIImage new];
       UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
@@ -266,6 +282,13 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
     self.edgesForExtendedLayout &= ~UIRectEdgeBottom;
   }
   
+}
+
+-(void)setStyleOnDisappear
+{
+  [self.navigationController.navigationBar setBackgroundImage:self.originalNavBarImages[@"bgImage"] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = self.originalNavBarImages[@"shadowImage"];
+  self.originalNavBarImages = nil;
 }
 
 // only styles that can't be set on willAppear should be set here
