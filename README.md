@@ -119,6 +119,8 @@ You need an iOS React Native project ([instructions on how to create one](https:
 3. In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Phases` tab (right pane) <br> In the `Link Binary With Libraries` section add `libReactNativeControllers.a` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-2))
 4. In Xcode, in Project Navigator (left pane), click on your project (top) and select the `Build Settings` tab (right pane) <br> In the `Header Search Paths` section add `$(SRCROOT)/../node_modules/react-native-controllers/ios` <br> Make sure on the right to mark this new path `recursive` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-3))
 
+> Make sure you are using React Native version >= 0.19.0
+
 ## Usage
 
 Check out the iOS example project under [`./example`](example) to see everything in action. For a detailed explanation of how to modify your project, follow the 3 steps below:
