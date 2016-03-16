@@ -413,7 +413,8 @@ navigationController.push({
     icon: require('./img/navicon_camera.png'), // optional, image for an icon button
     onPress: function() {
       // on press event handler
-    }
+    },
+    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 });
@@ -429,6 +430,14 @@ navigationController.pop({
 );
 ```
 
+ * **popToRoot()** - pop all the screens from the navigation stack until we get to the root
+
+```js
+navigationController.popToRoot({
+  animated: true // does the pop have a transition animation (optional, default true)
+);
+```
+
  * **setLeftButtons(buttons, animated = false)** - set the left buttons of the navigation bar
  * **setRightButtons(buttons, animated = false)** - set the right buttons of the navigation bar
 
@@ -438,15 +447,25 @@ navigationController.setRightButtons([
     title: "Button Title", // title for a textual button
     onPress: function() {
       // on press event handler
-    }
+    },
+    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
   },
   {
     icon: require('./img/navicon_camera.png'), // image for an icon button
     onPress: function() {
       // on press event handler
-    }
+    },
+    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
   }
   ]);
+```
+
+* **setTitle(params)** - change the title in the navigation bar during runtime
+
+```js
+navigationController.setTitle({
+  title: "New Title"
+});
 ```
 
 ##### Styling Navigation
