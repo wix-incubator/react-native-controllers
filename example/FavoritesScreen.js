@@ -356,7 +356,8 @@ var FavoritesScreen = React.createClass({
               icon: require('./img/navicon_add.png'),
               onPress: function() {
                 AlertIOS.alert('Button', 'Add pressed');
-              }
+              },
+              testID: "e2erules"
             }
           ]
         });

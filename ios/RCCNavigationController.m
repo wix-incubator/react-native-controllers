@@ -119,6 +119,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     [self popViewControllerAnimated:animated];
     return;
   }
+  
+  // popToRoot
+  if ([performAction isEqualToString:@"popToRoot"])
+  {
+    [self popToRootViewControllerAnimated:animated];
+    return;
+  }
 
   // setButtons
   if ([performAction isEqualToString:@"setButtons"])
@@ -131,6 +138,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     return;
   }
 
+  // setTitle
+  if ([performAction isEqualToString:@"setTitle"])
+  {
+    NSString *title = actionParams[@"title"];
+    if (title) self.topViewController.title = title;
+    return;
+  }
 }
 
 -(void)onButtonPress:(UIBarButtonItem*)barButtonItem
@@ -172,6 +186,12 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     if (buttonId)
     {
       objc_setAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID, buttonId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    
+    NSString *testID = button[@"testID"];
+    if (testID)
+    {
+      barButtonItem.accessibilityIdentifier = testID;
     }
   }
   

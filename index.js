@@ -119,6 +119,12 @@ var Controllers = {
       pop: function (params) {
         RCCManager.NavigationControllerIOS(id, "pop", params);
       },
+      popToRoot: function (params) {
+        RCCManager.NavigationControllerIOS(id, "popToRoot", params);
+      },
+      setTitle: function (params) {
+        RCCManager.NavigationControllerIOS(id, "setTitle", params);
+      },
       setLeftButton: function () {
         console.error('setLeftButton is deprecated, see setLeftButtons');
       },
