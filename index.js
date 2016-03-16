@@ -119,6 +119,26 @@ var Controllers = {
       pop: function (params) {
         RCCManager.NavigationControllerIOS(id, "pop", params);
       },
+      setRootController: function (params) {
+        var unsubscribes = [];
+        if (params['style']) {
+          _processProperties(params['style']);
+        }
+        if (params['leftButtons']) {
+          var unsubscribe = _processButtons(params['leftButtons']);
+          unsubscribes.push(unsubscribe);
+        }
+        if (params['rightButtons']) {
+          var unsubscribe = _processButtons(params['rightButtons']);
+          unsubscribes.push(unsubscribe);
+        }
+        RCCManager.NavigationControllerIOS(id, "setRootController", params);
+        return function() {
+          for (var i = 0 ; i < unsubscribes.length ; i++) {
+            if (unsubscribes[i]) { unsubscribes[i](); }
+          }
+        };
+      },
       setLeftButton: function () {
         console.error('setLeftButton is deprecated, see setLeftButtons');
       },
