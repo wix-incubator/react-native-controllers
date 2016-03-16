@@ -6,6 +6,8 @@
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
+*Versions 1.2.0+ only support react-native 0.19.0+ (due to breaking change in native promise API)*
+
 ![Screenshots](http://i.imgur.com/2QyOm9a.png)
 
 Without `react-native-controllers`, iOS skeleton components such as [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/) or a [side menu drawer](https://www.cocoacontrols.com/search?q=drawer) are challenging to implement natively. This forces developers to compromise on user experience to use React Native.
@@ -111,6 +113,8 @@ By using the proposed approach, we made several scarifices that you should be aw
 ## Installation
 
 You need an iOS React Native project ([instructions on how to create one](https://facebook.github.io/react-native/docs/getting-started.html#quick-start))
+
+> Important: Make sure you are using react-native version >= 0.19.0
 
 1. Run `npm install react-native-controllers --save` in your project root
 2. In Xcode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]` <br> Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))
@@ -449,25 +453,30 @@ navigationController.setRightButtons([
 
 You can apply styling to the navigation bar appearance and behavior by setting the `style` property when defining your `NavigationControllerIOS` or by passing the `style` object when pushing a new screen. 
 
-Please note that styles are remembered for future pushed screens. For example, if you change the navigation bar color, all future pushed screens will keep this style and have the same changed colors. If you wish to have different colors in a pushed screen, simply override the style by passing the `style` object when calling `push()`.
+Please note that some styles (usually color related) are remembered for future pushed screens. For example, if you change the navigation bar color, all future pushed screens will keep this style and have the same changed colors. If you wish to have different colors in a pushed screen, simply override the style by passing the `style` object when calling `push()`. Every style that is remembered across pushes is documented as such below.
 
 All styles are optional, this is the format of the style object:
 
 ```js
 {
-  navBarTextColor: '#000000', // change the text color of the title
-  navBarBackgroundColor: '#f7f7f7', // change the background color of the nav bar
-  navBarButtonColor: '#007aff', // change the button colors of the nav bar (eg. the back button)
+  navBarTextColor: '#000000', // change the text color of the title (remembered across pushes)
+  navBarBackgroundColor: '#f7f7f7', // change the background color of the nav bar (remembered across pushes)
+  navBarButtonColor: '#007aff', // change the button colors of the nav bar (eg. the back button) (remembered across pushes)
   navBarHidden: false, // make the nav bar hidden
   navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
-  drawUnderNavBar: false, // make the nav bar translucent and draw the screen content under it
-  drawUnderTabBar: false, // make the tab bar translucent and draw the screen content under it
+  navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+  drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
+  drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
   statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true
   navBarBlur: false, // blur the entire nav bar, works best with drawUnderNavBar:true
-  tabBarHidden: false, // make the screen content hide the tab bar
+  tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
   statusBarHideWithNavBar: false // hide the status bar if the nav bar is also hidden, useful for navBarHidden:true
+  statusBarHidden: false, // make the status bar hidden regardless of nav bar state
+  statusBarTextColorScheme: 'dark' // text color of status bar, 'dark' / 'light' (remembered across pushes)
 }
 ```
+
+> Note: If you set any styles related to the Status Bar, make sure that in Xcode > project > Info.plist, the property `View controller-based status bar appearance` is set to `YES`.
 
 See all the styles in action by running the [example](example) project in Xcode (under the "Favorites" tab).
 

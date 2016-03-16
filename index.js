@@ -32,6 +32,7 @@ function _setListener(callbackId, func) {
 }
 
 function _processButtons(buttons) {
+  if (!buttons) return;
   var unsubscribes = [];
   for (var i = 0 ; i < buttons.length ; i++) {
     var button = buttons[i];
