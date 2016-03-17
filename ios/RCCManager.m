@@ -56,11 +56,25 @@
     self.modulesRegistry[componentType] = componentsDic;
   }
 
+  /*
+  TODO: we really want this error, but we need to unregister controllers when they dealloc
   if (componentsDic[componentId])
   {
     [self.sharedBridge.redBox showErrorMessage:[NSString stringWithFormat:@"Controllers: controller with id %@ is already registered. Make sure all of the controller id's you use are unique.", componentId]];
   }
+  */
+   
   componentsDic[componentId] = controller;
+}
+
+-(void)unregisterController:(NSString*)componentId componentType:(NSString*)componentType
+{
+  if (componentType == nil || componentId == nil) return;
+  NSMutableDictionary *componentsDic = self.modulesRegistry[componentType];
+  if (componentsDic != nil)
+  {
+    [componentsDic removeObjectForKey:componentId];
+  }
 }
 
 -(id)getControllerWithId:(NSString*)componentId componentType:(NSString*)componentType
