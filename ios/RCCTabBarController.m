@@ -40,6 +40,15 @@
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
     viewController.tabBarItem.selectedImage = iconImageSelected;
 
+    // create badge
+    NSObject *badge = tabItemLayout[@"props"][@"badge"];
+
+    if(badge == nil || [badge isEqual:[NSNull null]]) {
+      viewController.tabBarItem.badgeValue = nil;
+    } else {
+      viewController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%@", badge];
+    }
+
     [viewControllers addObject:viewController];
   }
 
