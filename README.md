@@ -438,6 +438,27 @@ navigationController.popToRoot({
 );
 ```
 
+* **resetTo()** - replace the navigation stack root, all screens in the existing stack will be discarded
+
+```js
+navigationController.resetTo({
+  title: "New Screen", // nav bar title of the new screen (optional)
+  component: "PushedScreen", // the unique ID registered with AppRegistry.registerComponent (required)
+  passProps: {}, // simple serializable object that will pass as props to the new component (optional)
+  style: {}, // style the navigation bar for the new screen (optional, see "Styling Navigation" below)
+  animated: true, // does the reset have a transition animation (optional, default true)
+  leftButtons: [{ // buttons in the nav bar of the new screen (optional)
+    title: "Button Title", // optional, title for a textual button
+    icon: require('./img/navicon_camera.png'), // optional, image for an icon button
+    onPress: function() {
+      // on press event handler
+    },
+    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
+  }],
+  rightButtons: [] // similar format to leftButtons (optional)
+);
+```
+
  * **setLeftButtons(buttons, animated = false)** - set the left buttons of the navigation bar
  * **setRightButtons(buttons, animated = false)** - set the right buttons of the navigation bar
 
