@@ -28,7 +28,7 @@ var MoviesApp = Controllers.createClass({
             <NavigationControllerIOS
               title="Red Title"
               component="MovieListScreen"
-              id="movies"
+              id="movies_nav"
               style={{navBarTextColor: '#ff0000', drawUnderNavBar: false, drawUnderTabBar: true}}
             />
           </TabBarControllerIOS.Item>
@@ -36,7 +36,7 @@ var MoviesApp = Controllers.createClass({
             <NavigationControllerIOS
               title="Favorites"
               component="FavoritesScreen"
-              id="favorites"
+              id="favorites_nav"
               passProps={{hidePop: true}}
             />
           </TabBarControllerIOS.Item>
@@ -55,7 +55,7 @@ var ModalScreenTester = Controllers.createClass({
       <NavigationControllerIOS
         title="Modal"
         component="ModalScreen"
-        id="modal"
+        id="modal_nav"
         leftButtons={[{
           title: "Close",
           onPress: function() {

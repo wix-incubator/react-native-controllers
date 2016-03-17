@@ -27,7 +27,7 @@ var MovieListScreen = React.createClass({
   },
 
   componentDidMount: function() {
-    Controllers.NavigationControllerIOS("movies").setLeftButtons([{
+    Controllers.NavigationControllerIOS("movies_nav").setLeftButtons([{
       title: "Burger",
       onPress: function() {
         Controllers.DrawerControllerIOS("drawer").toggle();

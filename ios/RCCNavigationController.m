@@ -127,8 +127,8 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     return;
   }
 
-  // setRootController
-  if ([performAction isEqualToString:@"setRootController"])
+  // resetTo
+  if ([performAction isEqualToString:@"resetTo"])
   {
     NSString *component = actionParams[@"component"];
     if (!component) return;

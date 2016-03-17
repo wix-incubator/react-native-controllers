@@ -24,15 +24,46 @@ var PushedScreen = React.createClass({
           Notice how the push was 100% native. This screen doesn't have any special styles applied.
         </Text>
 
-        <TouchableOpacity onPress={ this.onButtonClick }>
+        <TouchableOpacity onPress={ this.onPushClick }>
+          <Text style={styles.button}>Push Another</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPopClick }>
           <Text style={styles.button}>Pop</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onPopToRootClick }>
+          <Text style={styles.button}>PopToRoot</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onResetToClick }>
+          <Text style={styles.button}>ResetTo</Text>
+        </TouchableOpacity>
+
       </View>
     );
   },
 
-  onButtonClick: function() {
-    Controllers.NavigationControllerIOS("favorites").pop();
+  onPushClick: function() {
+    Controllers.NavigationControllerIOS("favorites_nav").push({
+      component: 'PushedScreen',
+      title: 'Another'
+    });
+  },
+
+  onPopClick: function() {
+    Controllers.NavigationControllerIOS("favorites_nav").pop();
+  },
+
+  onPopToRootClick: function() {
+    Controllers.NavigationControllerIOS("favorites_nav").popToRoot();
+  },
+
+  onResetToClick: function() {
+    Controllers.NavigationControllerIOS("favorites_nav").resetTo({
+      component: 'PushedScreen',
+      title: 'New Root'
+    });
   }
 
 });

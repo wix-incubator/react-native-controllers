@@ -125,7 +125,7 @@ var Controllers = {
       setTitle: function (params) {
         RCCManager.NavigationControllerIOS(id, "setTitle", params);
       },
-      setRootController: function (params) {
+      resetTo: function (params) {
         var unsubscribes = [];
         if (params['style']) {
           _processProperties(params['style']);
@@ -138,7 +138,7 @@ var Controllers = {
           var unsubscribe = _processButtons(params['rightButtons']);
           unsubscribes.push(unsubscribe);
         }
-        RCCManager.NavigationControllerIOS(id, "setRootController", params);
+        RCCManager.NavigationControllerIOS(id, "resetTo", params);
         return function() {
           for (var i = 0 ; i < unsubscribes.length ; i++) {
             if (unsubscribes[i]) { unsubscribes[i](); }

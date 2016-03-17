@@ -139,21 +139,21 @@ var FavoritesScreen = React.createClass({
   },
 
   onPopClick: function() {
-    Controllers.NavigationControllerIOS("favorites").pop();
+    Controllers.NavigationControllerIOS("favorites_nav").pop();
   },
 
   onButtonClick: function(cmd) {
     switch (cmd) {
       case 'plain':
         require('./PushedScreen'); // help the react bundler understand we want this file included
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "Pushed screen",
           component: "PushedScreen",
           animated: true
         });
         break;
       case 'navcolors':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -164,7 +164,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'navhidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -173,7 +173,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'statushidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -182,7 +182,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'lightstatus':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -191,7 +191,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
         case 'darkstatus':
-          Controllers.NavigationControllerIOS("favorites").push({
+          Controllers.NavigationControllerIOS("favorites_nav").push({
             title: "More",
             component: "FavoritesScreen",
             style: {
@@ -200,7 +200,7 @@ var FavoritesScreen = React.createClass({
           });
           break;
       case 'navstatushidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -210,7 +210,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'navnothidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -219,7 +219,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'navscrollhidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -228,7 +228,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'navstatusscrollhidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -238,7 +238,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'tabhidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -247,7 +247,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'tabnothidden':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -256,7 +256,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'undernav':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -267,7 +267,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'undertab':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -277,7 +277,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'underboth':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -288,7 +288,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'blurstatus':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -298,7 +298,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'blurnav':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           style: {
@@ -308,21 +308,21 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'backnotext':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           backButtonTitle: ""
         });
         break;
       case 'backcustomtext':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           backButtonTitle: "Hello"
         });
         break;
       case 'rightbuttons':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           rightButtons: [
@@ -342,7 +342,7 @@ var FavoritesScreen = React.createClass({
         });
         break;
       case 'righticonbuttons':
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           rightButtons: [
@@ -374,7 +374,7 @@ var FavoritesScreen = React.createClass({
               break;
           }
         });
-        Controllers.NavigationControllerIOS("favorites").push({
+        Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
           component: "FavoritesScreen",
           rightButtons: [

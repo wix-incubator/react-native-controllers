@@ -11,34 +11,28 @@ var {
 
 var Controllers = require('react-native-controllers');
 
-var ModalScreen = React.createClass({
+var PushedModalScreen = React.createClass({
 
   render: function() {
     return (
       <View style={styles.container}>
         <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 50}}>
-          Simple Modal Screen
+          Simple Pushed Screen
         </Text>
 
         <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
-          Notice how the show modal was 100% native. This screen doesn't have any special styles applied.
+          Notice how the push was 100% native. This screen doesn't have any special styles applied.
         </Text>
 
-        <TouchableOpacity onPress={ this.onPushClick }>
-          <Text style={styles.button}>Push Plain Screen</Text>
+        <TouchableOpacity onPress={ this.onButtonClick }>
+          <Text style={styles.button}>Pop</Text>
         </TouchableOpacity>
-
       </View>
     );
   },
 
-  onPushClick: function() {
-    require('./PushedModalScreen'); // help the react bundler understand we want this file included
-    Controllers.NavigationControllerIOS("modal_nav").push({
-      title: "Pushed screen",
-      component: "PushedModalScreen",
-      animated: true
-    });
+  onButtonClick: function() {
+    Controllers.NavigationControllerIOS("modal_nav").pop();
   }
 
 });
@@ -57,6 +51,6 @@ var styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('ModalScreen', () => ModalScreen);
+AppRegistry.registerComponent('PushedModalScreen', () => PushedModalScreen);
 
-module.exports = ModalScreen;
+module.exports = PushedModalScreen;
