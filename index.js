@@ -182,6 +182,9 @@ var Controllers = {
     return {
       setHidden: function (params) {
         return RCCManager.TabBarControllerIOS(id, "setTabBarHidden", params);
+      },
+      setBadge: function (tabIndex, badge) {
+        return RCCManager.TabBarControllerIOS(id, "setBadge", {tabIndex: tabIndex, badge: badge});
       }
     };
   },

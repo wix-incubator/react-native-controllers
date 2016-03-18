@@ -644,6 +644,11 @@ tabController.setHidden({
   animated: true
 });
 ```
+ * **setBadge(tabIndex, badge)** - change badge value
+
+```js
+tabController.setBadge(4, "BOOM!");
+```
 
 #### `ViewControllerIOS`
 
