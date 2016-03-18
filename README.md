@@ -15,6 +15,10 @@ Without `react-native-controllers`, iOS skeleton components such as [`UINavigati
 
 > Note: The main purpose of this package is to generate discussion around difficulties we found wrapping native iOS skeleton components with React Native. Look at this as a thought experiment with a proposed solution. If you have alternate ideas please share your feedback!
 
+## Before you start
+
+react-native-controllers is a low-level package with API that wasn't designed to be cross-platform (since it's optimized for native UX). We have another project called [react-native-navigation](https://github.com/wix/react-native-navigation) which is a syntactic sugar wrapper around react-native-controllers. It provides the *same* native goodness with API that is *much* simpler, cross-platform between iOS and Android, and supports redux!
+
 ## Table of contents
 
 * [Why do we need this package?](#why-do-we-need-this-package)
