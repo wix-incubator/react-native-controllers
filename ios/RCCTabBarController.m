@@ -60,6 +60,23 @@
 
 - (void)performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams bridge:(RCTBridge *)bridge completion:(void (^)(void))completion
 {
+    if ([performAction isEqualToString:@"setBadge"])
+    {
+      int i = [actionParams[@"tabIndex"] integerValue];
+      
+      if([self.viewControllers count] > i) {
+        UIViewController *viewController = [self.viewControllers objectAtIndex:i];
+        
+        NSObject *badge = actionParams[@"badge"];
+        
+        if(badge == nil || [badge isEqual:[NSNull null]]) {
+          viewController.tabBarItem.badgeValue = nil;
+        } else {
+          viewController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%@", badge];
+        }
+      }
+    }
+
     if ([performAction isEqualToString:@"setTabBarHidden"])
     {
         BOOL hidden = [actionParams[@"hidden"] boolValue];
