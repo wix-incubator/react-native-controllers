@@ -124,6 +124,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 
 -(void)onRNReload
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self.view];
   self.view = nil;
 }
 
