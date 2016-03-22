@@ -39,6 +39,8 @@
 
 -(void)onRNReload
 {
+  id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+  appDelegate.window.rootViewController = nil;
   [self.modulesRegistry removeAllObjects];
 }
 

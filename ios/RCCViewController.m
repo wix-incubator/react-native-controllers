@@ -113,6 +113,19 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   self.navigatorStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
   
   [self setStyleOnInit];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)onRNReload
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self.view];
+  self.view = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
