@@ -235,6 +235,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
       CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
       blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height + statusBarFrame.size.height);
       blur.userInteractionEnabled = NO;
+      blur.tag = BLUR_NAVBAR_TAG;
       [self.navigationController.navigationBar insertSubview:blur atIndex:0];
     }
   }
@@ -244,8 +245,9 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
     if (blur)
     {
       [blur removeFromSuperview];
-      [self.navigationController.navigationBar setShadowImage:nil];
-      [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+      [self.navigationController.navigationBar setBackgroundImage:self.originalNavBarImages[@"bgImage"] forBarMetrics:UIBarMetricsDefault];
+      self.navigationController.navigationBar.shadowImage = self.originalNavBarImages[@"shadowImage"];
+      self.originalNavBarImages = nil;
     }
   }
   
@@ -286,9 +288,6 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 
 -(void)setStyleOnDisappear
 {
-  [self.navigationController.navigationBar setBackgroundImage:self.originalNavBarImages[@"bgImage"] forBarMetrics:UIBarMetricsDefault];
-  self.navigationController.navigationBar.shadowImage = self.originalNavBarImages[@"shadowImage"];
-  self.originalNavBarImages = nil;
 }
 
 // only styles that can't be set on willAppear should be set here
