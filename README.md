@@ -623,6 +623,7 @@ Item Attribute | Description
 title | Title displayed on the tab label
 icon | Local asset image for the tab icon (unselected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
 selectedIcon | Local asset image for the tab icon (selected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
+badge | Badge displayed on tab icon. To keep item without badge set `none` or leave without `badge` property
 
 > Note: For best results on iOS, supply icon images that are 50x50 pixels for retina screen, make sure you add the `@2x` suffix for the filename on disk (eg. `home@2x.png`)
 
@@ -642,6 +643,11 @@ tabController.setHidden({
   hidden: true, // the new state of the tab bar
   animated: true
 });
+```
+ * **setBadge(tabIndex, badge)** - change badge value
+
+```js
+tabController.setBadge(4, "BOOM!");
 ```
 
 #### `ViewControllerIOS`
