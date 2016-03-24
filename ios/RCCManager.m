@@ -3,9 +3,10 @@
 #import "RCTRedBox.h"
 #import <Foundation/Foundation.h>
 
-@interface RCCManager()
+@interface RCCManager() <RCTBridgeDelegate>
 @property (nonatomic, strong) NSMutableDictionary *modulesRegistry;
 @property (nonatomic, strong) RCTBridge *sharedBridge;
+@property (nonatomic, strong) NSURL *bundleURL;
 @end
 
 @implementation RCCManager
@@ -97,19 +98,24 @@
   return component;
 }
 
-
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL
 {
   if (self.sharedBridge) return;
-  RCTBridge *bridge = [[RCTBridge alloc] initWithBundleURL:bundleURL
-                                            moduleProvider:nil
-                                             launchOptions:nil];
-  self.sharedBridge = bridge;
+  
+  self.bundleURL = bundleURL;
+  self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:nil];
 }
 
 -(RCTBridge*)getBridge
 {
   return self.sharedBridge;
+}
+
+#pragma mark - RCTBridgeDelegate methods
+
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+  return self.bundleURL;
 }
 
 @end
