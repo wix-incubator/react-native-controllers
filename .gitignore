@@ -137,6 +137,11 @@ xcuserdata
 *.gcno
 
 ####
+# Webstrom
+
+.idea
+
+####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
 # ...none. Everything is now explained.:

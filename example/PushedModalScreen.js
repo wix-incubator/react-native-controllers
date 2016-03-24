@@ -10,6 +10,9 @@ var {
 } = React;
 
 var Controllers = require('react-native-controllers');
+var {
+  Modal
+} = Controllers;
 
 var PushedModalScreen = React.createClass({
 
@@ -27,12 +30,20 @@ var PushedModalScreen = React.createClass({
         <TouchableOpacity onPress={ this.onButtonClick }>
           <Text style={styles.button}>Pop</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowModalClick }>
+          <Text style={styles.button}>Show another Modal</Text>
+        </TouchableOpacity>
       </View>
     );
   },
 
   onButtonClick: function() {
     Controllers.NavigationControllerIOS("modal_nav").pop();
+  },
+
+  onShowModalClick: async function() {
+    Modal.showController('ModalScreenTester');
   }
 
 });

@@ -10,6 +10,10 @@ var {
 } = React;
 
 var Controllers = require('react-native-controllers');
+var {
+  Modal,
+  ControllerRegistry
+} = Controllers;
 
 var ModalScreen = React.createClass({
 
@@ -28,6 +32,14 @@ var ModalScreen = React.createClass({
           <Text style={styles.button}>Push Plain Screen</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onReplaceRootClick }>
+          <Text style={styles.button}>Replace Root</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowModalClick }>
+          <Text style={styles.button}>Show another Modal</Text>
+        </TouchableOpacity>
+
       </View>
     );
   },
@@ -39,7 +51,15 @@ var ModalScreen = React.createClass({
       component: "PushedModalScreen",
       animated: true
     });
-  }
+  },
+
+  onReplaceRootClick: function() {
+    ControllerRegistry.setRootController('ModalScreenTester', 'slide-down');
+  },
+
+  onShowModalClick: async function() {
+    Modal.showController('ModalScreenTester');
+  },
 
 });
 

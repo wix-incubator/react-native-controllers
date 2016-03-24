@@ -38,9 +38,14 @@ RCT_EXPORT_MODULE(RCCManager);
              };
 }
 
-+(UIViewController*)appRootViewController
++(UIViewController*)modalPresenterViewController
 {
-    return [UIApplication sharedApplication].delegate.window.rootViewController;
+    UIViewController *modalPresenterViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    if(modalPresenterViewController.presentedViewController != nil)
+    {
+        modalPresenterViewController = modalPresenterViewController.presentedViewController;
+    }
+    return modalPresenterViewController;
 }
 
 +(NSError*)rccErrorWithCode:(NSInteger)code description:(NSString*)description
@@ -165,8 +170,8 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType reso
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
     }
-    
-    [[RCCManagerModule appRootViewController] presentViewController:controller
+
+    [[RCCManagerModule modalPresenterViewController] presentViewController:controller
                                                            animated:![animationType isEqualToString:@"none"]
                                                          completion:^(){ resolve(nil); }];
 }
@@ -174,7 +179,7 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType reso
 RCT_EXPORT_METHOD(
 dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [[RCCManagerModule appRootViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
+    [[RCCManagerModule modalPresenterViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
                                                                  completion:^(){ resolve(nil); }];
 }
 
