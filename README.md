@@ -418,7 +418,8 @@ navigationController.push({
     onPress: function() {
       // on press event handler
     },
-    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
+    testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
+    disabled: true // optional, fades the button color and disables the callback
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 });
@@ -457,7 +458,8 @@ navigationController.resetTo({
     onPress: function() {
       // on press event handler
     },
-    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
+    testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
+    disabled: true // optional, fades the button color and disables the callback
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 );

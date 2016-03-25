@@ -220,6 +220,10 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
       objc_setAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID, buttonId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
+    if ([button[@"disabled"] boolValue]) {
+      [barButtonItem setEnabled:NO];
+    }
+
     NSString *testID = button[@"testID"];
     if (testID)
     {
