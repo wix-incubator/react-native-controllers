@@ -663,7 +663,7 @@ tabController.setBadge({
   tabIndex: 0, // if you want to specify the tab by its index (option A)
   contentId: "movies_nav", // if instead of index you want to specify by the contained controller id (option B)
   contentType: "NavigationControllerIOS", // the type of the contained controller (option B)
-  badge: "HOT"
+  badge: "HOT" // badge value, null to remove badge
 });
 ```
 
