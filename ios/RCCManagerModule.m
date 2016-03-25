@@ -41,7 +41,7 @@ RCT_EXPORT_MODULE(RCCManager);
 +(UIViewController*)modalPresenterViewController
 {
     UIViewController *modalPresenterViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
-    if(modalPresenterViewController.presentedViewController != nil)
+    while (modalPresenterViewController.presentedViewController != nil)
     {
         modalPresenterViewController = modalPresenterViewController.presentedViewController;
     }

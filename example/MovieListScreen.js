@@ -55,7 +55,7 @@ var MovieListScreen = React.createClass({
 
   render: function() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentInset={{bottom: 50}}>
         <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
           Side Menu Example
         </Text>
