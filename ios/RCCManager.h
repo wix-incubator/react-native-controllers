@@ -8,6 +8,7 @@
 
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
 -(RCTBridge*)getBridge;
+-(void)setLoadingView:(UIView *)loadingView;
 
 -(void)registerController:(UIViewController*)controller componentId:(NSString*)componentId componentType:(NSString*)componentType;
 -(id)getControllerWithId:(NSString*)componentId componentType:(NSString*)componentType;

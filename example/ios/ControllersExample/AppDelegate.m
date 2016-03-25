@@ -34,7 +34,12 @@
 
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor whiteColor];
+  self.window.backgroundColor = [UIColor blueColor];
+
+  UIView *loadingView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  loadingView.backgroundColor = [UIColor redColor];
+
+  [[RCCManager sharedIntance] setLoadingView:loadingView];
   [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation];
   
   return YES;
