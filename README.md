@@ -623,6 +623,7 @@ Item Attribute | Description
 title | Title displayed on the tab label
 icon | Local asset image for the tab icon (unselected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
 selectedIcon | Local asset image for the tab icon (selected state), use `require` like with a [local image](https://facebook.github.io/react-native/docs/image.html)
+style | Style the tab bar, see [Styling Tab Bar](#styling-tab-bar) below for all available styles
 badge | Badge displayed on tab icon. To keep item without badge set `none` or leave without `badge` property
 
 > Note: For best results on iOS, supply icon images that are 50x50 pixels for retina screen, make sure you add the `@2x` suffix for the filename on disk (eg. `home@2x.png`)
@@ -636,6 +637,16 @@ var Controllers = require('react-native-controllers');
 var tabController = Controllers.TabBarControllerIOS("main");
 ```
 
+ * **switchTo(params)** - switch to one of the tabs
+
+```js
+tabController.switchTo({
+  tabIndex: 0, // if you want to specify the tab by its index (option A)
+  contentId: "movies_nav", // if instead of index you want to specify by the contained controller id (option B)
+  contentType: "NavigationControllerIOS" // the type of the contained controller (option B)
+});
+```
+
  * **setHidden(params)** - manually hide/show the tab bar
 
 ```js
@@ -644,10 +655,30 @@ tabController.setHidden({
   animated: true
 });
 ```
- * **setBadge(tabIndex, badge)** - change badge value
+
+ * **setBadge(params)** - change the badge value on a tab
 
 ```js
-tabController.setBadge(4, "BOOM!");
+tabController.setBadge({
+  tabIndex: 0, // if you want to specify the tab by its index (option A)
+  contentId: "movies_nav", // if instead of index you want to specify by the contained controller id (option B)
+  contentType: "NavigationControllerIOS", // the type of the contained controller (option B)
+  badge: "HOT"
+});
+```
+
+##### Styling Tab Bar
+
+You can apply styling to the tab bar appearance by setting the `style` property when defining your `TabBarControllerIOS`. 
+
+All styles are optional, this is the format of the style object:
+
+```js
+{
+  tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
+  tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
+  tabBarBackgroundColor: '#551A8B' // change the background color of the tab bar
+}
 ```
 
 #### `ViewControllerIOS`
