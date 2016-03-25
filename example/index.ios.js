@@ -17,6 +17,7 @@ require('./MovieListScreen');
 require('./SearchScreen');
 require('./FavoritesScreen');
 require('./ModalScreen');
+require('./StyledTabScreen');
 
 var MoviesApp = Controllers.createClass({
 
@@ -41,7 +42,10 @@ var MoviesApp = Controllers.createClass({
             />
           </TabBarControllerIOS.Item>
           <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')} selectedIcon={require('./img/discover_selected.png')}>
-            <ViewControllerIOS component="SearchScreen" />
+            <ViewControllerIOS
+              component="SearchScreen"
+              style={{ drawUnderTabBar: true }}
+            />
           </TabBarControllerIOS.Item>
         </TabBarControllerIOS>
       </DrawerControllerIOS>
@@ -67,8 +71,47 @@ var ModalScreenTester = Controllers.createClass({
   },
 });
 
+var TabStyleTester = Controllers.createClass({
+  render: function() {
+    return (
+      <TabBarControllerIOS
+        id="styled_tabs"
+        style={{tabBarButtonColor: '#ffff00', tabBarSelectedButtonColor: '#ff9900', tabBarBackgroundColor: '#551A8B'}}
+      >
+        <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')} selectedIcon={require('./img/home_selected.png')}>
+          <NavigationControllerIOS
+            title="Styled Tabs"
+            component="StyledTabScreen"
+            id="styled_tab_nav"
+            leftButtons={[{
+              title: "Close",
+              onPress: function() {
+                Controllers.Modal.dismissController();
+              }
+            }]}
+          />
+        </TabBarControllerIOS.Item>
+        <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
+          <NavigationControllerIOS
+            title="Styled Tabs"
+            component="StyledTabScreen"
+            id="styled_tab_nav2"
+            leftButtons={[{
+              title: "Close",
+              onPress: function() {
+                Controllers.Modal.dismissController();
+              }
+            }]}
+          />
+        </TabBarControllerIOS.Item>
+      </TabBarControllerIOS>
+    );
+  },
+});
+
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ControllerRegistry.registerController('ModalScreenTester', () => ModalScreenTester);
+ControllerRegistry.registerController('TabStyleTester', () => TabStyleTester);
 
 // this line makes the app actually start and initialize
 ControllerRegistry.setRootController('MoviesApp');

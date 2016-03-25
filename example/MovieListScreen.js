@@ -20,12 +20,6 @@ var {
 
 var MovieListScreen = React.createClass({
 
-  getInitialState: function() {
-    return {
-      tabBarHidden: false
-    }
-  },
-
   componentDidMount: function() {
     Controllers.NavigationControllerIOS("movies_nav").setLeftButtons([{
       title: "Burger",
@@ -53,13 +47,6 @@ var MovieListScreen = React.createClass({
 
   onShowModalVcClick: async function() {
     Modal.showController('ModalScreenTester');
-  },
-
-  onToggleTabBarClick: async function() {
-    this.setState({
-      tabBarHidden: !this.state.tabBarHidden
-    });
-    Controllers.TabBarControllerIOS("main").setHidden({hidden: this.state.tabBarHidden, animated: true});
   },
 
   onReplaceRootAnimatedClick: function() {
@@ -117,21 +104,10 @@ var MovieListScreen = React.createClass({
           <Text style={styles.button}>Show Modal ViewController</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onToggleTabBarClick }>
-          <Text style={styles.button}>Toggle tab-bar</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity onPress={ this.onReplaceRootAnimatedClick }>
           <Text style={styles.button}>Replace root animated</Text>
         </TouchableOpacity>
 
-        <View style={{height: 50}}>
-          {
-            this.state.tabBarHidden ?
-            <Text style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 30, color: 'red', backgroundColor: '#ffcccc', textAlign: 'center'}}>Wink wink</Text>
-            : false
-          }
-        </View>
       </ScrollView>
     );
   },
