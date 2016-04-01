@@ -360,7 +360,7 @@ Modal.showLightBox({
   passProps: {}, // simple serializable object that will pass as props to lightbox component (optional)
   style: {
     backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
-    backgroundColor: "#ff0000" // tint color for the background (optional)
+    backgroundColor: "#ff000080" // tint color for the background, you can specify alpha here (optional)
   }
 });
 ```
