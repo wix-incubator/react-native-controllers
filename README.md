@@ -28,6 +28,7 @@ react-native-controllers is a low-level package with API that wasn't designed to
 * [API](#api)
 * [Available view controllers](#available-view-controllers)
 * [Credits](#credits)
+* [Release Notes](CHANGES.md)
 * [License](#license)
 
 ## Why do we need this package?
@@ -673,7 +674,7 @@ tabController.setBadge({
 
 ##### Styling Tab Bar
 
-You can apply styling to the tab bar appearance by setting the `style` property when defining your `TabBarControllerIOS`. 
+You can apply styling to the tab bar appearance by setting the `style` property when defining your `TabBarControllerIOS`.
 
 All styles are optional, this is the format of the style object:
 
