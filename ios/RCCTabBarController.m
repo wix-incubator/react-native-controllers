@@ -145,7 +145,7 @@
       NSString *contentType = actionParams[@"contentType"];
       if (contentId && contentType)
       {
-        viewController = [[RCCManager sharedIntance] getControllerWithId:contentId componentType:contentType];
+        viewController = [[RCCManager sharedInstance] getControllerWithId:contentId componentType:contentType];
       }
       
       if (viewController)
@@ -180,7 +180,7 @@
       NSString *contentType = actionParams[@"contentType"];
       if (contentId && contentType)
       {
-        viewController = [[RCCManager sharedIntance] getControllerWithId:contentId componentType:contentType];
+        viewController = [[RCCManager sharedInstance] getControllerWithId:contentId componentType:contentType];
       }
     
       if (viewController)

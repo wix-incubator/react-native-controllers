@@ -66,7 +66,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   NSString *componentId = props[@"id"];
   if (controller && componentId)
   {
-    [[RCCManager sharedIntance] registerController:controller componentId:componentId componentType:type];
+    [[RCCManager sharedInstance] registerController:controller componentId:componentId componentType:type];
   }
 
   return controller;
