@@ -261,7 +261,7 @@ var Controllers = require('react-native-controllers');
 ```
 
  * **hijackReact()** - change the React instance in this file so controllers can be defined (see explanation above)
- 
+
 ```js
 var React = Controllers.hijackReact();
 var {
@@ -296,7 +296,7 @@ var { ControllerRegistry } = Controllers;
 ```
 
  * **registerController(controllerId, generator)** - register a unique id for a controller
- 
+
 ```js
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ```
@@ -308,7 +308,7 @@ ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 // controllerId: a string id previously registered with ControllerRegistry.registerController
 ControllerRegistry.setRootController('MoviesApp');
 
-// example with animation, useful for changing your app root during runtime (from a different controller) 
+// example with animation, useful for changing your app root during runtime (from a different controller)
 // animationType: 'none', 'slide-down'
 ControllerRegistry.setRootController('LoginApp', 'slide-down');
 ```
@@ -411,7 +411,7 @@ navigationController.push({
   passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
   style: {}, // style the navigation bar for the pushed screen (optional, see "Styling Navigation" below)
   animated: true, // does the push have a transition animation (optional, default true)
-  backButtonTitle: "Back" // override the nav bar back button title for the pushed screen (optional) 
+  backButtonTitle: "Back" // override the nav bar back button title for the pushed screen (optional)
   leftButtons: [{ // buttons in the nav bar of the pushed screen (optional)
     title: "Button Title", // optional, title for a textual button
     icon: require('./img/navicon_camera.png'), // optional, image for an icon button
@@ -419,7 +419,7 @@ navigationController.push({
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, fades the button color and disables the callback
+    disabled: true // optional, disables the button (shown as faded without interaction)
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 });
@@ -459,7 +459,7 @@ navigationController.resetTo({
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, fades the button color and disables the callback
+    disabled: true // optional, disables the button (shown as faded without interaction)
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 );
@@ -475,14 +475,16 @@ navigationController.setRightButtons([
     onPress: function() {
       // on press event handler
     },
-    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
+    testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
+    disabled: true // optional, disables the button (shown as faded without interaction)
   },
   {
     icon: require('./img/navicon_camera.png'), // image for an icon button
     onPress: function() {
       // on press event handler
     },
-    testID: "e2e_is_awesome" // optional, used to locate this view in end-to-end tests
+    testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
+    disabled: true // optional, disables the button (shown as faded without interaction)
   }
   ]);
 ```
@@ -497,7 +499,7 @@ navigationController.setTitle({
 
 ##### Styling Navigation
 
-You can apply styling to the navigation bar appearance and behavior by setting the `style` property when defining your `NavigationControllerIOS` or by passing the `style` object when pushing a new screen. 
+You can apply styling to the navigation bar appearance and behavior by setting the `style` property when defining your `NavigationControllerIOS` or by passing the `style` object when pushing a new screen.
 
 Please note that some styles (usually color related) are remembered for future pushed screens. For example, if you change the navigation bar color, all future pushed screens will keep this style and have the same changed colors. If you wish to have different colors in a pushed screen, simply override the style by passing the `style` object when calling `push()`. Every style that is remembered across pushes is documented as such below.
 
