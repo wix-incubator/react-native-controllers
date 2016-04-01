@@ -11,19 +11,19 @@
 
 @implementation RCCManager
 
-+ (instancetype)sharedIntance
++ (instancetype)sharedInstance
 {
-  static RCCManager *sharedIntance = nil;
+  static RCCManager *sharedInstance = nil;
   static dispatch_once_t onceToken = 0;
 
   dispatch_once(&onceToken,^{
-    if (sharedIntance == nil)
+    if (sharedInstance == nil)
     {
-      sharedIntance = [[RCCManager alloc] init];
+      sharedInstance = [[RCCManager alloc] init];
     }
   });
 
-  return sharedIntance;
+  return sharedInstance;
 }
 
 - (instancetype)init

@@ -35,7 +35,7 @@
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
-  [[RCCManager sharedIntance] initBridgeWithBundleURL:jsCodeLocation];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation];
   
   return YES;
 }
