@@ -5,6 +5,7 @@
 @interface RCCManager : NSObject
 
 + (instancetype)sharedInstance;
++ (instancetype)sharedIntance;
 
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
 -(RCTBridge*)getBridge;
