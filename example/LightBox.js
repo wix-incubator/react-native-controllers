@@ -25,6 +25,9 @@ var LightBox = React.createClass({
         <Text style={styles.welcome}>
           This is a LightBox!
         </Text>
+        <Text style={[styles.welcome, {fontSize: 16, marginTop: 20}]}>
+          {this.props.greeting}
+        </Text>
         <TouchableOpacity onPress={ this._onButtonClick }>
           <Text style={styles.button}>Dismiss</Text>
         </TouchableOpacity>

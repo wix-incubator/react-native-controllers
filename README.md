@@ -349,6 +349,7 @@ Modal.dismissController('none');
 ```js
 Modal.showLightBox({
   component: "LightBoxScreen", // the unique ID registered with AppRegistry.registerComponent (required)
+  passProps: {}, // simple serializable object that will pass as props to lightbox component (optional)
   style: {
     backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background
     backgroundColor: "#ff0000" // tint color for the background (optional)

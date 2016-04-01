@@ -38,6 +38,9 @@ var MovieListScreen = React.createClass({
   onShowLightBoxClick: function(backgroundBlur, backgroundColor = undefined) {
     Modal.showLightBox({
       component: 'LightBox',
+      passProps: {
+        greeting: 'hello world'
+      },
       style: {
         backgroundBlur: backgroundBlur,
         backgroundColor: backgroundColor
@@ -98,6 +101,10 @@ var MovieListScreen = React.createClass({
 
         <TouchableOpacity onPress={ this.onShowLightBoxClick.bind(this, "light", "rgba(66, 141, 200, 0.2)") }>
           <Text style={styles.button}>LightBox (light blur + color overlay)</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={ this.onShowLightBoxClick.bind(this, "none") }>
+          <Text style={styles.button}>LightBox (no blur, no color overlay)</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this.onShowModalVcClick }>

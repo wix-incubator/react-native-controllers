@@ -23,6 +23,8 @@ const NSInteger kLightBoxTag = 0x101010;
     {
         self.params = params;
         
+        NSDictionary *passProps = self.params[@"passProps"];
+        
         NSDictionary *style = self.params[@"style"];
         if (self.params != nil && style != nil)
         {
@@ -47,8 +49,7 @@ const NSInteger kLightBoxTag = 0x101010;
             }
         }
         
-        self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:self.params[@"component"] initialProperties:self.params[@"passProps"]];
-
+        self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:self.params[@"component"] initialProperties:passProps];
         self.reactView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
         self.reactView.center = self.center;
         [self addSubview:self.reactView];
