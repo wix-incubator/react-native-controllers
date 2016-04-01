@@ -310,7 +310,7 @@ ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ControllerRegistry.setRootController('MoviesApp');
 
 // example with animation, useful for changing your app root during runtime (from a different controller)
-// animationType: 'none', 'slide-down'
+// animationType: 'none', 'slide-down', 'fade'
 ControllerRegistry.setRootController('LoginApp', 'slide-down');
 ```
 
