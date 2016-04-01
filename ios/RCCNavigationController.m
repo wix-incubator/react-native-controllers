@@ -97,6 +97,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
       self.topViewController.navigationItem.backBarButtonItem = nil;
     }
     
+    NSNumber *backButtonHidden = actionParams[@"backButtonHidden"];
+    BOOL backButtonHiddenBool = backButtonHidden ? [backButtonHidden boolValue] : NO;
+    if (backButtonHiddenBool)
+    {
+      viewController.navigationItem.hidesBackButton = YES;
+    }
+    
     NSArray *leftButtons = actionParams[@"leftButtons"];
     if (leftButtons)
     {

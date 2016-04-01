@@ -120,6 +120,10 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Custom Back Button Text</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backhidden') }>
+          <Text style={styles.button}>Hidden Back Button</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttons') }>
           <Text style={styles.button}>Right NavBar Text Buttons</Text>
         </TouchableOpacity>
@@ -323,6 +327,13 @@ var FavoritesScreen = React.createClass({
           title: "More",
           component: "FavoritesScreen",
           backButtonTitle: "Hello"
+        });
+        break;
+      case 'backhidden':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "More",
+          component: "FavoritesScreen",
+          backButtonHidden: true
         });
         break;
       case 'rightbuttons':

@@ -412,7 +412,8 @@ navigationController.push({
   passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
   style: {}, // style the navigation bar for the pushed screen (optional, see "Styling Navigation" below)
   animated: true, // does the push have a transition animation (optional, default true)
-  backButtonTitle: "Back" // override the nav bar back button title for the pushed screen (optional)
+  backButtonTitle: "Back", // override the nav bar back button title for the pushed screen (optional)
+  backButtonHidden: true, // hide the nav bar back button for the pushed screen altogether (optional)
   leftButtons: [{ // buttons in the nav bar of the pushed screen (optional)
     title: "Button Title", // optional, title for a textual button
     icon: require('./img/navicon_camera.png'), // optional, image for an icon button
