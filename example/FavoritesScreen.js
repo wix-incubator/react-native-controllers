@@ -124,6 +124,10 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Right NavBar Text Buttons</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttonsdisabled') }>
+          <Text style={styles.button}>Right NavBar Text Buttons Disabled</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'righticonbuttons') }>
           <Text style={styles.button}>Right NavBar Icon Buttons</Text>
         </TouchableOpacity>
@@ -331,6 +335,24 @@ var FavoritesScreen = React.createClass({
               onPress: function() {
                 AlertIOS.alert('Button', 'Edit pressed');
               }
+            },
+            {
+              title: "Save",
+              onPress: function() {
+                AlertIOS.alert('Button', 'Save pressed');
+              }
+            }
+          ]
+        });
+        break;
+      case 'rightbuttonsdisabled':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "More",
+          component: "FavoritesScreen",
+          rightButtons: [
+            {
+              title: "Edit",
+              disabled: true
             },
             {
               title: "Save",
