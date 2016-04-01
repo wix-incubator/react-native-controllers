@@ -86,11 +86,11 @@ var Controllers = {
     registerController: function (appKey, getControllerFunc) {
       _controllerRegistry[appKey] = getControllerFunc();
     },
-    setRootController: function (appKey, animationType = 'none') {
+    setRootController: function (appKey, animationType = 'none', passProps = {}) {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
-      RCCManager.setRootController(layout, animationType);
+      RCCManager.setRootController(layout, animationType, passProps);
     }
   },
 
@@ -200,11 +200,11 @@ var Controllers = {
     dismissLightBox: function() {
       RCCManager.modalDismissLightBox();
     },
-    showController: function(appKey, animationType = 'slide-down') {
+    showController: function(appKey, animationType = 'slide-up', passProps = {}) {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
-      RCCManager.showController(layout, animationType);
+      RCCManager.showController(layout, animationType, passProps);
     },
     dismissController: function(animationType = 'slide-down') {
       RCCManager.dismissController(animationType);

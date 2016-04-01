@@ -49,11 +49,14 @@ var MovieListScreen = React.createClass({
   },
 
   onShowModalVcClick: async function() {
-    Modal.showController('ModalScreenTester');
+    // defaults: Modal.showController('ModalScreenTester');
+    // this example shows animation type and passProps
+    Modal.showController('ModalScreenTester', 'slide-up', { greeting: 'hi there!' });
   },
 
   onReplaceRootAnimatedClick: function() {
-    ControllerRegistry.setRootController('ModalScreenTester', 'slide-down');
+    // this example shows animation type and passProps
+    ControllerRegistry.setRootController('ModalScreenTester', 'slide-down', { greeting: 'how you doin?' });
   },
 
   render: function() {

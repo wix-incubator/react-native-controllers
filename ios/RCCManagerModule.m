@@ -65,10 +65,10 @@ RCT_EXPORT_MODULE(RCCManager);
 }
 
 RCT_EXPORT_METHOD(
-setRootController:(NSDictionary*)layout animationType:(NSString*)animationType)
+setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
     // create the new controller
-    UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedInstance] getBridge]];
+    UIViewController *controller = [RCCViewController controllerWithLayout:layout globalProps:globalProps bridge:[[RCCManager sharedInstance] getBridge]];
     if (controller == nil) return;
 
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
@@ -161,9 +161,9 @@ modalDismissLightBox)
 }
 
 RCT_EXPORT_METHOD(
-showController:(NSDictionary*)layout animationType:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+showController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    UIViewController *controller = [RCCViewController controllerWithLayout:layout bridge:[[RCCManager sharedInstance] getBridge]];
+    UIViewController *controller = [RCCViewController controllerWithLayout:layout globalProps:globalProps bridge:[[RCCManager sharedInstance] getBridge]];
     if (controller == nil)
     {
         [RCCManagerModule handleRCTPromiseRejectBlock:reject

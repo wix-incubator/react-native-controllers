@@ -302,7 +302,7 @@ var { ControllerRegistry } = Controllers;
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ```
 
- * **setRootController(controllerId, animationType = 'none')** - start the app with a root controller
+ * **setRootController(controllerId, animationType = 'none', passProps = {})** - start the app with a root controller
 
 ```js
 // example without animation
@@ -312,6 +312,10 @@ ControllerRegistry.setRootController('MoviesApp');
 // example with animation, useful for changing your app root during runtime (from a different controller)
 // animationType: 'none', 'slide-down', 'fade'
 ControllerRegistry.setRootController('LoginApp', 'slide-down');
+
+// example with props
+// these props will be passed to all top components in the layout hierarchy (eg. all tabs, side menus, etc.)
+ControllerRegistry.setRootController('MoviesApp', 'none', { greeting: 'hello world' });
 ```
 
 #### `Modal`
@@ -321,7 +325,7 @@ var Controllers = require('react-native-controllers');
 var { Modal } = Controllers;
 ```
 
- * **showController(controllerId, animationType = 'slide-up')** - display a controller modally
+ * **showController(controllerId, animationType = 'slide-up', passProps = {})** - display a controller modally
 
 ```js
 // example with default slide up animation
@@ -331,6 +335,10 @@ Modal.showController('MoviesApp');
 // example without animation
 // animationType: 'none', 'slide-up'
 Modal.showController('LoginApp', 'none');
+
+// example with props
+Modal.showController('MoviesApp', 'slide-up', { greeting: 'hello world' });
+
 ```
 
  * **dismissController(animationType = 'slide-down')** - dismiss the current modal controller

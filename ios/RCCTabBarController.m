@@ -21,7 +21,7 @@
   return newImage;
 }
 
-- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
 {
   self = [super init];
   if (!self) return nil;
@@ -72,7 +72,7 @@
     if (![tabItemLayout[@"children"] isKindOfClass:[NSArray class]]) continue;
     if ([tabItemLayout[@"children"] count] < 1) continue;
     NSDictionary *childLayout = tabItemLayout[@"children"][0];
-    UIViewController *viewController = [RCCViewController controllerWithLayout:childLayout bridge:bridge];
+    UIViewController *viewController = [RCCViewController controllerWithLayout:childLayout globalProps:globalProps bridge:bridge];
     if (!viewController) continue;
 
     // create the tab icon and title

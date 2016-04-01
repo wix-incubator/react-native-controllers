@@ -19,7 +19,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 
 @implementation RCCViewController
 
-+ (UIViewController*)controllerWithLayout:(NSDictionary *)layout bridge:(RCTBridge *)bridge
++ (UIViewController*)controllerWithLayout:(NSDictionary *)layout globalProps:(NSDictionary *)globalProps bridge:(RCTBridge *)bridge
 {
   UIViewController* controller = nil;
   if (!layout) return nil;
@@ -41,25 +41,25 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   // regular view controller
   if ([type isEqualToString:@"ViewControllerIOS"])
   {
-    controller = [[RCCViewController alloc] initWithProps:props children:children bridge:bridge];
+    controller = [[RCCViewController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
   }
 
   // navigation controller
   if ([type isEqualToString:@"NavigationControllerIOS"])
   {
-    controller = [[RCCNavigationController alloc] initWithProps:props children:children bridge:bridge];
+    controller = [[RCCNavigationController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
   }
 
   // tab bar controller
   if ([type isEqualToString:@"TabBarControllerIOS"])
   {
-    controller = [[RCCTabBarController alloc] initWithProps:props children:children bridge:bridge];
+    controller = [[RCCTabBarController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
   }
 
   // side menu controller
   if ([type isEqualToString:@"DrawerControllerIOS"])
   {
-    controller = [[RCCDrawerController alloc] initWithProps:props children:children bridge:bridge];
+    controller = [[RCCDrawerController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
   }
 
   // register the controller if we have an id
@@ -72,7 +72,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   return controller;
 }
 
-- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary *)globalProps bridge:(RCTBridge *)bridge
 {
   NSString *component = props[@"component"];
   if (!component) return nil;
@@ -80,7 +80,10 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   NSDictionary *passProps = props[@"passProps"];
   NSDictionary *navigatorStyle = props[@"style"];
 
-  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:passProps];
+  NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
+  [mergedProps addEntriesFromDictionary:passProps];
+  
+  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
 
   self = [super init];
@@ -91,9 +94,12 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   return self;
 }
 
-- (instancetype)initWithComponent:(NSString *)component passProps:(NSDictionary *)passProps navigatorStyle:(NSDictionary*)navigatorStyle bridge:(RCTBridge *)bridge
+- (instancetype)initWithComponent:(NSString *)component passProps:(NSDictionary *)passProps navigatorStyle:(NSDictionary*)navigatorStyle globalProps:(NSDictionary *)globalProps bridge:(RCTBridge *)bridge
 {
-  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:passProps];
+  NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
+  [mergedProps addEntriesFromDictionary:passProps];
+  
+  RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
 
   self = [super init];

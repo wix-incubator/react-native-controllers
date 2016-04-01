@@ -4,23 +4,23 @@
 
 @implementation RCCDrawerController
 
-- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children bridge:(RCTBridge *)bridge
+- (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
 {
   // center
   if ([children count] < 1) return nil;
-  UIViewController *centerViewController = [RCCViewController controllerWithLayout:children[0] bridge:bridge];
+  UIViewController *centerViewController = [RCCViewController controllerWithLayout:children[0] globalProps:globalProps bridge:bridge];
 
   // left
   UIViewController *leftViewController = nil;
   NSString *componentLeft = props[@"componentLeft"];
   NSDictionary *passPropsLeft = props[@"passPropsLeft"];
-  if (componentLeft) leftViewController = [[RCCViewController alloc] initWithComponent:componentLeft passProps:passPropsLeft navigatorStyle:nil bridge:bridge];
+  if (componentLeft) leftViewController = [[RCCViewController alloc] initWithComponent:componentLeft passProps:passPropsLeft navigatorStyle:nil globalProps:globalProps bridge:bridge];
 
   // right
   UIViewController *rightViewController = nil;
   NSString *componentRight = props[@"componentRight"];
   NSDictionary *passPropsRight = props[@"passPropsRight"];
-  if (componentRight) rightViewController = [[RCCViewController alloc] initWithComponent:componentRight passProps:passPropsRight navigatorStyle:nil bridge:bridge];
+  if (componentRight) rightViewController = [[RCCViewController alloc] initWithComponent:componentRight passProps:passPropsRight navigatorStyle:nil globalProps:globalProps bridge:bridge];
 
   self = [super initWithCenterViewController:centerViewController
                     leftDrawerViewController:leftViewController

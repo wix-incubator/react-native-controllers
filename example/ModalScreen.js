@@ -28,6 +28,13 @@ var ModalScreen = React.createClass({
           Notice how the show modal was 100% native. This screen doesn't have any special styles applied.
         </Text>
 
+        {
+          !this.props.greeting ? false :
+          <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+            {this.props.greeting}
+          </Text>
+        }
+
         <TouchableOpacity onPress={ this.onPushClick }>
           <Text style={styles.button}>Push Plain Screen</Text>
         </TouchableOpacity>
