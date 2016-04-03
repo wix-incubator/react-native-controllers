@@ -73,7 +73,7 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
 
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     
-    if ([animationType isEqualToString:@"none"])
+    if ((appDelegate.window.rootViewController == nil) || ([animationType isEqualToString:@"none"]))
     {
         // set this new controller as the root
         appDelegate.window.rootViewController = controller;
