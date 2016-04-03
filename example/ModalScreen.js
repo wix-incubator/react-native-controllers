@@ -47,6 +47,9 @@ var ModalScreen = React.createClass({
           <Text style={styles.button}>Show another Modal</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onDismissAllModalsClick }>
+          <Text style={styles.button}>Dismiss All Modals</Text>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -68,6 +71,9 @@ var ModalScreen = React.createClass({
     Modal.showController('ModalScreenTester');
   },
 
+  onDismissAllModalsClick: function() {
+    Modal.dismissAllControllers();
+  },
 });
 
 var styles = StyleSheet.create({

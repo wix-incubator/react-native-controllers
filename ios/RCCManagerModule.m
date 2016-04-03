@@ -8,6 +8,8 @@
 #import "RCTConvert.h"
 #import "RCCTabBarController.h"
 
+#define kSlideDownAnimationDuration 0.35
+
 typedef NS_ENUM(NSInteger, RCCManagerModuleErrorCode)
 {
     RCCManagerModuleCantCreateControllerErrorCode   = -100,
@@ -38,14 +40,29 @@ RCT_EXPORT_MODULE(RCCManager);
              };
 }
 
-+(UIViewController*)modalPresenterViewController
++(UIViewController*)modalPresenterViewControllers:(NSMutableArray*)returnAllPresenters
 {
     UIViewController *modalPresenterViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    if ((returnAllPresenters != nil) && (modalPresenterViewController != nil))
+    {
+        [returnAllPresenters addObject:modalPresenterViewController];
+    }
+    
     while (modalPresenterViewController.presentedViewController != nil)
     {
         modalPresenterViewController = modalPresenterViewController.presentedViewController;
+        
+        if (returnAllPresenters != nil)
+        {
+            [returnAllPresenters addObject:modalPresenterViewController];
+        }
     }
     return modalPresenterViewController;
+}
+
++(UIViewController*)lastModalPresenterViewController
+{
+    return [self modalPresenterViewControllers:nil];
 }
 
 +(NSError*)rccErrorWithCode:(NSInteger)code description:(NSString*)description
@@ -92,7 +109,7 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
         [appDelegate.window.rootViewController.view addSubview:snapshot];
         [presentedViewController dismissViewControllerAnimated:NO completion:nil];
         
-        [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
+        [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
          {
              if (animationType == nil || [animationType isEqualToString:@"slide-down"])
              {
@@ -171,7 +188,7 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
         return;
     }
 
-    [[RCCManagerModule modalPresenterViewController] presentViewController:controller
+    [[RCCManagerModule lastModalPresenterViewController] presentViewController:controller
                                                            animated:![animationType isEqualToString:@"none"]
                                                          completion:^(){ resolve(nil); }];
 }
@@ -179,8 +196,44 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
 RCT_EXPORT_METHOD(
 dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [[RCCManagerModule modalPresenterViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
+    [[RCCManagerModule lastModalPresenterViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
                                                                  completion:^(){ resolve(nil); }];
+}
+
+RCT_EXPORT_METHOD(
+dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSMutableArray *allPresentedViewControllers = [NSMutableArray array];
+    [RCCManagerModule modalPresenterViewControllers:allPresentedViewControllers];
+    
+    if (![animationType isEqualToString:@"none"])
+    {
+        id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+        UIView *snapshot = [appDelegate.window snapshotViewAfterScreenUpdates:NO];
+        [appDelegate.window addSubview:snapshot];
+        
+        [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^()
+         {
+             if (animationType == nil || [animationType isEqualToString:@"slide-down"])
+             {
+                 snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
+             }
+             else if ([animationType isEqualToString:@"fade"])
+             {
+                 snapshot.alpha = 0;
+             }
+         }
+                         completion:^(BOOL finished)
+         {
+             [snapshot removeFromSuperview];
+         }];
+    }
+    
+    for (UIViewController *viewController in allPresentedViewControllers)
+    {
+        [viewController dismissViewControllerAnimated:NO completion:^(){ resolve(nil); }];
+    }
+    [allPresentedViewControllers removeAllObjects];
 }
 
 @end

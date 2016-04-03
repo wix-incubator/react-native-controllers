@@ -208,6 +208,9 @@ var Controllers = {
     },
     dismissController: function(animationType = 'slide-down') {
       RCCManager.dismissController(animationType);
+    },
+    dismissAllControllers: function(animationType = 'slide-down') {
+      RCCManager.dismissAllControllers(animationType);
     }
   },
 };
