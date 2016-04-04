@@ -206,7 +206,8 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
     NSMutableArray *allPresentedViewControllers = [NSMutableArray array];
     [RCCManagerModule modalPresenterViewControllers:allPresentedViewControllers];
     
-    if (![animationType isEqualToString:@"none"])
+    BOOL animated = ![animationType isEqualToString:@"none"];
+    if (animated)
     {
         id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
         UIView *snapshot = [appDelegate.window snapshotViewAfterScreenUpdates:NO];
@@ -226,14 +227,20 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
                          completion:^(BOOL finished)
          {
              [snapshot removeFromSuperview];
+             resolve(nil);
          }];
     }
     
     for (UIViewController *viewController in allPresentedViewControllers)
     {
-        [viewController dismissViewControllerAnimated:NO completion:^(){ resolve(nil); }];
+        [viewController dismissViewControllerAnimated:NO completion:nil];
     }
     [allPresentedViewControllers removeAllObjects];
+    
+    if (!animated)
+    {
+        resolve(nil);
+    }
 }
 
 @end

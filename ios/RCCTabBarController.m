@@ -210,6 +210,10 @@
         }];
         return;
     }
+    else if (completion != nil)
+    {
+      completion();
+    }
 }
 
 @end
