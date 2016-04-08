@@ -35,6 +35,7 @@ function _processButtons(buttons) {
   if (!buttons) return;
   var unsubscribes = [];
   for (var i = 0 ; i < buttons.length ; i++) {
+    buttons[i] = Object.assign({}, buttons[i]);
     var button = buttons[i];
     _processProperties(button);
     if (typeof button.onPress === "function") {
@@ -63,8 +64,10 @@ var Controllers = {
       createElement: function(type, props) {
         var children = Array.prototype.slice.call(arguments, 2);
         var flatChildren = utils.flattenDeep(children);
+        props = Object.assign({}, props);
         _processProperties(props);
         if (props['style']) {
+          props['style'] = Object.assign({}, props['style']);
           _processProperties(props['style']);
         }
         return {
@@ -99,6 +102,7 @@ var Controllers = {
       push: function (params) {
         var unsubscribes = [];
         if (params['style']) {
+          params['style'] = Object.assign({}, params['style']);
           _processProperties(params['style']);
         }
         if (params['leftButtons']) {
@@ -128,6 +132,7 @@ var Controllers = {
       resetTo: function (params) {
         var unsubscribes = [];
         if (params['style']) {
+          params['style'] = Object.assign({}, params['style']);
           _processProperties(params['style']);
         }
         if (params['leftButtons']) {
@@ -194,7 +199,8 @@ var Controllers = {
 
   Modal: {
     showLightBox: function(params) {
-      _processProperties(params.style);
+      params['style'] = Object.assign({}, params['style']);
+      _processProperties(params['style']);
       RCCManager.modalShowLightBox(params);
     },
     dismissLightBox: function() {
