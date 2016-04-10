@@ -352,6 +352,13 @@ Modal.dismissController();
 Modal.dismissController('none');
 ```
 
+* **dismissAllControllers(animationType = 'slide-down')** - dismiss all displayed modal controllers
+
+```js
+// this will dismiss several displayed controllers at once
+Modal.dismissAllControllers();
+```
+
  * **showLightBox(params)** - display a component as a light box
 
 ```js
