@@ -28,6 +28,13 @@
 
   self.openDrawerGestureModeMask = MMOpenDrawerGestureModeAll;
   self.closeDrawerGestureModeMask = MMCloseDrawerGestureModeAll;
+    
+    // default is all MMOpenDrawerGestureModeAll and MMCloseDrawerGestureModeAll
+    NSNumber *disableOpenGesture = props[@"disableOpenGesture"];
+    if ([disableOpenGesture boolValue]) {
+        self.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+        self.closeDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    }
 
   [self setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
     MMDrawerControllerDrawerVisualStateBlock block;
