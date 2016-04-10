@@ -33,7 +33,6 @@
     NSNumber *disableOpenGesture = props[@"disableOpenGesture"];
     if ([disableOpenGesture boolValue]) {
         self.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
-        self.closeDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     }
 
   [self setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
