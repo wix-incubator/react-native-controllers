@@ -569,7 +569,7 @@ componentRight | [Registered name](https://github.com/wix/react-native-controlle
 id | Unique ID used to reference this view controller in future API calls
 passPropsLeft | Simple serializable object that will pass as props to the left component
 passPropsRight | Simple serializable object that will pass as props to the right component
-disableOpenGesture | Disable the open and close gestures
+disableOpenGesture | Disable the open gesture
 
 ##### Methods
 
