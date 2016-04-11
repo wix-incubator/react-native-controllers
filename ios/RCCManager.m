@@ -43,11 +43,16 @@
   return self;
 }
 
+-(void)clearModuleRegistry
+{
+  [self.modulesRegistry removeAllObjects];
+}
+
 -(void)onRNReload
 {
   id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
   appDelegate.window.rootViewController = nil;
-  [self.modulesRegistry removeAllObjects];
+  [self clearModuleRegistry];
 }
 
 -(void)registerController:(UIViewController*)controller componentId:(NSString*)componentId componentType:(NSString*)componentType

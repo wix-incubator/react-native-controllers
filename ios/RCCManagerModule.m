@@ -84,6 +84,9 @@ RCT_EXPORT_MODULE(RCCManager);
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
+    //first clear the registry to remove any refernece to the previous controllers
+    [[RCCManager sharedInstance] clearModuleRegistry];
+    
     // create the new controller
     UIViewController *controller = [RCCViewController controllerWithLayout:layout globalProps:globalProps bridge:[[RCCManager sharedInstance] getBridge]];
     if (controller == nil) return;

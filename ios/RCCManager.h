@@ -14,4 +14,6 @@
 -(id)getControllerWithId:(NSString*)componentId componentType:(NSString*)componentType;
 -(void)unregisterController:(NSString*)componentId componentType:(NSString*)componentType;
 
+-(void)clearModuleRegistry;
+
 @end
