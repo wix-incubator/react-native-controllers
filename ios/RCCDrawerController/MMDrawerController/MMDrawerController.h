@@ -342,6 +342,18 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  */
 -(void)setCenterViewController:(UIViewController *)centerViewController withCloseAnimation:(BOOL)closeAnimated completion:(void(^)(BOOL finished))completion;
 
+
+/**
+ Sets the new `centerViewController.overlayViewColor`.
+ 
+ This sets the overlay view color
+ 
+ @param color The new `UIColor`.
+ 
+ */
+-(void)setCenterOverlayColor:(UIColor*)color;
+
+
 /**
  Sets the new `centerViewController`. 
  

@@ -14,6 +14,7 @@ var {
 // require all top level react components you refer to in the layout
 require('./SideMenu');
 require('./MovieListScreen');
+require('./MoreDrawerOptionsScreen');
 require('./SearchScreen');
 require('./FavoritesScreen');
 require('./ModalScreen');
@@ -50,23 +51,23 @@ var MoviesApp = Controllers.createClass({
         </TabBarControllerIOS>
       </DrawerControllerIOS>
     );
-  },
+  }
 });
 
 var ModalScreenTester = Controllers.createClass({
   render: function() {
     return (
-      <NavigationControllerIOS
-        title="Modal"
-        component="ModalScreen"
-        id="modal_nav"
-        leftButtons={[{
+        <NavigationControllerIOS
+            title="Modal"
+            component="ModalScreen"
+            id="modal_nav"
+            leftButtons={[{
           title: "Close",
           onPress: function() {
             Controllers.Modal.dismissController();
           }
         }]}
-      />
+        />
     );
   },
 });
@@ -106,15 +107,38 @@ var TabStyleTester = Controllers.createClass({
         </TabBarControllerIOS.Item>
       </TabBarControllerIOS>
     );
+  }
+})
+
+var MoreDrawerScreenTester = Controllers.createClass({
+  render: function() {
+    return (
+      <DrawerControllerIOS id="drawer_options"
+                           componentLeft="SideMenu"
+                           componentRight="SideMenu"
+                           type="TheSideBar"
+                           drawerType="airbnb"
+                           style={{leftDrawerWidth: 80, rightDrawerWidth: 50, contentOverlayColor: '#162D3Dff'}}>
+
+        <NavigationControllerIOS
+          title="More Drawer"
+          component="MoreDrawerOptionsScreen"
+          id="more_nav"
+          style={{navBarTextColor: '#00ff00', drawUnderNavBar: false, drawUnderTabBar: true}}
+        />
+      </DrawerControllerIOS>
+    );
   },
 });
 
 ControllerRegistry.registerController('MoviesApp', () => MoviesApp);
 ControllerRegistry.registerController('ModalScreenTester', () => ModalScreenTester);
 ControllerRegistry.registerController('TabStyleTester', () => TabStyleTester);
+ControllerRegistry.registerController('MoreDrawerScreenTester', () => MoreDrawerScreenTester);
 
 // this line makes the app actually start and initialize
 ControllerRegistry.setRootController('MoviesApp');
 
 module.exports = MoviesApp;
 module.exports = ModalScreenTester;
+module.exports = MoreDrawerScreenTester;
