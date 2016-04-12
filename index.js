@@ -246,6 +246,7 @@ var Controllers = {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
+      _validateDrawerProps(layout);
       RCCManager.showController(layout, animationType, passProps);
     },
     dismissController: function(animationType = 'slide-down') {
