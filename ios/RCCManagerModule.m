@@ -7,6 +7,8 @@
 #import "RCCLightBox.h"
 #import "RCTConvert.h"
 #import "RCCTabBarController.h"
+#import "RCCTheSideBarManagerViewController.h"
+
 
 #define kSlideDownAnimationDuration 0.35
 
@@ -143,9 +145,11 @@ RCT_EXPORT_METHOD(
 DrawerControllerIOS:(NSString*)controllerId performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams)
 {
   if (!controllerId || !performAction) return;
-  RCCDrawerController* controller = [[RCCManager sharedInstance] getControllerWithId:controllerId componentType:@"DrawerControllerIOS"];
-  if (!controller || ![controller isKindOfClass:[RCCDrawerController class]]) return;
-  return [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedInstance] getBridge]];
+
+  id<RCCDrawerDelegate> controller = [[RCCManager sharedIntance] getControllerWithId:controllerId componentType:@"DrawerControllerIOS"];
+  if (!controller || (![controller isKindOfClass:[RCCDrawerController class]] && ![controller isKindOfClass:[RCCTheSideBarManagerViewController class]])) return;
+  return [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedIntance] getBridge]];
+
 }
 
 RCT_EXPORT_METHOD(

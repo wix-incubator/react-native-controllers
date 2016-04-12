@@ -53,6 +53,38 @@ function _processButtons(buttons) {
   };
 }
 
+
+
+
+function _validateDrawerProps(layout) {
+  if (layout.type === "DrawerControllerIOS") {
+    let shouldSetToDefault = true;
+
+    const drawerProps = layout.props;
+    if (drawerProps.type === "MMDrawer") {
+      ["door", "parallax", "slide", "slide-and-scale"].forEach(function(type) {
+        if (type === drawerProps.animationType){
+          shouldSetToDefault = false;
+        }
+      })
+    }
+    else if (drawerProps.type === "TheSideBar") {
+      ["airbnb", "facebook", "luvocracy", "feedly", "flipboard", "wunderlist"].forEach(function(type) {
+        if (type === drawerProps.animationType){
+          shouldSetToDefault = false;
+        }
+      })
+    }
+
+    if (shouldSetToDefault) {
+      console.warn("Set to defult type=MMDrawer animationType=slide");
+      drawerProps.type = "MMDrawer";
+      drawerProps.animationType = "slide";
+    }
+  }
+}
+
+
 var Controllers = {
 
   createClass: function (app) {
@@ -93,6 +125,7 @@ var Controllers = {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
+      _validateDrawerProps(layout);
       RCCManager.setRootController(layout, animationType, passProps);
     }
   },
@@ -174,7 +207,10 @@ var Controllers = {
       close: function (params) {
         return RCCManager.DrawerControllerIOS(id, "close", params);
       },
-      toggle: function (params) {
+      toggleLeft: function (params) {
+        return RCCManager.DrawerControllerIOS(id, "toggle", params);
+      },
+      toggleRight: function (params) {
         return RCCManager.DrawerControllerIOS(id, "toggle", params);
       },
       setStyle: function (params) {

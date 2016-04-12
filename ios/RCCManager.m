@@ -71,7 +71,7 @@
 
   /*
   TODO: we really want this error, but we need to unregister controllers when they dealloc
-  if (componentsDic[componentId])
+  if (componentsDic[componentId])@synthesize closeOnTopButton = _closeOnTopButton;
   {
     [self.sharedBridge.redBox showErrorMessage:[NSString stringWithFormat:@"Controllers: controller with id %@ is already registered. Make sure all of the controller id's you use are unique.", componentId]];
   }

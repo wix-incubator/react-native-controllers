@@ -83,9 +83,30 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 @interface MMDrawerCenterContainerView : UIView
 @property (nonatomic,assign) MMDrawerOpenCenterInteractionMode centerInteractionMode;
 @property (nonatomic,assign) MMDrawerSide openSide;
+
+@property (nonatomic, strong) UIView *overlayView;
+@property (nonatomic, strong) UIColor *overlayViewColor;
+
 @end
 
 @implementation MMDrawerCenterContainerView
+
+
+-(void)setOverlayViewColor:(UIColor*)overlayViewColor {
+    _overlayViewColor = overlayViewColor;
+    self.overlayView.backgroundColor = _overlayViewColor;
+}
+
+
+-(UIView *)overlayView {
+    if (!_overlayView) {
+        _overlayView = [[UIView alloc] initWithFrame:self.bounds];
+        _overlayView.backgroundColor = [UIColor colorWithRed:22/256 green:45/256 blue:61/256 alpha:0.5];
+        _overlayView.userInteractionEnabled = NO;
+    }
+    return _overlayView;
+}
+
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
     UIView *hitView = [super hitTest:point withEvent:event];
@@ -118,6 +139,25 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     }
     return navBar;
 }
+
+-(void)setFrame:(CGRect)frame withLayoutAlpha:(CGFloat)layoutAlpha {
+    [super setFrame:frame];
+    
+    self.overlayView.alpha = layoutAlpha;
+    
+    if (![self.overlayView isDescendantOfView:self]) {
+//        [self addSubview:self.overlayView];
+    }
+    else {
+        NSLog(@"%@",NSStringFromCGRect(frame));
+        [self bringSubviewToFront:self.overlayView];
+        
+//        if (frame.origin.x == 0 && frame.origin.y == 0)  {
+//            [self.overlayView removeFromSuperview];
+//        }
+    }
+}
+
 @end
 
 @interface MMDrawerController () <UIGestureRecognizerDelegate>{
@@ -310,7 +350,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
          options:options
          animations:^{
              [self setNeedsStatusBarAppearanceUpdateIfSupported];
-             [self.centerContainerView setFrame:newFrame];
+             [self.centerContainerView setFrame:newFrame withLayoutAlpha:0.0];
              [self updateDrawerVisualStateForDrawerSide:visibleSide percentVisible:0.0];
          }
          completion:^(BOOL finished) {
@@ -366,7 +406,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
              options:options
              animations:^{
                  [self setNeedsStatusBarAppearanceUpdateIfSupported];
-                 [self.centerContainerView setFrame:newFrame];
+                 [self.centerContainerView setFrame:newFrame withLayoutAlpha:1.0];
                  [self updateDrawerVisualStateForDrawerSide:drawerSide percentVisible:1.0];
              }
              completion:^(BOOL finished) {
@@ -528,14 +568,14 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
          delay:0.0
          options:UIViewAnimationOptionCurveEaseInOut
          animations:^{
-             [self.centerContainerView setFrame:newCenterRect];
+             [self.centerContainerView setFrame:newCenterRect withLayoutAlpha:1.0];
              [sideDrawerViewController.view setFrame:self.childControllerContainerView.bounds];
          }
          completion:^(BOOL finished) {
 
              CGRect oldCenterRect = self.centerContainerView.frame;
              [self setCenterViewController:newCenterViewController animated:animated];
-             [self.centerContainerView setFrame:oldCenterRect];
+             [self.centerContainerView setFrame:oldCenterRect withLayoutAlpha:1.0];
              [self updateDrawerVisualStateForDrawerSide:self.openSide percentVisible:1.0];
              if(forwardAppearanceMethodsToCenterViewController) {
                  [oldCenterViewController endAppearanceTransition];
@@ -547,7 +587,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
              delay:MMDrawerDefaultFullAnimationDelay
              options:UIViewAnimationOptionCurveEaseInOut
              animations:^{
-                 [self.centerContainerView setFrame:self.childControllerContainerView.bounds];
+                 [self.centerContainerView setFrame:self.childControllerContainerView.bounds withLayoutAlpha:1.0];
                  [self updateDrawerVisualStateForDrawerSide:self.openSide percentVisible:0.0];
              }
              completion:^(BOOL finished) {
@@ -578,6 +618,14 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
         }
     }
 }
+
+
+-(void)setCenterOverlayColor:(UIColor*)color {
+    if (color) {
+        self.centerContainerView.overlayViewColor = color;
+    }
+}
+
 
 #pragma mark - Size Methods
 -(void)setMaximumLeftDrawerWidth:(CGFloat)width animated:(BOOL)animated completion:(void(^)(BOOL finished))completion{
@@ -616,7 +664,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
          delay:0.0
          options:UIViewAnimationOptionCurveEaseInOut
          animations:^{
-             [self.centerContainerView setFrame:newCenterRect];
+             [self.centerContainerView setFrame:newCenterRect withLayoutAlpha:1.0];
              [sideDrawerViewController.view setFrame:sideDrawerViewController.mm_visibleDrawerFrame];
          }
          completion:^(BOOL finished) {
@@ -1105,6 +1153,10 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
             newFrame.origin.x = floor(newFrame.origin.x);
             newFrame.origin.y = floor(newFrame.origin.y);
             self.centerContainerView.frame = newFrame;
+            
+            [self.centerContainerView addSubview:self.centerContainerView.overlayView];
+            [self.centerContainerView bringSubviewToFront:self.centerContainerView.overlayView];
+            self.centerContainerView.overlayView.alpha = percentVisible;
             
             break;
         }
