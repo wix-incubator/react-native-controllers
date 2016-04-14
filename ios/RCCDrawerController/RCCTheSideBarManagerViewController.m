@@ -137,12 +137,13 @@
     
     UIImage *backgroundImage = nil;
     id icon = self.drawerStyle[@"backgroundImage"];
+    UIWindow *appDelegateWindow = [[[UIApplication sharedApplication] delegate] window];
+    self.originalWindowBackgroundColor = appDelegateWindow.backgroundColor;
+    
     if (icon)
     {
         backgroundImage = [RCTConvert UIImage:icon];
         if (backgroundImage) {
-            UIWindow *appDelegateWindow = [[[UIApplication sharedApplication] delegate] window];
-            self.originalWindowBackgroundColor = appDelegateWindow.backgroundColor;
             backgroundImage = [RCCDrawerHelper imageWithImage:backgroundImage scaledToSize:appDelegateWindow.bounds.size];
             [appDelegateWindow setBackgroundColor:[UIColor colorWithPatternImage:backgroundImage]];
         }
@@ -155,10 +156,10 @@
     else if ([type isEqualToString:@"facebook"]) self.animationStyle = SidebarTransitionStyleFacebook;
     else if ([type isEqualToString:@"luvocracy"]) self.animationStyle = SidebarTransitionStyleLuvocracy;
     else if ([type isEqualToString:@"wunder-list"]) self.animationStyle = SidebarTransitionStyleWunderlist;
-
-//    currently unsuported animation types
-//    else if ([type isEqualToString:@"feedly"]) self.animationStyle = SidebarTransitionStyleFeedly;
-//    else if ([type isEqualToString:@"flipboard"]) self.animationStyle = SidebarTransitionStyleFlipboard;
+    
+    //    currently unsuported animation types
+    //    else if ([type isEqualToString:@"feedly"]) self.animationStyle = SidebarTransitionStyleFeedly;
+    //    else if ([type isEqualToString:@"flipboard"]) self.animationStyle = SidebarTransitionStyleFlipboard;
     
     
     // default
