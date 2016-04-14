@@ -570,6 +570,9 @@ id | Unique ID used to reference this view controller in future API calls
 passPropsLeft | Simple serializable object that will pass as props to the left component
 passPropsRight | Simple serializable object that will pass as props to the right component
 disableOpenGesture | Disable the open gesture
+type | MMDrawer / TheSideBar (default is MMDrawer)
+animationType | if type=MMDrawer animationTypes=door/parallax/slide/slide-and-scale. If type=TheSideBar animationType=airbnb/facebook/luvocracy/wunder-list (**Default** is type=MMDrawer animationType=slide)
+
 
 ##### Methods
 
@@ -614,6 +617,24 @@ drawerController.setStyle({
   animationType: "slide" // slide, slideAndScale, parallax, door
 });
 ```
+##### Styling Drawer
+
+You can apply styling to the Drawer appearance and behavior by setting the `style` property when defining your `DrawerControllerIOS `.
+
+All styles are optional, this is the format of the style object:
+
+```js
+{
+  contentOverlayColor: '#162D3D55', // change the text color of the title (support colors with alpha - last 2 digits)
+  backgroundImage: 'icon={require('./img/home.png')}', // change the background image. Will be seen when Drawer animationType are slide-and-scale or airbnb/luvacracy
+  leftDrawerWidth: '60' // change the left drawer width. Precentage value, 60% of screen width (default is 80%)
+  rightDrawerWidth: '70' // change the left drawer width. Precentage value, 70% of screen width (default is 80%)
+}
+```
+
+See all the styles in action by running the [example](example) project in Xcode (under the "Movies" tab, side menu section, try to press "More..." button in order to show more cool drawer options).
+
+
 
 ##### Examples
 
