@@ -2,6 +2,7 @@ var OriginalReact = require('react-native');
 var RCCManager = OriginalReact.NativeModules.RCCManager;
 var NativeAppEventEmitter = OriginalReact.NativeAppEventEmitter;
 var utils = require('./utils');
+var Constants = require('./Constants');
 var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 var processColor = require('react-native/Libraries/StyleSheet/processColor');
 
@@ -14,7 +15,7 @@ function _getRandomId() {
 function _processProperties(properties) {
   for (var property in properties) {
     if (properties.hasOwnProperty(property)) {
-      if (property === 'icon' || property.endsWith('Icon')) {
+      if (property === 'icon' || property.endsWith('Icon') || property.endsWith('Image')) {
         properties[property] = resolveAssetSource(properties[property]);
       }
       if (property === 'color' || property.endsWith('Color')) {
@@ -52,6 +53,35 @@ function _processButtons(buttons) {
     }
   };
 }
+
+function _validateDrawerProps(layout) {
+  if (layout.type === "DrawerControllerIOS") {
+    let shouldSetToDefault = true;
+
+    const drawerProps = layout.props;
+    if (drawerProps.type === "MMDrawer") {
+      [ Constants.MMDRAWER_DOOR, Constants.MMDRAWER_PARALLAX, Constants.MMDRAWER_SLIDE, Constants.MMDRAWER_SLIDE_AND_SCALE].forEach(function(type) {
+        if (type === drawerProps.animationType){
+          shouldSetToDefault = false;
+        }
+      })
+    }
+    else if (drawerProps.type === "TheSideBar") {
+      [Constants.THE_SIDEBAR_AIRBNB, Constants.THE_SIDEBAR_FACEBOOK, Constants.THE_SIDEBAR_LUVOCRACY, Constants.THE_SIDEBAR_WUNDER_LIST].forEach(function(type) {
+        if (type === drawerProps.animationType){
+          shouldSetToDefault = false;
+        }
+      })
+    }
+
+    if (shouldSetToDefault) {
+      console.warn("Set to default type=MMDrawer animationType=slide");
+      drawerProps.type = "MMDrawer";
+      drawerProps.animationType = "slide";
+    }
+  }
+}
+
 
 var Controllers = {
 
@@ -93,6 +123,7 @@ var Controllers = {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
+      _validateDrawerProps(layout);
       RCCManager.setRootController(layout, animationType, passProps);
     }
   },
@@ -210,6 +241,7 @@ var Controllers = {
       var controller = _controllerRegistry[appKey];
       if (controller === undefined) return;
       var layout = controller.render();
+      _validateDrawerProps(layout);
       RCCManager.showController(layout, animationType, passProps);
     },
     dismissController: function(animationType = 'slide-down') {
@@ -219,6 +251,9 @@ var Controllers = {
       RCCManager.dismissAllControllers(animationType);
     }
   },
+
+  Constants: Constants
 };
 
 module.exports = Controllers;
+

@@ -26,13 +26,13 @@
  
  ## Creating a MMDrawerController
  `MMDrawerController` is a container view controller, similiar to `UINavigationController` or `UITabBarController`, with up to three child view controllers - Center, LeftDrawer, and RightDrawer. To create a `MMDrawerController`, you must first instantiate the drawer view controllers and the initial center controller, then call one of the init methods listed in this class.
-
+ 
  ## Handling a UINavigationController as the centerViewController
  `MMDrawerController` automatically supports handling a `UINavigationController` as the `centerViewController`, and will correctly handle the proper gestures on each view (the navigation bar view as well as the content view for the visible view controller). Note that while this library does support other container view controllers, the open/close gestures are not customized to support them.
  
  ## Accessing MMDrawerController from the Child View Controller
  You can leverage the category class (UIViewController+MMDrawerController) included with this library to access information about the parent `MMDrawerController`. Note that if you are contained within a UINavigationController, the `drawerContainerViewController` will still return the proper reference to the `drawerContainerViewController` parent, even though it is not the direct parent. Refer to the documentation included with the category for more information.
-
+ 
  ## How MMDrawerOpenCenterInteractionMode is handled
  `MMDrawerOpenCenterInteractionMode` controls how the user should be able to interact with the center view controller when either drawer is open. By default, this is set to `MMDrawerOpenCenterInteractionModeNavigationBarOnly`, which allows the user to interact with UINavigationBarItems while either drawer is open (typicaly used to click the menu button to close). If you set the interaction mode to `MMDrawerOpenCenterInteractionModeNone`, no items within the center view will be able to be interacted with while a drawer is open. Note that this setting has no effect at all on the `MMCloseDrawerGestureMode`.
  
@@ -44,10 +44,10 @@
  
  ## What this library doesn't do.
  This library is not meant for:
-    - Top or bottom drawer views
-    - Displaying both drawers at one time
-    - Displaying a minimum drawer width
-    - Support container view controllers other than `UINavigationController` as the center view controller. 
+ - Top or bottom drawer views
+ - Displaying both drawers at one time
+ - Displaying a minimum drawer width
+ - Support container view controllers other than `UINavigationController` as the center view controller.
  */
 
 typedef NS_ENUM(NSInteger,MMDrawerSide){
@@ -63,9 +63,9 @@ typedef NS_OPTIONS(NSInteger, MMOpenDrawerGestureMode) {
     MMOpenDrawerGestureModeBezelPanningCenterView   = 1 << 3,
     MMOpenDrawerGestureModeCustom                   = 1 << 4,
     MMOpenDrawerGestureModeAll                      =   MMOpenDrawerGestureModePanningNavigationBar     |
-                                                        MMOpenDrawerGestureModePanningCenterView        |
-                                                        MMOpenDrawerGestureModeBezelPanningCenterView   |
-                                                        MMOpenDrawerGestureModeCustom,
+    MMOpenDrawerGestureModePanningCenterView        |
+    MMOpenDrawerGestureModeBezelPanningCenterView   |
+    MMOpenDrawerGestureModeCustom,
 };
 
 typedef NS_OPTIONS(NSInteger, MMCloseDrawerGestureMode) {
@@ -78,12 +78,12 @@ typedef NS_OPTIONS(NSInteger, MMCloseDrawerGestureMode) {
     MMCloseDrawerGestureModePanningDrawerView       = 1 << 6,
     MMCloseDrawerGestureModeCustom                  = 1 << 7,
     MMCloseDrawerGestureModeAll                     =   MMCloseDrawerGestureModePanningNavigationBar    |
-                                                        MMCloseDrawerGestureModePanningCenterView       |
-                                                        MMCloseDrawerGestureModeBezelPanningCenterView  |
-                                                        MMCloseDrawerGestureModeTapNavigationBar        |
-                                                        MMCloseDrawerGestureModeTapCenterView           |
-                                                        MMCloseDrawerGestureModePanningDrawerView       |
-                                                        MMCloseDrawerGestureModeCustom,
+    MMCloseDrawerGestureModePanningCenterView       |
+    MMCloseDrawerGestureModeBezelPanningCenterView  |
+    MMCloseDrawerGestureModeTapNavigationBar        |
+    MMCloseDrawerGestureModeTapCenterView           |
+    MMCloseDrawerGestureModePanningDrawerView       |
+    MMCloseDrawerGestureModeCustom,
 };
 
 typedef NS_ENUM(NSInteger, MMDrawerOpenCenterInteractionMode) {
@@ -102,50 +102,50 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- The center view controller. 
+ The center view controller.
  
  This can only be set via the init methods, as well as the `setNewCenterViewController:...` methods. The size of this view controller will automatically be set to the size of the drawer container view controller, and it's position is modified from within this class. Do not modify the frame externally.
  */
 @property (nonatomic, strong) UIViewController * centerViewController;
 
 /**
- The left drawer view controller. 
+ The left drawer view controller.
  
  The size of this view controller is managed within this class, and is automatically set to the appropriate size based on the `maximumLeftDrawerWidth`. Do not modify the frame externally.
  */
 @property (nonatomic, strong) UIViewController * leftDrawerViewController;
 
 /**
- The right drawer view controller. 
+ The right drawer view controller.
  
  The size of this view controller is managed within this class, and is automatically set to the appropriate size based on the `maximumRightDrawerWidth`. Do not modify the frame externally.
  */
 @property (nonatomic, strong) UIViewController * rightDrawerViewController;
 
 /**
- The maximum width of the `leftDrawerViewController`. 
+ The maximum width of the `leftDrawerViewController`.
  
  By default, this is set to 280. If the `leftDrawerViewController` is nil, this property will return 0.0;
  */
 @property (nonatomic, assign) CGFloat maximumLeftDrawerWidth;
 
 /**
- The maximum width of the `rightDrawerViewController`. 
+ The maximum width of the `rightDrawerViewController`.
  
  By default, this is set to 280. If the `rightDrawerViewController` is nil, this property will return 0.0;
-
+ 
  */
 @property (nonatomic, assign) CGFloat maximumRightDrawerWidth;
 
 /**
- The visible width of the `leftDrawerViewController`. 
+ The visible width of the `leftDrawerViewController`.
  
  Note this value can be greater than `maximumLeftDrawerWidth` during the full close animation when setting a new center view controller;
  */
 @property (nonatomic, assign, readonly) CGFloat visibleLeftDrawerWidth;
 
 /**
- The visible width of the `rightDrawerViewController`. 
+ The visible width of the `rightDrawerViewController`.
  
  Note this value can be greater than `maximumRightDrawerWidth` during the full close animation when setting a new center view controller;
  */
@@ -158,7 +158,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  */
 @property (nonatomic, assign) CGFloat animationVelocity;
 
-/** 
+/**
  A boolean that determines whether or not the panning gesture will "hard-stop" at the maximum width for a given drawer side.
  
  By default, this value is set to YES. Enabling `shouldStretchDrawer` will give the pan a gradual asymptotic stopping point much like `UIScrollView` behaves. Note that if this value is set to YES, the `drawerVisualStateBlock` can be passed a `percentVisible` greater than 1.0, so be sure to handle that case appropriately.
@@ -166,35 +166,35 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 @property (nonatomic, assign) BOOL shouldStretchDrawer;
 
 /**
- The current open side of the drawer. 
+ The current open side of the drawer.
  
  Note this value will change as soon as a pan gesture opens a drawer, or when a open/close animation is finished.
  */
 @property (nonatomic, assign, readonly) MMDrawerSide openSide;
 
 /**
- How a user is allowed to open a drawer using gestures. 
+ How a user is allowed to open a drawer using gestures.
  
  By default, this is set to `MMOpenDrawerGestureModeNone`. Note these gestures may affect user interaction with the `centerViewController`, so be sure to use appropriately.
  */
 @property (nonatomic, assign) MMOpenDrawerGestureMode openDrawerGestureModeMask;
 
 /**
- How a user is allowed to close a drawer. 
+ How a user is allowed to close a drawer.
  
  By default, this is set to `MMCloseDrawerGestureModeNone`. Note these gestures may affect user interaction with the `centerViewController`, so be sure to use appropriately.
  */
 @property (nonatomic, assign) MMCloseDrawerGestureMode closeDrawerGestureModeMask;
 
 /**
- The value determining if the user can interact with the `centerViewController` when a side drawer is open. 
+ The value determining if the user can interact with the `centerViewController` when a side drawer is open.
  
  By default, it is `MMDrawerOpenCenterInteractionModeNavigationBarOnly`, meaning that the user can only interact with the buttons on the `UINavigationBar`, if the center view controller is a `UINavigationController`. Otherwise, the user cannot interact with any other center view controller elements.
  */
 @property (nonatomic, assign) MMDrawerOpenCenterInteractionMode centerHiddenInteractionMode;
 
 /**
- The flag determining if a shadow should be drawn off of `centerViewController` when a drawer is open. 
+ The flag determining if a shadow should be drawn off of `centerViewController` when a drawer is open.
  
  By default, this is set to YES.
  */
@@ -261,7 +261,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- Creates and initializes an `MMDrawerController` object with the specified center view controller, left drawer view controller, and right drawer view controller. 
+ Creates and initializes an `MMDrawerController` object with the specified center view controller, left drawer view controller, and right drawer view controller.
  
  @param centerViewController The center view controller. This argument must not be `nil`.
  @param leftDrawerViewController The left drawer view controller.
@@ -296,7 +296,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- Toggles the drawer open/closed based on the `drawer` passed in. 
+ Toggles the drawer open/closed based on the `drawer` passed in.
  
  Note that if you attempt to toggle a drawer closed while the other is open, nothing will happen. For example, if you pass in MMDrawerSideLeft, but the right drawer is open, nothing will happen. In addition, the completion block will be called with the finished flag set to NO.
  
@@ -331,7 +331,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- Sets the new `centerViewController`. 
+ Sets the new `centerViewController`.
  
  This sets the view controller and will automatically adjust the frame based on the current state of the drawer controller. If `closeAnimated` is YES, it will immediately change the center view controller, and close the drawer from its current position.
  
@@ -342,8 +342,20 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
  */
 -(void)setCenterViewController:(UIViewController *)centerViewController withCloseAnimation:(BOOL)closeAnimated completion:(void(^)(BOOL finished))completion;
 
+
 /**
- Sets the new `centerViewController`. 
+ Sets the new `centerViewController.overlayViewColor`.
+ 
+ This sets the overlay view color
+ 
+ @param color The new `UIColor`.
+ 
+ */
+-(void)setCenterOverlayColor:(UIColor*)color;
+
+
+/**
+ Sets the new `centerViewController`.
  
  This sets the view controller and will automatically adjust the frame based on the current state of the drawer controller. If `closeFullAnimated` is YES, the current center view controller will animate off the screen, the new center view controller will then be set, followed by the drawer closing across the full width of the screen.
  
@@ -359,7 +371,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- Sets the maximum width of the left drawer view controller. 
+ Sets the maximum width of the left drawer view controller.
  
  If the drawer is open, and `animated` is YES, it will animate the drawer frame as well as adjust the center view controller. If the drawer is not open, this change will take place immediately.
  
@@ -371,7 +383,7 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 -(void)setMaximumLeftDrawerWidth:(CGFloat)width animated:(BOOL)animated completion:(void(^)(BOOL finished))completion;
 
 /**
- Sets the maximum width of the right drawer view controller. 
+ Sets the maximum width of the right drawer view controller.
  
  If the drawer is open, and `animated` is YES, it will animate the drawer frame as well as adjust the center view controller. If the drawer is not open, this change will take place immediately.
  
@@ -410,15 +422,15 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 ///---------------------------------------
 
 /**
- Sets a callback to be called when a drawer visual state needs to be updated. 
+ Sets a callback to be called when a drawer visual state needs to be updated.
  
  This block is responsible for updating the drawer's view state, and the drawer controller will handle animating to that state from the current state. This block will be called when the drawer is opened or closed, as well when the user is panning the drawer. This block is not responsible for doing animations directly, but instead just updating the state of the properies (such as alpha, anchor point, transform, etc). Note that if `shouldStretchDrawer` is set to YES, it is possible for `percentVisible` to be greater than 1.0. If `shouldStretchDrawer` is set to NO, `percentVisible` will never be greater than 1.0.
  
  Note that when the drawer is finished opening or closing, the side drawer controller view will be reset with the following properies:
  
-    - alpha: 1.0
-    - transform: CATransform3DIdentity
-    - anchorPoint: (0.5,0.5)
+ - alpha: 1.0
+ - transform: CATransform3DIdentity
+ - anchorPoint: (0.5,0.5)
  
  @param drawerVisualStateBlock A block object to be called that allows the implementer to update visual state properties on the drawer. `percentVisible` represents the amount of the drawer space that is current visible, with drawer space being defined as the edge of the screen to the maxmimum drawer width. Note that you do have access to the drawerController, which will allow you to update things like the anchor point of the side drawer layer.
  */

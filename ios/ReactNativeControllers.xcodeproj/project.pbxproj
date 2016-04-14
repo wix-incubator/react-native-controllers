@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC84A19D1C1A0C4E00B3A6A2 /* RCCDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1921C1A0C4E00B3A6A2 /* RCCDrawerController.m */; };
 		CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */; };
 		CC84A19F1C1A0C4E00B3A6A2 /* RCCManagerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1961C1A0C4E00B3A6A2 /* RCCManagerModule.m */; };
 		CC84A1A01C1A0C4E00B3A6A2 /* RCCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1981C1A0C4E00B3A6A2 /* RCCNavigationController.m */; };
 		CC84A1A11C1A0C4E00B3A6A2 /* RCCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */; };
 		CC84A1A21C1A0C4E00B3A6A2 /* RCCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */; };
-		CC84A1D21C1A103200B3A6A2 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1C81C1A103200B3A6A2 /* MMDrawerBarButtonItem.m */; };
-		CC84A1D31C1A103200B3A6A2 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1CA1C1A103200B3A6A2 /* MMDrawerController.m */; };
-		CC84A1D41C1A103200B3A6A2 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1CD1C1A103200B3A6A2 /* MMDrawerVisualState.m */; };
-		CC84A1D51C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1CF1C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.m */; };
-		CC84A1D61C1A103200B3A6A2 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC84A1D11C1A103200B3A6A2 /* UIViewController+MMDrawerController.m */; };
 		D84813191C8C5EB700051BAF /* RCCLightBox.m in Sources */ = {isa = PBXBuildFile; fileRef = D84813181C8C5EB700051BAF /* RCCLightBox.m */; };
+		D85082E11CBCF54200FDB961 /* RCCDrawerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082CB1CBCF54200FDB961 /* RCCDrawerHelper.m */; };
+		D85082E21CBCF54200FDB961 /* RCCTheSideBarManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082CE1CBCF54200FDB961 /* RCCTheSideBarManagerViewController.m */; };
+		D85082E31CBCF54200FDB961 /* SidebarAirbnbAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082D21CBCF54200FDB961 /* SidebarAirbnbAnimation.m */; };
+		D85082E41CBCF54200FDB961 /* SidebarAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082D41CBCF54200FDB961 /* SidebarAnimation.m */; };
+		D85082E51CBCF54200FDB961 /* SidebarFacebookAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082D61CBCF54200FDB961 /* SidebarFacebookAnimation.m */; };
+		D85082E61CBCF54200FDB961 /* SidebarFeedlyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082D81CBCF54200FDB961 /* SidebarFeedlyAnimation.m */; };
+		D85082E71CBCF54200FDB961 /* SidebarFlipboardAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082DA1CBCF54200FDB961 /* SidebarFlipboardAnimation.m */; };
+		D85082E81CBCF54200FDB961 /* SidebarLuvocracyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082DC1CBCF54200FDB961 /* SidebarLuvocracyAnimation.m */; };
+		D85082E91CBCF54200FDB961 /* SidebarWunderlistAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082DE1CBCF54200FDB961 /* SidebarWunderlistAnimation.m */; };
+		D85082EA1CBCF54200FDB961 /* TheSidebarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082E01CBCF54200FDB961 /* TheSidebarController.m */; };
+		D85082FC1CBCF8A800FDB961 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082BE1CBCF42400FDB961 /* MMDrawerBarButtonItem.m */; };
+		D85082FD1CBCF8A800FDB961 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082C11CBCF42400FDB961 /* MMDrawerController.m */; };
+		D85082FE1CBCF8A800FDB961 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082C31CBCF42400FDB961 /* MMDrawerVisualState.m */; };
+		D85082FF1CBCF8A800FDB961 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082C51CBCF42400FDB961 /* MMExampleDrawerVisualStateManager.m */; };
+		D85083001CBCF8A800FDB961 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D85082C71CBCF42400FDB961 /* UIViewController+MMDrawerController.m */; };
+		D8E11C571CBD1F670018B644 /* RCCDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E11C561CBD1F670018B644 /* RCCDrawerController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,8 +44,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CC84A1911C1A0C4E00B3A6A2 /* RCCDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerController.h; sourceTree = "<group>"; };
-		CC84A1921C1A0C4E00B3A6A2 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManager.h; sourceTree = "<group>"; };
 		CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCManager.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCManagerModule.h; sourceTree = "<group>"; };
@@ -46,20 +54,43 @@
 		CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCTabBarController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCViewController.h; sourceTree = "<group>"; };
 		CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCViewController.m; sourceTree = "<group>"; tabWidth = 2; };
-		CC84A1C71C1A103200B3A6A2 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawerBarButtonItem.h; path = MMDrawerController/MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
-		CC84A1C81C1A103200B3A6A2 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDrawerBarButtonItem.m; path = MMDrawerController/MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
-		CC84A1C91C1A103200B3A6A2 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawerController.h; path = MMDrawerController/MMDrawerController.h; sourceTree = "<group>"; };
-		CC84A1CA1C1A103200B3A6A2 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDrawerController.m; path = MMDrawerController/MMDrawerController.m; sourceTree = "<group>"; };
-		CC84A1CB1C1A103200B3A6A2 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MMDrawerController+Subclass.h"; path = "MMDrawerController/MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
-		CC84A1CC1C1A103200B3A6A2 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMDrawerVisualState.h; path = MMDrawerController/MMDrawerVisualState.h; sourceTree = "<group>"; };
-		CC84A1CD1C1A103200B3A6A2 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMDrawerVisualState.m; path = MMDrawerController/MMDrawerVisualState.m; sourceTree = "<group>"; };
-		CC84A1CE1C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMExampleDrawerVisualStateManager.h; path = MMDrawerController/MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
-		CC84A1CF1C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMExampleDrawerVisualStateManager.m; path = MMDrawerController/MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
-		CC84A1D01C1A103200B3A6A2 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+MMDrawerController.h"; path = "MMDrawerController/UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
-		CC84A1D11C1A103200B3A6A2 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+MMDrawerController.m"; path = "MMDrawerController/UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		D84813171C8C5EB700051BAF /* RCCLightBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCLightBox.h; sourceTree = "<group>"; };
 		D84813181C8C5EB700051BAF /* RCCLightBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCLightBox.m; sourceTree = "<group>"; };
+		D85082BD1CBCF42400FDB961 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		D85082BE1CBCF42400FDB961 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		D85082BF1CBCF42400FDB961 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		D85082C01CBCF42400FDB961 /* MMDrawerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		D85082C11CBCF42400FDB961 /* MMDrawerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		D85082C21CBCF42400FDB961 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		D85082C31CBCF42400FDB961 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		D85082C41CBCF42400FDB961 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
+		D85082C51CBCF42400FDB961 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
+		D85082C61CBCF42400FDB961 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		D85082C71CBCF42400FDB961 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		D85082C81CBCF42400FDB961 /* RCCDrawerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCCDrawerController.h; sourceTree = "<group>"; };
+		D85082CA1CBCF54200FDB961 /* RCCDrawerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerHelper.h; sourceTree = "<group>"; };
+		D85082CB1CBCF54200FDB961 /* RCCDrawerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerHelper.m; sourceTree = "<group>"; };
+		D85082CC1CBCF54200FDB961 /* RCCDrawerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerProtocol.h; sourceTree = "<group>"; };
+		D85082CD1CBCF54200FDB961 /* RCCTheSideBarManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTheSideBarManagerViewController.h; sourceTree = "<group>"; };
+		D85082CE1CBCF54200FDB961 /* RCCTheSideBarManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCTheSideBarManagerViewController.m; sourceTree = "<group>"; };
+		D85082D11CBCF54200FDB961 /* SidebarAirbnbAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarAirbnbAnimation.h; sourceTree = "<group>"; };
+		D85082D21CBCF54200FDB961 /* SidebarAirbnbAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarAirbnbAnimation.m; sourceTree = "<group>"; };
+		D85082D31CBCF54200FDB961 /* SidebarAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarAnimation.h; sourceTree = "<group>"; };
+		D85082D41CBCF54200FDB961 /* SidebarAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarAnimation.m; sourceTree = "<group>"; };
+		D85082D51CBCF54200FDB961 /* SidebarFacebookAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFacebookAnimation.h; sourceTree = "<group>"; };
+		D85082D61CBCF54200FDB961 /* SidebarFacebookAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFacebookAnimation.m; sourceTree = "<group>"; };
+		D85082D71CBCF54200FDB961 /* SidebarFeedlyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFeedlyAnimation.h; sourceTree = "<group>"; };
+		D85082D81CBCF54200FDB961 /* SidebarFeedlyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFeedlyAnimation.m; sourceTree = "<group>"; };
+		D85082D91CBCF54200FDB961 /* SidebarFlipboardAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFlipboardAnimation.h; sourceTree = "<group>"; };
+		D85082DA1CBCF54200FDB961 /* SidebarFlipboardAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFlipboardAnimation.m; sourceTree = "<group>"; };
+		D85082DB1CBCF54200FDB961 /* SidebarLuvocracyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarLuvocracyAnimation.h; sourceTree = "<group>"; };
+		D85082DC1CBCF54200FDB961 /* SidebarLuvocracyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarLuvocracyAnimation.m; sourceTree = "<group>"; };
+		D85082DD1CBCF54200FDB961 /* SidebarWunderlistAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarWunderlistAnimation.h; sourceTree = "<group>"; };
+		D85082DE1CBCF54200FDB961 /* SidebarWunderlistAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarWunderlistAnimation.m; sourceTree = "<group>"; };
+		D85082DF1CBCF54200FDB961 /* TheSidebarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheSidebarController.h; sourceTree = "<group>"; };
+		D85082E01CBCF54200FDB961 /* TheSidebarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheSidebarController.m; sourceTree = "<group>"; };
 		D8AFADBD1BEE6F3F00A4592D /* libReactNativeControllers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeControllers.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8E11C561CBD1F670018B644 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,30 +104,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CC84A1C61C1A101100B3A6A2 /* MMDrawerController */ = {
+		D85082BB1CBCF42400FDB961 /* RCCDrawerController */ = {
 			isa = PBXGroup;
 			children = (
-				CC84A1C71C1A103200B3A6A2 /* MMDrawerBarButtonItem.h */,
-				CC84A1C81C1A103200B3A6A2 /* MMDrawerBarButtonItem.m */,
-				CC84A1C91C1A103200B3A6A2 /* MMDrawerController.h */,
-				CC84A1CA1C1A103200B3A6A2 /* MMDrawerController.m */,
-				CC84A1CB1C1A103200B3A6A2 /* MMDrawerController+Subclass.h */,
-				CC84A1CC1C1A103200B3A6A2 /* MMDrawerVisualState.h */,
-				CC84A1CD1C1A103200B3A6A2 /* MMDrawerVisualState.m */,
-				CC84A1CE1C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.h */,
-				CC84A1CF1C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.m */,
-				CC84A1D01C1A103200B3A6A2 /* UIViewController+MMDrawerController.h */,
-				CC84A1D11C1A103200B3A6A2 /* UIViewController+MMDrawerController.m */,
+				D85082CF1CBCF54200FDB961 /* TheSidebarController */,
+				D85082BC1CBCF42400FDB961 /* MMDrawerController */,
+				D85082CA1CBCF54200FDB961 /* RCCDrawerHelper.h */,
+				D85082CB1CBCF54200FDB961 /* RCCDrawerHelper.m */,
+				D85082CC1CBCF54200FDB961 /* RCCDrawerProtocol.h */,
+				D85082CD1CBCF54200FDB961 /* RCCTheSideBarManagerViewController.h */,
+				D85082CE1CBCF54200FDB961 /* RCCTheSideBarManagerViewController.m */,
+				D85082C81CBCF42400FDB961 /* RCCDrawerController.h */,
+				D8E11C561CBD1F670018B644 /* RCCDrawerController.m */,
 			);
-			name = MMDrawerController;
+			path = RCCDrawerController;
+			sourceTree = "<group>";
+		};
+		D85082BC1CBCF42400FDB961 /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				D85082BD1CBCF42400FDB961 /* MMDrawerBarButtonItem.h */,
+				D85082BE1CBCF42400FDB961 /* MMDrawerBarButtonItem.m */,
+				D85082BF1CBCF42400FDB961 /* MMDrawerController+Subclass.h */,
+				D85082C01CBCF42400FDB961 /* MMDrawerController.h */,
+				D85082C11CBCF42400FDB961 /* MMDrawerController.m */,
+				D85082C21CBCF42400FDB961 /* MMDrawerVisualState.h */,
+				D85082C31CBCF42400FDB961 /* MMDrawerVisualState.m */,
+				D85082C41CBCF42400FDB961 /* MMExampleDrawerVisualStateManager.h */,
+				D85082C51CBCF42400FDB961 /* MMExampleDrawerVisualStateManager.m */,
+				D85082C61CBCF42400FDB961 /* UIViewController+MMDrawerController.h */,
+				D85082C71CBCF42400FDB961 /* UIViewController+MMDrawerController.m */,
+			);
+			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		D85082CF1CBCF54200FDB961 /* TheSidebarController */ = {
+			isa = PBXGroup;
+			children = (
+				D85082D01CBCF54200FDB961 /* Animations */,
+				D85082DF1CBCF54200FDB961 /* TheSidebarController.h */,
+				D85082E01CBCF54200FDB961 /* TheSidebarController.m */,
+			);
+			path = TheSidebarController;
+			sourceTree = "<group>";
+		};
+		D85082D01CBCF54200FDB961 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				D85082D11CBCF54200FDB961 /* SidebarAirbnbAnimation.h */,
+				D85082D21CBCF54200FDB961 /* SidebarAirbnbAnimation.m */,
+				D85082D31CBCF54200FDB961 /* SidebarAnimation.h */,
+				D85082D41CBCF54200FDB961 /* SidebarAnimation.m */,
+				D85082D51CBCF54200FDB961 /* SidebarFacebookAnimation.h */,
+				D85082D61CBCF54200FDB961 /* SidebarFacebookAnimation.m */,
+				D85082D71CBCF54200FDB961 /* SidebarFeedlyAnimation.h */,
+				D85082D81CBCF54200FDB961 /* SidebarFeedlyAnimation.m */,
+				D85082D91CBCF54200FDB961 /* SidebarFlipboardAnimation.h */,
+				D85082DA1CBCF54200FDB961 /* SidebarFlipboardAnimation.m */,
+				D85082DB1CBCF54200FDB961 /* SidebarLuvocracyAnimation.h */,
+				D85082DC1CBCF54200FDB961 /* SidebarLuvocracyAnimation.m */,
+				D85082DD1CBCF54200FDB961 /* SidebarWunderlistAnimation.h */,
+				D85082DE1CBCF54200FDB961 /* SidebarWunderlistAnimation.m */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		D8AFADB41BEE6F3F00A4592D = {
 			isa = PBXGroup;
 			children = (
-				CC84A1C61C1A101100B3A6A2 /* MMDrawerController */,
-				CC84A1911C1A0C4E00B3A6A2 /* RCCDrawerController.h */,
-				CC84A1921C1A0C4E00B3A6A2 /* RCCDrawerController.m */,
+				D85082BB1CBCF42400FDB961 /* RCCDrawerController */,
 				CC84A1931C1A0C4E00B3A6A2 /* RCCManager.h */,
 				CC84A1941C1A0C4E00B3A6A2 /* RCCManager.m */,
 				CC84A1951C1A0C4E00B3A6A2 /* RCCManagerModule.h */,
@@ -177,18 +253,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC84A1D61C1A103200B3A6A2 /* UIViewController+MMDrawerController.m in Sources */,
+				D85082EA1CBCF54200FDB961 /* TheSidebarController.m in Sources */,
 				CC84A1A01C1A0C4E00B3A6A2 /* RCCNavigationController.m in Sources */,
 				CC84A19F1C1A0C4E00B3A6A2 /* RCCManagerModule.m in Sources */,
-				CC84A1D31C1A103200B3A6A2 /* MMDrawerController.m in Sources */,
-				CC84A1D41C1A103200B3A6A2 /* MMDrawerVisualState.m in Sources */,
+				D85082E81CBCF54200FDB961 /* SidebarLuvocracyAnimation.m in Sources */,
+				D85082E31CBCF54200FDB961 /* SidebarAirbnbAnimation.m in Sources */,
 				D84813191C8C5EB700051BAF /* RCCLightBox.m in Sources */,
 				CC84A19E1C1A0C4E00B3A6A2 /* RCCManager.m in Sources */,
+				D85082E21CBCF54200FDB961 /* RCCTheSideBarManagerViewController.m in Sources */,
+				D85082FC1CBCF8A800FDB961 /* MMDrawerBarButtonItem.m in Sources */,
+				D85083001CBCF8A800FDB961 /* UIViewController+MMDrawerController.m in Sources */,
+				D85082FF1CBCF8A800FDB961 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				D85082E61CBCF54200FDB961 /* SidebarFeedlyAnimation.m in Sources */,
 				CC84A1A11C1A0C4E00B3A6A2 /* RCCTabBarController.m in Sources */,
-				CC84A19D1C1A0C4E00B3A6A2 /* RCCDrawerController.m in Sources */,
+				D85082E71CBCF54200FDB961 /* SidebarFlipboardAnimation.m in Sources */,
+				D85082E51CBCF54200FDB961 /* SidebarFacebookAnimation.m in Sources */,
 				CC84A1A21C1A0C4E00B3A6A2 /* RCCViewController.m in Sources */,
-				CC84A1D21C1A103200B3A6A2 /* MMDrawerBarButtonItem.m in Sources */,
-				CC84A1D51C1A103200B3A6A2 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				D85082E91CBCF54200FDB961 /* SidebarWunderlistAnimation.m in Sources */,
+				D85082E11CBCF54200FDB961 /* RCCDrawerHelper.m in Sources */,
+				D85082FE1CBCF8A800FDB961 /* MMDrawerVisualState.m in Sources */,
+				D85082FD1CBCF8A800FDB961 /* MMDrawerController.m in Sources */,
+				D85082E41CBCF54200FDB961 /* SidebarAnimation.m in Sources */,
+				D8E11C571CBD1F670018B644 /* RCCDrawerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

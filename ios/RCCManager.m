@@ -80,21 +80,13 @@
   componentsDic[componentId] = controller;
 }
 
--(void)unregisterController:(UIViewController*)vc
+-(void)unregisterController:(NSString*)componentId componentType:(NSString*)componentType
 {
-  if (vc == nil) return;
-  
-  for (NSString *key in [self.modulesRegistry allKeys])
+  if (componentType == nil || componentId == nil) return;
+  NSMutableDictionary *componentsDic = self.modulesRegistry[componentType];
+  if (componentsDic != nil)
   {
-    NSMutableDictionary *componentsDic = self.modulesRegistry[key];
-    for (NSString *componentID in [componentsDic allKeys])
-    {
-      UIViewController *tmpVc = componentsDic[componentID];
-      if (tmpVc == vc)
-      {
-        [componentsDic removeObjectForKey:componentID];
-      }
-    }
+    [componentsDic removeObjectForKey:componentId];
   }
 }
 
