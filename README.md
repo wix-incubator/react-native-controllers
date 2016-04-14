@@ -407,7 +407,7 @@ id | Unique ID used to reference this view controller in future API calls
 passProps | Simple serializable object that will pass as props to the pushed component
 style | Style the navigation bar, see [Styling Navigation](#styling-navigation) below for all available styles
 leftButtons | Array of left buttons to add in the nav bar, see `setLeftButtons` below for array format
-righttButtons | Array of right buttons to add in the nav bar, see `setRightButtons` below for array format
+rightButtons | Array of right buttons to add in the nav bar, see `setRightButtons` below for array format
 
 ##### Methods
 
@@ -626,7 +626,7 @@ All styles are optional, this is the format of the style object:
 ```js
 {
   contentOverlayColor: '#162D3D55', // change the text color of the title (support colors with alpha - last 2 digits)
-  backgroundImage: 'icon={require('./img/home.png')}', // change the background image. Will be seen when Drawer animationType are slide-and-scale or airbnb/luvacracy
+  backgroundImage: 'icon={require('./img/background.png')}', // change the background image. Will be seen when Drawer animationType are slide-and-scale or airbnb/luvacracy
   leftDrawerWidth: '60' // change the left drawer width. Precentage value, 60% of screen width (default is 80%)
   rightDrawerWidth: '70' // change the left drawer width. Precentage value, 70% of screen width (default is 80%)
 }
