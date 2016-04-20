@@ -461,6 +461,15 @@ navigationController.popToRoot({
 );
 ```
 
+ * **popToView()** - pop to specific screen in the navigation stack
+
+```js
+navigationController.popToView({
+  animated: true, // does the pop have a transition animation (optional, default true)
+  index:1 // id of the navigation stack (required)
+);
+```
+
 * **resetTo()** - replace the navigation stack root, all screens in the existing stack will be discarded
 
 ```js

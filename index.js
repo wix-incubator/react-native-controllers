@@ -157,6 +157,9 @@ var Controllers = {
       popToRoot: function (params) {
         RCCManager.NavigationControllerIOS(id, "popToRoot", params);
       },
+      popToView: function (params) {
+        RCCManager.NavigationControllerIOS(id, "popToView", params);
+      },
       setTitle: function (params) {
         RCCManager.NavigationControllerIOS(id, "setTitle", params);
       },

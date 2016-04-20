@@ -134,6 +134,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     return;
   }
 
+  // popToView
+  if([performAction isEqualToString:@"popToView"]){
+    NSNumber *index = actionParams[@"index"];
+    [self popToViewController:[self.viewControllers objectAtIndex:index.integerValue] animated:animated];
+    return;
+  }
+  
   // resetTo
   if ([performAction isEqualToString:@"resetTo"])
   {
