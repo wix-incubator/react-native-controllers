@@ -6,7 +6,8 @@ var {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } = React;
 
 var Controllers = require('react-native-controllers');
@@ -21,7 +22,7 @@ var LightBox = React.createClass({
 
   render: function() {
     return (
-      <View style={{backgroundColor: '#ffffff', width: 300, height: 200}}>
+      <View style={styles.container}>
         <Text style={styles.welcome}>
           This is a LightBox!
         </Text>
@@ -39,9 +40,11 @@ var LightBox = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: Dimensions.get('window').width * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
+    borderRadius: 10
   },
   welcome: {
     fontSize: 20,
