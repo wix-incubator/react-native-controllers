@@ -140,6 +140,10 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Event Based NavBar Buttons</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'titleImage') }>
+          <Text style={styles.button}>Title Image</Text>
+        </TouchableOpacity>
+
         <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
 
       </ScrollView>
@@ -422,6 +426,13 @@ var FavoritesScreen = React.createClass({
               onPress: eventId
             }
           ]
+        });
+        break;
+      case 'titleImage':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "More",
+          titleImage: require('./img/turtle.png'),
+          component: "FavoritesScreen"
         });
         break;
     }

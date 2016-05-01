@@ -136,6 +136,9 @@ var Controllers = {
           params['style'] = Object.assign({}, params['style']);
           _processProperties(params['style']);
         }
+        if (params['titleImage']) {
+          params['titleImage'] = resolveAssetSource(params['titleImage']);
+        }
         if (params['leftButtons']) {
           var unsubscribe = _processButtons(params['leftButtons']);
           unsubscribes.push(unsubscribe);
