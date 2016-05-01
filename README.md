@@ -402,6 +402,7 @@ Native navigator wrapper around [`UINavigationController`](https://developer.app
 Attribute | Description
 -------- | -----------
 title | Title displayed on the navigation bar on the root view controller (initial route)
+titleImage | Image to be displayed in the navigation bar instead of the title
 component | [Registered name](https://github.com/wix/react-native-controllers#step-3---implement-all-top-level-components) of the component that provides the view for the root view controller (initial route)
 id | Unique ID used to reference this view controller in future API calls
 passProps | Simple serializable object that will pass as props to the pushed component
@@ -424,6 +425,7 @@ var navigationController = Controllers.NavigationControllerIOS("movies");
 require('./PushedScreen');
 navigationController.push({
   title: "New Screen", // nav bar title of the pushed screen (optional)
+  titleImage: require('../img/title_image.png'), //nav bar title image of the pushed screen (optional)
   component: "PushedScreen", // the unique ID registered with AppRegistry.registerComponent (required)
   passProps: {}, // simple serializable object that will pass as props to the pushed component (optional)
   style: {}, // style the navigation bar for the pushed screen (optional, see "Styling Navigation" below)
