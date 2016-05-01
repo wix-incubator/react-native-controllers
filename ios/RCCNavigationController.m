@@ -265,7 +265,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 
 -(void)setTitleIamgeForVC:(UIViewController*)viewController titleImageData:(id)titleImageData
 {
-  if (!titleImageData)
+  if (!titleImageData || [titleImageData isEqual:[NSNull null]])
   {
     viewController.navigationItem.titleView = nil;
     return;
