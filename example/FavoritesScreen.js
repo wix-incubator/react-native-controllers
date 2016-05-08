@@ -17,6 +17,12 @@ var Controllers = require('react-native-controllers');
 
 var FavoritesScreen = React.createClass({
 
+  getInitialState: function() {
+    return({
+      isNavBarHidden : false
+    });
+  },
+
   render: function() {
     return (
       <ScrollView style={styles.container}>
@@ -58,8 +64,8 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'togglenav') }>
-          <Text style={styles.button}>ToggleNavBar</Text>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setnavbarhidden') }>
+          <Text style={styles.button}>Set Navigation Bar Hidden</Text>
         </TouchableOpacity>
 
         <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
@@ -188,8 +194,12 @@ var FavoritesScreen = React.createClass({
           }
         });
         break;
-      case 'togglenav':
-        Controllers.NavigationControllerIOS("favorites_nav").toggleNavBar();
+      case 'setnavbarhidden':
+          this.state.isNavBarHidden = !this.state.isNavBarHidden;
+        Controllers.NavigationControllerIOS("favorites_nav").setNavBarHidden( {
+          isHidden: this.state.isNavBarHidden,
+          animated: true //default is true
+        });
         break;
       case 'statushidden':
         Controllers.NavigationControllerIOS("favorites_nav").push({
