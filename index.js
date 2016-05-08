@@ -196,6 +196,9 @@ var Controllers = {
         var unsubscribe = _processButtons(buttons);
         RCCManager.NavigationControllerIOS(id, "setButtons", {buttons: buttons, side: "right", animated: animated});
         return unsubscribe;
+      },
+      toggleNavBar: function(animated = true) {
+        RCCManager.NavigationControllerIOS(id, "toggleNavBar", {animated: animated});
       }
     };
   },

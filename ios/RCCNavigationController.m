@@ -13,18 +13,18 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
 {
   NSString *component = props[@"component"];
   if (!component) return nil;
-
+  
   NSDictionary *passProps = props[@"passProps"];
   NSDictionary *navigatorStyle = props[@"style"];
-
+  
   RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle globalProps:globalProps bridge:bridge];
   if (!viewController) return nil;
-
+  
   NSString *title = props[@"title"];
   if (title) viewController.title = title;
   
   [self setTitleIamgeForVC:viewController titleImageData:props[@"titleImage"]];
-    
+  
   NSArray *leftButtons = props[@"leftButtons"];
   if (leftButtons)
   {
@@ -36,25 +36,25 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   {
     [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
   }
-
+  
   self = [super initWithRootViewController:viewController];
   if (!self) return nil;
   
   self.navigationBar.translucent = NO; // default
-
+  
   return self;
 }
 
 - (void)performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams bridge:(RCTBridge *)bridge
 {
   BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
-
+  
   // push
   if ([performAction isEqualToString:@"push"])
   {
     NSString *component = actionParams[@"component"];
     if (!component) return;
-
+    
     NSDictionary *passProps = actionParams[@"passProps"];
     NSDictionary *navigatorStyle = actionParams[@"style"];
     
@@ -78,9 +78,9 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
       [mergedStyle addEntriesFromDictionary:navigatorStyle];
       navigatorStyle = mergedStyle;
     }
-
+    
     RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle globalProps:nil bridge:bridge];
-
+    
     NSString *title = actionParams[@"title"];
     if (title) viewController.title = title;
     
@@ -119,11 +119,11 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     {
       [self setButtons:rightButtons viewController:viewController side:@"right" animated:NO];
     }
-
+    
     [self pushViewController:viewController animated:animated];
     return;
   }
-
+  
   // pop
   if ([performAction isEqualToString:@"pop"])
   {
@@ -137,7 +137,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     [self popToRootViewControllerAnimated:animated];
     return;
   }
-
+  
   // resetTo
   if ([performAction isEqualToString:@"resetTo"])
   {
@@ -171,18 +171,18 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     [self setViewControllers:@[viewController] animated:animated];
     return;
   }
-
+  
   // setButtons
   if ([performAction isEqualToString:@"setButtons"])
   {
     NSArray *buttons = actionParams[@"buttons"];
     BOOL animated = actionParams[@"animated"] ? [actionParams[@"animated"] boolValue] : YES;
     NSString *side = actionParams[@"side"] ? actionParams[@"side"] : @"left";
-  
+    
     [self setButtons:buttons viewController:self.topViewController side:side animated:animated];
     return;
   }
-
+  
   // setTitle
   if ([performAction isEqualToString:@"setTitle"])
   {
@@ -196,6 +196,13 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     [self setTitleIamgeForVC:self.topViewController titleImageData:actionParams[@"titleImage"]];
     return;
   }
+  
+  // toggleNavBar
+  if ([performAction isEqualToString:@"toggleNavBar"]) {
+    NSNumber *animated = actionParams[@"animated"];
+    BOOL animatedBool = animated ? [animated boolValue] : NO;
+    [self setNavigationBarHidden:!self.navigationBarHidden animated:animatedBool];
+  }
 }
 
 -(void)onButtonPress:(UIBarButtonItem*)barButtonItem
@@ -204,10 +211,10 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   if (!callbackId) return;
   NSString *buttonId = objc_getAssociatedObject(barButtonItem, &CALLBACK_ASSOCIATED_ID);
   [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:callbackId body:@
-  {
-    @"type": @"NavBarButtonPress",
-    @"id": buttonId ? buttonId : [NSNull null]
-  }];
+   {
+     @"type": @"NavBarButtonPress",
+     @"id": buttonId ? buttonId : [NSNull null]
+   }];
 }
 
 -(void)setButtons:(NSArray*)buttons viewController:(UIViewController*)viewController side:(NSString*)side animated:(BOOL)animated
@@ -244,7 +251,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     if (disabledBool) {
       [barButtonItem setEnabled:NO];
     }
-
+    
     NSString *testID = button[@"testID"];
     if (testID)
     {

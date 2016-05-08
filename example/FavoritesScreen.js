@@ -58,6 +58,10 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'togglenav') }>
+          <Text style={styles.button}>ToggleNavBar</Text>
+        </TouchableOpacity>
+
         <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
           More styles under the image
         </Text>
@@ -183,6 +187,9 @@ var FavoritesScreen = React.createClass({
             navBarHidden: true
           }
         });
+        break;
+      case 'togglenav':
+        Controllers.NavigationControllerIOS("favorites_nav").toggleNavBar();
         break;
       case 'statushidden':
         Controllers.NavigationControllerIOS("favorites_nav").push({

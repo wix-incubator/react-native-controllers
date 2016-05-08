@@ -517,6 +517,12 @@ navigationController.setTitle({
 });
 ```
 
+* **toggleNavBar(animated = true)** - toggle the navigation bar
+
+```js
+navigationController.toggleNavBar();
+```
+
 ##### Styling Navigation
 
 You can apply styling to the navigation bar appearance and behavior by setting the `style` property when defining your `NavigationControllerIOS` or by passing the `style` object when pushing a new screen.
