@@ -197,8 +197,8 @@ var Controllers = {
         RCCManager.NavigationControllerIOS(id, "setButtons", {buttons: buttons, side: "right", animated: animated});
         return unsubscribe;
       },
-      toggleNavBar: function(animated = true) {
-        RCCManager.NavigationControllerIOS(id, "toggleNavBar", {animated: animated});
+      setNavBarHidden: function(params = {}) {
+        RCCManager.NavigationControllerIOS(id, "setNavBarHidden", params);
       }
     };
   },
