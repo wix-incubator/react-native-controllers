@@ -61,9 +61,9 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   if ([type isEqualToString:@"DrawerControllerIOS"])
   {
     NSString *drawerType = props[@"type"];
-    
+
     if ([drawerType isEqualToString:@"TheSideBar"]) {
-      
+
       controller = [[RCCTheSideBarManagerViewController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
     }
     else {
@@ -91,7 +91,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 
   NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
   [mergedProps addEntriesFromDictionary:passProps];
-  
+
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
 
@@ -107,7 +107,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 {
   NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
   [mergedProps addEntriesFromDictionary:passProps];
-  
+
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
 
@@ -122,14 +122,14 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 - (void)commonInit:(RCTRootView*)reactView navigatorStyle:(NSDictionary*)navigatorStyle
 {
   self.view = reactView;
-  
+
   self.edgesForExtendedLayout = UIRectEdgeNone; // default
   self.automaticallyAdjustsScrollViewInsets = NO; // default
-  
+
   self.navigatorStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
-  
+
   [self setStyleOnInit];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
 }
 
@@ -147,14 +147,14 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  
+
   [self setStyleOnAppear];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
-  
+
   [self setStyleOnDisappear];
 }
 
@@ -172,18 +172,36 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.navigationController.navigationBar.barTintColor = nil;
   }
-  
+
   NSString *navBarTextColor = self.navigatorStyle[@"navBarTextColor"];
-  if (navBarTextColor)
+  NSString *navBarFontFamily = self.navigatorStyle[@"navBarFontFamily"];
+  float navBarFontSize = [self.navigatorStyle[@"navBarFontSize"] floatValue];
+  if (navBarTextColor || navBarFontFamily)
   {
-    UIColor *color = navBarTextColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarTextColor] : nil;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : color}];
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
+    if (navBarTextColor)
+    {
+      UIColor *color = navBarTextColor != (id)[NSNull null] ? [RCTConvert UIColor:navBarTextColor] : nil;
+      [attributes setValue:color forKey:NSForegroundColorAttributeName];
+    }
+
+    if (navBarFontFamily)
+    {
+      if (!navBarFontSize)
+      {
+        float navBarFontSize = 17.0f;
+      }
+      UIFont *font = [UIFont fontWithName:navBarFontFamily size:navBarFontSize];
+      [attributes setValue:font forKey:NSFontAttributeName];
+    }
+
+    [self.navigationController.navigationBar setTitleTextAttributes:attributes];
   }
   else
   {
     [self.navigationController.navigationBar setTitleTextAttributes:nil];
   }
-  
+
   NSString *navBarButtonColor = self.navigatorStyle[@"navBarButtonColor"];
   if (navBarButtonColor)
   {
@@ -194,7 +212,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.navigationController.navigationBar.tintColor = nil;
   }
-  
+
   NSString *statusBarTextColorScheme = self.navigatorStyle[@"statusBarTextColorScheme"];
   if (statusBarTextColorScheme && [statusBarTextColorScheme isEqualToString:@"light"])
   {
@@ -206,14 +224,14 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     self._statusBarTextColorSchemeLight = NO;
   }
-  
+
   NSNumber *navBarHidden = self.navigatorStyle[@"navBarHidden"];
   BOOL navBarHiddenBool = navBarHidden ? [navBarHidden boolValue] : NO;
   if (self.navigationController.navigationBarHidden != navBarHiddenBool)
   {
     [self.navigationController setNavigationBarHidden:navBarHiddenBool animated:YES];
   }
-  
+
   NSNumber *navBarHideOnScroll = self.navigatorStyle[@"navBarHideOnScroll"];
   BOOL navBarHideOnScrollBool = navBarHideOnScroll ? [navBarHideOnScroll boolValue] : NO;
   if (navBarHideOnScrollBool)
@@ -224,7 +242,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.navigationController.hidesBarsOnSwipe = NO;
   }
-  
+
   NSNumber *statusBarBlur = self.navigatorStyle[@"statusBarBlur"];
   BOOL statusBarBlurBool = statusBarBlur ? [statusBarBlur boolValue] : NO;
   if (statusBarBlurBool)
@@ -237,7 +255,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
       [self.view addSubview:blur];
     }
   }
-  
+
   NSNumber *navBarBlur = self.navigatorStyle[@"navBarBlur"];
   BOOL navBarBlurBool = navBarBlur ? [navBarBlur boolValue] : NO;
   if (navBarBlurBool)
@@ -256,7 +274,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
         originalNavBarImages[@"shadowImage"] = shadowImage;
       }
       self.originalNavBarImages = originalNavBarImages;
-      
+
       [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
       self.navigationController.navigationBar.shadowImage = [UIImage new];
       UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
@@ -278,7 +296,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
       self.originalNavBarImages = nil;
     }
   }
-  
+
   NSNumber *navBarTranslucent = self.navigatorStyle[@"navBarTranslucent"];
   BOOL navBarTranslucentBool = navBarTranslucent ? [navBarTranslucent boolValue] : NO;
   if (navBarTranslucentBool || navBarBlurBool)
@@ -289,7 +307,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.navigationController.navigationBar.translucent = NO;
   }
-  
+
   NSNumber *drawUnderNavBar = self.navigatorStyle[@"drawUnderNavBar"];
   BOOL drawUnderNavBarBool = drawUnderNavBar ? [drawUnderNavBar boolValue] : NO;
   if (drawUnderNavBarBool)
@@ -300,7 +318,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.edgesForExtendedLayout &= ~UIRectEdgeTop;
   }
-  
+
   NSNumber *drawUnderTabBar = self.navigatorStyle[@"drawUnderTabBar"];
   BOOL drawUnderTabBarBool = drawUnderTabBar ? [drawUnderTabBar boolValue] : NO;
   if (drawUnderTabBarBool)
@@ -311,7 +329,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self.edgesForExtendedLayout &= ~UIRectEdgeBottom;
   }
-  
+
 }
 
 -(void)setStyleOnDisappear
@@ -331,7 +349,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self._hidesBottomBarWhenPushed = NO;
   }
-  
+
   NSNumber *statusBarHideWithNavBar = self.navigatorStyle[@"statusBarHideWithNavBar"];
   BOOL statusBarHideWithNavBarBool = statusBarHideWithNavBar ? [statusBarHideWithNavBar boolValue] : NO;
   if (statusBarHideWithNavBarBool)
@@ -342,7 +360,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   {
     self._statusBarHideWithNavBar = NO;
   }
-  
+
   NSNumber *statusBarHidden = self.navigatorStyle[@"statusBarHidden"];
   BOOL statusBarHiddenBool = statusBarHidden ? [statusBarHidden boolValue] : NO;
   if (statusBarHiddenBool)
