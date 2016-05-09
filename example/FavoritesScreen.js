@@ -64,7 +64,7 @@ var FavoritesScreen = React.createClass({
           <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setnavbarhidden') }>
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'sethidden') }>
           <Text style={styles.button}>Set Navigation Bar Hidden</Text>
         </TouchableOpacity>
 
@@ -83,7 +83,7 @@ var FavoritesScreen = React.createClass({
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navhidden') }>
-          <Text style={styles.button}>NavBar Hidden</Text>
+          <Text style={styles.button}>NavBar Hidden On Push</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navnothidden') }>
@@ -194,10 +194,10 @@ var FavoritesScreen = React.createClass({
           }
         });
         break;
-      case 'setnavbarhidden':
+      case 'sethidden':
           this.state.isNavBarHidden = !this.state.isNavBarHidden;
-        Controllers.NavigationControllerIOS("favorites_nav").setNavBarHidden( {
-          isHidden: this.state.isNavBarHidden,
+        Controllers.NavigationControllerIOS("favorites_nav").setHidden( {
+          hidden: this.state.isNavBarHidden,
           animated: true //default is true
         });
         break;
