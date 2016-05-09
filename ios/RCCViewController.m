@@ -377,6 +377,11 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
   }
 }
 
+- (void)setNavBarVisibilityChange:(BOOL)animated {
+  [self.navigationController setNavigationBarHidden:[self.navigatorStyle[@"navBarHidden"] boolValue] animated:animated];
+}
+
+
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
   if (self._statusBarTextColorSchemeLight)

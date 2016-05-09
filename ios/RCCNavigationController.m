@@ -204,9 +204,12 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     
     NSNumber *setHidden = actionParams[@"hidden"];
     BOOL isHiddenBool = setHidden ? [setHidden boolValue] : NO;
+  
+    RCCViewController *topViewController = ((RCCViewController*)self.topViewController);
+    topViewController.navigatorStyle[@"navBarHidden"] = setHidden;
+    [topViewController setNavBarVisibilityChange:animatedBool];
     
-    [self setNavigationBarHidden:isHiddenBool animated:animatedBool];
-  }
+    }
 }
 
 -(void)onButtonPress:(UIBarButtonItem*)barButtonItem
