@@ -198,11 +198,11 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   }
   
   // toggleNavBar
-  if ([performAction isEqualToString:@"setNavBarHidden"]) {
+  if ([performAction isEqualToString:@"setHidden"]) {
     NSNumber *animated = actionParams[@"animated"];
     BOOL animatedBool = animated ? [animated boolValue] : YES;
     
-    NSNumber *setHidden = actionParams[@"isHidden"];
+    NSNumber *setHidden = actionParams[@"hidden"];
     BOOL isHiddenBool = setHidden ? [setHidden boolValue] : NO;
     
     [self setNavigationBarHidden:isHiddenBool animated:animatedBool];
