@@ -535,6 +535,7 @@ All styles are optional, this is the format of the style object:
 {
   navBarTextColor: '#000000', // change the text color of the title (remembered across pushes)
   navBarBackgroundColor: '#f7f7f7', // change the background color of the nav bar (remembered across pushes)
+  navBarBackgroundImage: require('./images/navbar-background.png'), // change the background image of the nav bar
   navBarButtonColor: '#007aff', // change the button colors of the nav bar (eg. the back button) (remembered across pushes)
   navBarHidden: false, // make the nav bar hidden
   navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
