@@ -258,6 +258,8 @@ var Controllers = {
     }
   },
 
+  NavigationToolBarIOS: OriginalReact.requireNativeComponent('RCCToolBar', null),
+
   Constants: Constants
 };
 

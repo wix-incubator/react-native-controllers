@@ -17,6 +17,7 @@ require('./MovieListScreen');
 require('./MoreDrawerOptionsScreen');
 require('./SearchScreen');
 require('./FavoritesScreen');
+require('./ExtraScreen');
 require('./ModalScreen');
 require('./StyledTabScreen');
 
@@ -45,6 +46,7 @@ var MoviesApp = Controllers.createClass({
               component="FavoritesScreen"
               id="favorites_nav"
               passProps={{hidePop: true}}
+              style={{drawUnderNavBar: true, navBarTranslucent: true}}
             />
           </TabBarControllerIOS.Item>
           <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')} selectedIcon={require('./img/discover_selected.png')}>

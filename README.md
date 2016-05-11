@@ -378,6 +378,55 @@ Modal.showLightBox({
 Modal.dismissLightBox();
 ```
 
+#### Components
+
+##### `NavigationToolBarIOS`
+
+Helper component to assist with adding custom views to the bottom of the navigation bar. You can see this UI pattern in the native iOS Calendar app (week days in the day view) and the native iOS Health app (segmented control in the dashboard tab).
+
+This pattern can be implemented by adding a React component in your **screen component's content** (not really on the nav bar) and making it stick to top (using absolute position). The illusion that this component is part of the nav bar is achieved by wrapping it with `NavigationToolBarIOS ` which provides a background with the same translucent effect the nav bar has.
+
+You can see a working example of all this in the example project.
+
+```js
+var Controllers = require('react-native-controllers');
+var { NavigationToolBarIOS } = Controllers;
+```
+
+###### Example (holding SegmentedControlIOS)
+
+```js
+<NavigationToolBarIOS key='segmented' style={{
+  top: 44,
+  width: width,
+  height: 64,
+  position: 'absolute'
+}}>
+  <SegmentedControlIOS
+    values={['One', 'Two', 'Three']}
+    selectedIndex={this.state.segmentIndexSelected}
+    style={styles.segmentedControl}
+    onChange={(event) => {
+      this.setState({segmentIndexSelected : event.nativeEvent.selectedSegmentIndex});
+    }}
+  />
+  <View style={styles.lineBorder} />
+</NavigationToolBarIOS>
+```
+
+>Note: In order to position this component immediately below the navigation bar, we use `{position: 'absolute'}`. In addition, to make sure z-order is correct and this compoenent is rendered over the rest of the content, add it as the last component in your hierarchy (inside your screen component render method).
+
+###### Props
+
+```jsx
+<NavigationToolBarIOS translucent={true} />
+```
+
+Attribute | Description
+-------- | -----------
+translucent | Boolean, whether the background has the same translucent effect as a nav bar with the `NavBarTranslucent` style. Default `true`.
+
+
 ## Available View Controllers
 
 The package contains implementations for the following view controllers that you can use in your app skeleton:
@@ -539,6 +588,7 @@ All styles are optional, this is the format of the style object:
   navBarHidden: false, // make the nav bar hidden
   navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
   navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+  navBarNoBorder: false, // hide the navigation bar bottom border (hair line)
   drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
   drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
   statusBarBlur: false, // blur the area under the status bar, works best with navBarHidden:true

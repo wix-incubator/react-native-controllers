@@ -27,136 +27,140 @@ var FavoritesScreen = React.createClass({
     return (
       <ScrollView style={styles.container}>
 
-        <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
+            <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
 
-        <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
-          Styling Example
-        </Text>
+            <Text style={{fontSize: 20, textAlign: 'center', margin: 10, fontWeight: '500', marginTop: 30}}>
+              Styling Example
+            </Text>
 
-        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
-          There are a lot of styling options supported, scroll down to see them all in action. The images are here to help visualize colorful content with these styles.
-        </Text>
+            <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 20}}>
+              There are a lot of styling options supported, scroll down to see them all in action. The images are here to help visualize colorful content with these styles.
+            </Text>
 
-        {
-          this.props.hidePop ? false :
-          <TouchableOpacity onPress={ this.onPopClick }>
-            <Text style={styles.button}>Pop</Text>
-          </TouchableOpacity>
-        }
+            {
+              this.props.hidePop ? false :
+              <TouchableOpacity onPress={ this.onPopClick }>
+                <Text style={styles.button}>Pop</Text>
+              </TouchableOpacity>
+            }
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'plain') }>
-          <Text style={styles.button}>Push Plain Screen</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'plain') }>
+              <Text style={styles.button}>Push Plain Screen</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navcolors') }>
-          <Text style={styles.button}>NavBar Colors</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navcolors') }>
+              <Text style={styles.button}>NavBar Colors</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'underboth') }>
-          <Text style={styles.button}>Draw Under NavBar & TabBar</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'underboth') }>
+              <Text style={styles.button}>Draw Under NavBar & TabBar</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurstatus') }>
-          <Text style={styles.button}>Blur StatusBar (& hide NavBar)</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurstatus') }>
+              <Text style={styles.button}>Blur StatusBar (& hide NavBar)</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurnav') }>
-          <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'blurnav') }>
+              <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'sethidden') }>
-          <Text style={styles.button}>Set Navigation Bar Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'sethidden') }>
+              <Text style={styles.button}>Set Navigation Bar Hidden</Text>
+            </TouchableOpacity>
 
-        <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
-          More styles under the image
-        </Text>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'toolbarnavigation') }>
+              <Text style={styles.button}>Tool Bar Navigation</Text>
+            </TouchableOpacity>
 
-        <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
+            <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
+              More styles under the image
+            </Text>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'undernav') }>
-          <Text style={styles.button}>Draw Under NavBar Only</Text>
-        </TouchableOpacity>
+            <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'undertab') }>
-          <Text style={styles.button}>Draw Under TabBar Only</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'undernav') }>
+              <Text style={styles.button}>Draw Under NavBar Only</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navhidden') }>
-          <Text style={styles.button}>NavBar Hidden On Push</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'undertab') }>
+              <Text style={styles.button}>Draw Under TabBar Only</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navnothidden') }>
-          <Text style={styles.button}>NavBar Not Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navhidden') }>
+              <Text style={styles.button}>NavBar Hidden On Push</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'statushidden') }>
-          <Text style={styles.button}>StatusBar Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navnothidden') }>
+              <Text style={styles.button}>NavBar Not Hidden</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'lightstatus') }>
-          <Text style={styles.button}>Light StatusBar</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'statushidden') }>
+              <Text style={styles.button}>StatusBar Hidden</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'darkstatus') }>
-          <Text style={styles.button}>Dark StatusBar</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'lightstatus') }>
+              <Text style={styles.button}>Light StatusBar</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatushidden') }>
-          <Text style={styles.button}>NavBar & StatusBar Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'darkstatus') }>
+              <Text style={styles.button}>Dark StatusBar</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navscrollhidden') }>
-          <Text style={styles.button}>NavBar Hide On Scroll</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatushidden') }>
+              <Text style={styles.button}>NavBar & StatusBar Hidden</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatusscrollhidden') }>
-          <Text style={styles.button}>NavBar & StatusBar Hide On Scroll</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navscrollhidden') }>
+              <Text style={styles.button}>NavBar Hide On Scroll</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabhidden') }>
-          <Text style={styles.button}>TabBar Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navstatusscrollhidden') }>
+              <Text style={styles.button}>NavBar & StatusBar Hide On Scroll</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabnothidden') }>
-          <Text style={styles.button}>TabBar Not Hidden</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabhidden') }>
+              <Text style={styles.button}>TabBar Hidden</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backnotext') }>
-          <Text style={styles.button}>Empty Back Button Text</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'tabnothidden') }>
+              <Text style={styles.button}>TabBar Not Hidden</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backcustomtext') }>
-          <Text style={styles.button}>Custom Back Button Text</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backnotext') }>
+              <Text style={styles.button}>Empty Back Button Text</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backhidden') }>
-          <Text style={styles.button}>Hidden Back Button</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backcustomtext') }>
+              <Text style={styles.button}>Custom Back Button Text</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttons') }>
-          <Text style={styles.button}>Right NavBar Text Buttons</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'backhidden') }>
+              <Text style={styles.button}>Hidden Back Button</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttonsdisabled') }>
-          <Text style={styles.button}>Right NavBar Text Buttons Disabled</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttons') }>
+              <Text style={styles.button}>Right NavBar Text Buttons</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'righticonbuttons') }>
-          <Text style={styles.button}>Right NavBar Icon Buttons</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'rightbuttonsdisabled') }>
+              <Text style={styles.button}>Right NavBar Text Buttons Disabled</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'eventbuttons') }>
-          <Text style={styles.button}>Event Based NavBar Buttons</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'righticonbuttons') }>
+              <Text style={styles.button}>Right NavBar Icon Buttons</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'titleImage') }>
-          <Text style={styles.button}>Title Image</Text>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'eventbuttons') }>
+              <Text style={styles.button}>Event Based NavBar Buttons</Text>
+            </TouchableOpacity>
 
-        <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'titleImage') }>
+              <Text style={styles.button}>Title Image</Text>
+            </TouchableOpacity>
 
-      </ScrollView>
+            <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
+
+          </ScrollView>
     );
   },
 
@@ -207,6 +211,17 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen",
           style: {
             statusBarHidden: true
+          }
+        });
+        break;
+      case 'toolbarnavigation':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "Extra",
+          component: "ExtraScreen",
+          style: {
+            drawUnderNavBar: true,
+            navBarTranslucent: true,
+            navBarNoBorder: true
           }
         });
         break;
