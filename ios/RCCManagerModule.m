@@ -42,6 +42,13 @@ RCT_EXPORT_MODULE(RCCManager);
              };
 }
 
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
+}
+
+#pragma mark - helper methods
+
 +(UIViewController*)modalPresenterViewControllers:(NSMutableArray*)returnAllPresenters
 {
     UIViewController *modalPresenterViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
@@ -78,15 +85,78 @@ RCT_EXPORT_MODULE(RCCManager);
     reject([NSString stringWithFormat: @"%lu", (long)error.code], error.localizedDescription, error);
 }
 
-- (dispatch_queue_t)methodQueue
+-(void)animateSnapshot:(UIView*)snapshot animationType:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve
 {
-    return dispatch_get_main_queue();
+    [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^()
+     {
+         if (animationType == nil || [animationType isEqualToString:@"slide-down"])
+         {
+             snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
+         }
+         else if ([animationType isEqualToString:@"fade"])
+         {
+             snapshot.alpha = 0;
+         }
+     }
+                     completion:^(BOOL finished)
+     {
+         [snapshot removeFromSuperview];
+         
+         if (resolve != nil)
+         {
+             resolve(nil);
+         }
+     }];
 }
+
+-(void)dismissAllModalPresenters:(NSMutableArray*)allPresentedViewControllers resolver:(RCTPromiseResolveBlock)resolve
+{
+    if (allPresentedViewControllers.count > 0)
+    {
+        __block NSUInteger counter = 0;
+        for (UIViewController *viewController in allPresentedViewControllers)
+        {
+            counter++;
+            
+            [[RCCManager sharedIntance] unregisterController:viewController];
+            if (viewController.presentedViewController != nil)
+            {
+                [viewController dismissViewControllerAnimated:NO completion:^()
+                 {
+                     if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+                     {
+                         [allPresentedViewControllers removeAllObjects];
+                         
+                         if (resolve != nil)
+                         {
+                             resolve(nil);
+                         }
+                     }
+                 }];
+            }
+            else if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+            {
+                [allPresentedViewControllers removeAllObjects];
+                
+                if (resolve != nil)
+                {
+                    resolve(nil);
+                }
+            }
+        }
+    }
+    else if (resolve != nil)
+    {
+        resolve(nil);
+    }
+}
+
+#pragma mark - RCT exported methods
 
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
-    //first clear the registry to remove any refernece to the previous controllers
+    // first clear the registry to remove any refernece to the previous controllers
     [[RCCManager sharedInstance] clearModuleRegistry];
     
     // create the new controller
@@ -94,42 +164,37 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
     if (controller == nil) return;
 
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    BOOL animated = !((appDelegate.window.rootViewController == nil) || ([animationType isEqualToString:@"none"]));
     
-    if ((appDelegate.window.rootViewController == nil) || ([animationType isEqualToString:@"none"]))
+    // if we're animating - add a snapshot now
+    UIViewController *presentedViewController = nil;
+    UIView *snapshot = nil;
+    if (animated)
     {
-        // set this new controller as the root
-        appDelegate.window.rootViewController = controller;
-        [appDelegate.window makeKeyAndVisible];
-    }
-    else
-    {
-        UIViewController *presentedViewController = nil;
         if(appDelegate.window.rootViewController.presentedViewController != nil)
             presentedViewController = appDelegate.window.rootViewController.presentedViewController;
         else
             presentedViewController = appDelegate.window.rootViewController;
         
-        UIView *snapshot = [presentedViewController.view snapshotViewAfterScreenUpdates:NO];
-        appDelegate.window.rootViewController = controller;
+        snapshot = [presentedViewController.view snapshotViewAfterScreenUpdates:NO];
         [appDelegate.window.rootViewController.view addSubview:snapshot];
+    }
+    
+    // dismiss the modal controllers without animation just so they can be released
+    [self dismissAllControllers:@"none" resolver:^(id result)
+    {
+        // set the new controller as the root
+        appDelegate.window.rootViewController = controller;
+        [appDelegate.window makeKeyAndVisible];
         [presentedViewController dismissViewControllerAnimated:NO completion:nil];
         
-        [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^()
-         {
-             if (animationType == nil || [animationType isEqualToString:@"slide-down"])
-             {
-                 snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
-             }
-             else if ([animationType isEqualToString:@"fade"])
-             {
-                 snapshot.alpha = 0;
-             }
-         }
-                         completion:^(BOOL finished)
-         {
-             [snapshot removeFromSuperview];
-         }];
-    }
+        if (animated)
+        {
+            // move the snaphot to the new root and animate it
+            [appDelegate.window.rootViewController.view addSubview:snapshot];
+            [self animateSnapshot:snapshot animationType:animationType resolver:nil];
+        }
+    } rejecter:nil];
 }
 
 RCT_EXPORT_METHOD(
@@ -203,7 +268,10 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
 RCT_EXPORT_METHOD(
 dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    [[RCCManagerModule lastModalPresenterViewController] dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
+    UIViewController* vc = [RCCManagerModule lastModalPresenterViewController];
+    [[RCCManager sharedIntance] unregisterController:vc];
+    
+    [vc dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
                                                                  completion:^(){ resolve(nil); }];
 }
 
@@ -220,33 +288,14 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
         UIView *snapshot = [appDelegate.window snapshotViewAfterScreenUpdates:NO];
         [appDelegate.window addSubview:snapshot];
         
-        [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^()
-         {
-             if (animationType == nil || [animationType isEqualToString:@"slide-down"])
-             {
-                 snapshot.transform = CGAffineTransformMakeTranslation(0, snapshot.frame.size.height);
-             }
-             else if ([animationType isEqualToString:@"fade"])
-             {
-                 snapshot.alpha = 0;
-             }
-         }
-                         completion:^(BOOL finished)
-         {
-             [snapshot removeFromSuperview];
-             resolve(nil);
-         }];
+        [self dismissAllModalPresenters:allPresentedViewControllers resolver:^(id result)
+        {
+            [self animateSnapshot:snapshot animationType:animationType resolver:resolve];
+        }];
     }
-    
-    for (UIViewController *viewController in allPresentedViewControllers)
+    else
     {
-        [viewController dismissViewControllerAnimated:NO completion:nil];
-    }
-    [allPresentedViewControllers removeAllObjects];
-    
-    if (!animated)
-    {
-        resolve(nil);
+        [self dismissAllModalPresenters:allPresentedViewControllers resolver:resolve];
     }
 }
 
