@@ -1,10 +1,10 @@
-var OriginalReact = require('react-native');
-var RCCManager = OriginalReact.NativeModules.RCCManager;
-var NativeAppEventEmitter = OriginalReact.NativeAppEventEmitter;
+var OriginalReactNative = require('react-native');
+var RCCManager = OriginalReactNative.NativeModules.RCCManager;
+var NativeAppEventEmitter = OriginalReactNative.NativeAppEventEmitter;
 var utils = require('./utils');
 var Constants = require('./Constants');
 var resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
-var processColor = require('react-native/Libraries/StyleSheet/processColor');
+var processColor = OriginalReactNative.processColor;
 
 var _controllerRegistry = {};
 
@@ -258,7 +258,7 @@ var Controllers = {
     }
   },
 
-  NavigationToolBarIOS: OriginalReact.requireNativeComponent('RCCToolBar', null),
+  NavigationToolBarIOS: OriginalReactNative.requireNativeComponent('RCCToolBar', null),
 
   Constants: Constants
 };

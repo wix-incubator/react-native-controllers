@@ -1,6 +1,7 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
 	AppRegistry,
 	StyleSheet,
@@ -10,13 +11,10 @@ var {
 	ScrollView,
 	TouchableHighlight,
 	TouchableOpacity,
-	AlertIOS,
-	NativeAppEventEmitter,
-	requireNativeComponent,
 	SegmentedControlIOS,
 	Dimensions,
 	TextInput
-} = React;
+} = ReactNative;
 
 var Controllers = require('react-native-controllers');
 const {NavigationToolBarIOS} = Controllers;

@@ -1,13 +1,13 @@
 'use strict';
 
-var React = require('react-native');
+var React = require('react');
+var ReactNative = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
   Text,
-  View,
-  TouchableHighlight,
-} = React;
+  View
+} = ReactNative;
 
 var SideMenu = React.createClass({
 

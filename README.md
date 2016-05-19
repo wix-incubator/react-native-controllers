@@ -6,7 +6,9 @@
 * Truly native side menu drawer (instead of the JS-based alternatives available today)
 * Smoother animations, improved performance and look and feel that matches the OS for all iOS versions
 
-*Versions 1.2.0+ only support react-native 0.19.0+ (due to breaking change in native promise API)*
+*Versions 1.x.x support react-native 0.19.0-0.25.0*
+
+*Versions 2.x.x support react-native 0.25.0+ (due to breaking changes in React Native)*
 
 ![Screenshots](http://i.imgur.com/2QyOm9a.png)
 
@@ -119,7 +121,7 @@ By using the proposed approach, we made several scarifices that you should be aw
 
 You need an iOS React Native project ([instructions on how to create one](https://facebook.github.io/react-native/docs/getting-started.html#quick-start))
 
-> Important: Make sure you are using react-native version >= 0.19.0
+> Important: Make sure you are using react-native version >= 0.25.1
 
 1. Run `npm install react-native-controllers --save` in your project root
 2. In Xcode, in Project Navigator (left pane), right-click on the `Libraries` > `Add files to [project name]` <br> Add `./node_modules/react-native-controllers/ios/ReactNativeControllers.xcodeproj` ([screenshots](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#step-1))

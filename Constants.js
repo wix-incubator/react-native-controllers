@@ -1,7 +1,4 @@
 
-
-
-
 export const MMDRAWER_DOOR = 'door';
 export const MMDRAWER_PARALLAX = 'parallax';
 export const MMDRAWER_SLIDE = 'slide';
