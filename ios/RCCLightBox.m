@@ -3,6 +3,7 @@
 #import "RCTRootView.h"
 #import "RCTRootViewDelegate.h"
 #import "RCTConvert.h"
+#import "RCTHelpers.h"
 #import <objc/runtime.h>
 
 const NSInteger kLightBoxTag = 0x101010;
@@ -12,6 +13,7 @@ const NSInteger kLightBoxTag = 0x101010;
 @property (nonatomic, strong) UIVisualEffectView *visualEffectView;
 @property (nonatomic, strong) UIView *overlayColorView;
 @property (nonatomic, strong) NSDictionary *params;
+@property (nonatomic)         BOOL yellowBoxRemoved;
 @end
 
 @implementation RCCLightBoxView
@@ -22,6 +24,7 @@ const NSInteger kLightBoxTag = 0x101010;
     if (self)
     {
         self.params = params;
+        self.yellowBoxRemoved = NO;
         
         NSDictionary *passProps = self.params[@"passProps"];
         
@@ -61,6 +64,16 @@ const NSInteger kLightBoxTag = 0x101010;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRNReload) name:RCTReloadNotification object:nil];
     }
     return self;
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if(!self.yellowBoxRemoved)
+    {
+        self.yellowBoxRemoved = [RCTHelpers removeYellowBox:self.reactView];
+    }
 }
 
 -(void)removeAllObservers
@@ -184,16 +197,9 @@ const NSInteger kLightBoxTag = 0x101010;
 
 @implementation RCCLightBox
 
-+(UIWindow*)getWindow
-{
-    UIApplication *app = [UIApplication sharedApplication];
-    UIWindow *window = (app.keyWindow != nil) ? app.keyWindow : app.windows[0];
-    return window;
-}
-
 +(void)showWithParams:(NSDictionary*)params
 {
-    UIWindow *window = [RCCLightBox getWindow];
+    UIWindow *window = [[RCCManager sharedInstance] getAppWindow];
     if ([window viewWithTag:kLightBoxTag] != nil)
     {
         return;
@@ -207,7 +213,7 @@ const NSInteger kLightBoxTag = 0x101010;
 
 +(void)dismiss
 {
-    UIWindow *window = [RCCLightBox getWindow];
+    UIWindow *window = [[RCCManager sharedInstance] getAppWindow];
     RCCLightBoxView *lightBox = [window viewWithTag:kLightBoxTag];
     if (lightBox != nil)
     {

@@ -11,12 +11,14 @@ var {
 } = ReactNative;
 
 require('./LightBox');
+require('./Notification');
 
 var Controllers = require('react-native-controllers');
 var {
     Modal,
     ControllerRegistry,
-    Constants
+    Constants,
+    Notification
 } = Controllers;
 
 var MovieListScreen = React.createClass({
@@ -54,6 +56,19 @@ var MovieListScreen = React.createClass({
                 backgroundColor: backgroundColor
             }
         });
+    },
+
+    onShowNotificationClick: function(animationParams, shadowRadius) {
+      Notification.show({
+        component: 'NotificationExample',
+        passProps: {
+          greeting: 'This is a Notification!'
+        },
+        animation: animationParams,
+        dismissWithSwipe: true,
+        autoDismissTimerSec: 5,
+        shadowRadius: shadowRadius
+      });
     },
 
     onShowModalVcClick: async function() {
@@ -141,6 +156,18 @@ var MovieListScreen = React.createClass({
 
                 <TouchableOpacity onPress={ this.onReplaceRootAnimatedClick }>
                     <Text style={styles.button}>Replace root animated</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 0) }>
+                  <Text style={styles.button}>Show Default Notification</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 10) }>
+                  <Text style={styles.button}>Show Notification With Shadow</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.swing, 0) }>
+                  <Text style={styles.button}>Show Swing Notification</Text>
                 </TouchableOpacity>
 
             </ScrollView>
