@@ -49,6 +49,10 @@ var FavoritesScreen = React.createClass({
               <Text style={styles.button}>Push Plain Screen</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navtransparent') }>
+              <Text style={styles.button}>Push Transparent Nav Bar Screen</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navcolors') }>
               <Text style={styles.button}>NavBar Colors</Text>
             </TouchableOpacity>
@@ -178,6 +182,17 @@ var FavoritesScreen = React.createClass({
           component: "PushedScreen",
           animated: true
         });
+        break;
+      case 'navtransparent':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarTransparent: true,
+            drawUnderNavBar: true,
+            navBarTranslucent: true
+          }
+          });
         break;
       case 'navcolors':
         Controllers.NavigationControllerIOS("favorites_nav").push({
@@ -348,7 +363,8 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen",
           style: {
             navBarBlur: true,
-            drawUnderNavBar: true
+            drawUnderNavBar: true,
+            navBarTransparent: false
           }
         });
         break;
