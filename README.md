@@ -590,6 +590,7 @@ All styles are optional, this is the format of the style object:
   navBarHidden: false, // make the nav bar hidden
   navBarHideOnScroll: false, // make the nav bar hidden only after the user starts to scroll
   navBarTranslucent: false, // make the nav bar semi-translucent, works best with drawUnderNavBar:true
+  navBarTransparent: false, // make the nav bar transparent, works best with drawUnderNavBar:true
   navBarNoBorder: false, // hide the navigation bar bottom border (hair line)
   drawUnderNavBar: false, // draw the screen content under the nav bar, works best with navBarTranslucent:true
   drawUnderTabBar: false, // draw the screen content under the tab bar (the tab bar is always translucent)
