@@ -240,6 +240,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
     if (![self.view viewWithTag:BLUR_STATUS_TAG])
     {
       UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+      blur.autoresizingMask = UIViewAutoresizingFlexibleWidth;
       blur.frame = [[UIApplication sharedApplication] statusBarFrame];
       blur.tag = BLUR_STATUS_TAG;
       [self.view addSubview:blur];
@@ -268,6 +269,7 @@ const NSInteger BLUR_NAVBAR_TAG = 78264802;
       [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
       self.navigationController.navigationBar.shadowImage = [UIImage new];
       UIVisualEffectView *blur = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+      blur.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
       blur.frame = CGRectMake(0, -1 * statusBarFrame.size.height, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height + statusBarFrame.size.height);
       blur.userInteractionEnabled = NO;

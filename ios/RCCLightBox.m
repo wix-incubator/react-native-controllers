@@ -23,6 +23,8 @@ const NSInteger kLightBoxTag = 0x101010;
     self = [super initWithFrame:frame];
     if (self)
     {
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
         self.params = params;
         self.yellowBoxRemoved = NO;
         
@@ -35,6 +37,7 @@ const NSInteger kLightBoxTag = 0x101010;
             if (style[@"backgroundBlur"] != nil && ![style[@"backgroundBlur"] isEqualToString:@"none"])
             {
                 self.visualEffectView = [[UIVisualEffectView alloc] init];
+                self.visualEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                 self.visualEffectView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
                 [self addSubview:self.visualEffectView];
             }
@@ -53,6 +56,7 @@ const NSInteger kLightBoxTag = 0x101010;
         }
         
         self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:self.params[@"component"] initialProperties:passProps];
+        self.reactView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
         self.reactView.backgroundColor = [UIColor clearColor];
         self.reactView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
         self.reactView.center = self.center;
