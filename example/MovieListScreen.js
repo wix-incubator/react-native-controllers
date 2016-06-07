@@ -58,12 +58,13 @@ var MovieListScreen = React.createClass({
         });
     },
 
-    onShowNotificationClick: function(animationParams, shadowRadius) {
+    onShowNotificationClick: function(animationParams, shadowRadius, position) {
       Notification.show({
         component: 'NotificationExample',
         passProps: {
           greeting: 'This is a Notification!'
         },
+        position: position,
         animation: animationParams,
         dismissWithSwipe: true,
         autoDismissTimerSec: 5,
@@ -158,17 +159,21 @@ var MovieListScreen = React.createClass({
                     <Text style={styles.button}>Replace root animated</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 0) }>
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 0, 'top') }>
                   <Text style={styles.button}>Show Default Notification</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 10) }>
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 10, 'top') }>
                   <Text style={styles.button}>Show Notification With Shadow</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.swing, 0) }>
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.swing, 0, 'top') }>
                   <Text style={styles.button}>Show Swing Notification</Text>
                 </TouchableOpacity>
+
+              <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 0, 'bottom') }>
+                <Text style={styles.button}>Show Bottom Notification</Text>
+              </TouchableOpacity>
 
             </ScrollView>
         );

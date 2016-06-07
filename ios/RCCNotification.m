@@ -123,7 +123,13 @@
     
     if (!CGSizeEqualToSize(frameSize, self.reactView.frame.size))
     {
-        self.frame = CGRectMake((self.superview.frame.size.width - frameSize.width) / 2.0, 0, frameSize.width, frameSize.height);
+        CGFloat yPos = 0;
+        if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
+        {
+            yPos = self.superview.bounds.size.height - frameSize.height;
+        }
+        
+        self.frame = CGRectMake((self.superview.frame.size.width - frameSize.width) / 2.0, yPos, frameSize.width, frameSize.height);
         self.reactView.frame = CGRectMake(0, 0, frameSize.width, frameSize.height);
         self.reactView.contentView.frame = CGRectMake(0, 0, frameSize.width, frameSize.height);
         
@@ -169,17 +175,31 @@
         transform.m24 = -0.007f;
         if (self.layer.anchorPoint.x == 0.5 && self.layer.anchorPoint.y == 0.5)
         {
-            self.layer.anchorPoint = CGPointMake(0.5, 0);
-            self.layer.frame = CGRectOffset(self.layer.frame, 0, -self.layer.frame.size.height / 2.0);
+            CGPoint anchorPoint = CGPointMake(0.5, 0);
+            CGFloat yOffset = -self.layer.frame.size.height / 2.0;
+            if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
+            {
+                anchorPoint = CGPointMake(0.5, 1);
+                yOffset = self.layer.frame.size.height / 2.0;
+            }
+            
+            self.layer.anchorPoint = anchorPoint;
+            self.layer.frame = CGRectOffset(self.layer.frame, 0, yOffset);
         }
         self.layer.zPosition = 1000;
         self.layer.transform = CATransform3DRotate(transform, M_PI_2, 1, 0, 0);
     }
     else
     {
+        int slideAnimationSign = -1;
+        if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
+        {
+            slideAnimationSign = 1;
+        }
+        
         CGAffineTransform transform = CGAffineTransformIdentity;
         if ([animationType isEqualToString:@"slide-down"])
-            transform = CGAffineTransformMakeTranslation(0, -self.frame.size.height);
+            transform = CGAffineTransformMakeTranslation(0, slideAnimationSign * self.frame.size.height);
         else if ([animationType isEqualToString:@"slide-left"])
             transform = CGAffineTransformMakeTranslation(self.frame.size.width, 0);
         else if ([animationType isEqualToString:@"slide-right"])
