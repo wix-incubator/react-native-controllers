@@ -5,7 +5,7 @@
 
 @interface NotificationView : UIView
 @property (nonatomic, strong) RCTRootView *reactView;
-@property (nonatomic, strong) UIView *animGapView;
+@property (nonatomic, strong) UIView *slideAnimGapView;
 @property (nonatomic, strong) NSDictionary *params;
 @property (nonatomic, strong) NSTimer *autoDismissTimer;
 @property (nonatomic)         BOOL yellowBoxRemoved;
@@ -113,6 +113,64 @@
     self.reactView = nil;
 }
 
+-(UIColor*)reactViewAvgColor
+{
+    if (self.reactView.contentView.frame.size.width == 0 || self.reactView.contentView.frame.size.height == 0)
+    {
+        return [UIColor clearColor];
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, 1), YES, 0);
+    [self.reactView.contentView drawViewHierarchyInRect:CGRectMake(0, 0, 1, 1) afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    CFDataRef pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image.CGImage));
+    const UInt8* data = CFDataGetBytePtr(pixelData);
+    CFRelease(pixelData);
+    
+    //after scale defaults to bgr
+    CGFloat red = data[2] / 255.0f,
+            green = data[1] / 255.0f,
+            blue = data[0] / 255.0f,
+            alpha = data[3] / 255.0f;
+    
+    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+    return color;
+}
+
+-(BOOL)shouldAddSlidingAnimGapView
+{
+    if (![[self.params valueForKeyPath:@"animation.animated"] boolValue])
+    {
+        return NO;
+    }
+    
+    NSString *animationType = [self.params valueForKeyPath:@"animation.type"];
+    if (![animationType isEqualToString:@"slide-down"])
+    {
+        return NO;
+    }
+    
+    if (![self.params valueForKeyPath:@"animation.damping"])
+    {
+        return NO;
+    }
+    
+    CGFloat damping = [[self.params valueForKeyPath:@"animation.damping"] floatValue];
+    if (damping >= 1)
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(BOOL)isBottomPosition
+{
+    return ((self.params[@"position"] != nil) && ([self.params[@"position"] isEqualToString:@"bottom"]));
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     CGSize frameSize = CGSizeZero;
@@ -123,23 +181,29 @@
     
     if (!CGSizeEqualToSize(frameSize, self.reactView.frame.size))
     {
-        CGFloat yPos = 0;
-        if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
-        {
-            yPos = self.superview.bounds.size.height - frameSize.height;
-        }
-        
+        BOOL isBottomPosition = [self isBottomPosition];
+        CGFloat yPos = isBottomPosition ? self.superview.bounds.size.height - frameSize.height : 0;
         self.frame = CGRectMake((self.superview.frame.size.width - frameSize.width) / 2.0, yPos, frameSize.width, frameSize.height);
         self.reactView.frame = CGRectMake(0, 0, frameSize.width, frameSize.height);
         self.reactView.contentView.frame = CGRectMake(0, 0, frameSize.width, frameSize.height);
-        
-        if (self.animGapView == nil)
+    
+        //if necessary, add a view with the same color to cover the gap if there's a slide animation with spring
+        if ([self shouldAddSlidingAnimGapView])
         {
-            self.animGapView = [[UIView alloc] initWithFrame:CGRectZero];
-            [self addSubview:self.animGapView];
+            if (self.slideAnimGapView == nil)
+            {
+                self.slideAnimGapView = [[UIView alloc] initWithFrame:CGRectZero];
+                [self.reactView addSubview:self.slideAnimGapView];
+            }
+            
+            CGFloat yPos = isBottomPosition ? frameSize.height : -20;
+            self.slideAnimGapView.frame = CGRectMake(0, yPos, self.superview.frame.size.width, 20);
+            
+            dispatch_async(dispatch_get_main_queue(), ^
+            {
+               self.slideAnimGapView.backgroundColor = [self reactViewAvgColor];
+            });
         }
-        
-        self.animGapView.frame = CGRectMake(0, -20, self.frame.size.width, 20);
         
         if (self.params[@"shadowRadius"] != nil && [self.params[@"shadowRadius"] floatValue] > 0)
         {
@@ -177,7 +241,7 @@
         {
             CGPoint anchorPoint = CGPointMake(0.5, 0);
             CGFloat yOffset = -self.layer.frame.size.height / 2.0;
-            if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
+            if([self isBottomPosition])
             {
                 anchorPoint = CGPointMake(0.5, 1);
                 yOffset = self.layer.frame.size.height / 2.0;
@@ -191,12 +255,7 @@
     }
     else
     {
-        int slideAnimationSign = -1;
-        if(self.params[@"position"] != nil && [self.params[@"position"] isEqualToString:@"bottom"])
-        {
-            slideAnimationSign = 1;
-        }
-        
+        int slideAnimationSign = [self isBottomPosition] ? 1 : -1;
         CGAffineTransform transform = CGAffineTransformIdentity;
         if ([animationType isEqualToString:@"slide-down"])
             transform = CGAffineTransformMakeTranslation(0, slideAnimationSign * self.frame.size.height);
@@ -246,9 +305,14 @@
     {
         CGFloat duration = [[self.params valueForKeyPath:@"animation.duration"] floatValue];
         CGFloat delay = [[self.params valueForKeyPath:@"animation.delay"] floatValue];
-        CGFloat damping = [[self.params valueForKeyPath:@"animation.damping"] floatValue];
-        damping = MAX(damping, 0);
-        damping = MIN(damping, 1);
+        
+        CGFloat damping = 1;
+        if ([self.params valueForKeyPath:@"animation.damping"] != nil)
+        {
+            CGFloat damping = [[self.params valueForKeyPath:@"animation.damping"] floatValue];
+            damping = MAX(damping, 0);
+            damping = MIN(damping, 1);
+        }
         
         [self applyAnimations];
         
