@@ -21,9 +21,12 @@
         self.params = params;
         self.yellowBoxRemoved = NO;
         
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
         self.reactView = [[RCTRootView alloc] initWithBridge:[[RCCManager sharedInstance] getBridge] moduleName:params[@"component"] initialProperties:params[@"passProps"]];
         self.reactView.backgroundColor = [UIColor clearColor];
         self.reactView.sizeFlexibility = RCTRootViewSizeFlexibilityWidthAndHeight;
+        self.reactView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self addSubview:self.reactView];
         
         [self.reactView.contentView.layer addObserver:self forKeyPath:@"frame" options:0 context:nil];
