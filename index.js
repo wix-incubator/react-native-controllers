@@ -273,6 +273,12 @@ var Controllers = {
         type: 'slide-down',
         fade: true
       },
+      simple: {
+        animated: true,
+        duration: 0.3,
+        type: 'slide-down',
+        fade: true
+      },
       swing: {
         animated: true,
         duration: 0.65,

@@ -163,6 +163,10 @@ var MovieListScreen = React.createClass({
                   <Text style={styles.button}>Show Default Notification</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.simple, 0, 'top') }>
+                  <Text style={styles.button}>Show Simple Notification</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity onPress={ this.onShowNotificationClick.bind(this, Notification.AnimationPresets.default, 10, 'top') }>
                   <Text style={styles.button}>Show Notification With Shadow</Text>
                 </TouchableOpacity>
