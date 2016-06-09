@@ -472,7 +472,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 
 -(void)addExternalVCIfNecessary:(NSDictionary*)props
 {
-  NSString *externalScreenClass = props[@"ExternalNativeScreenClass"];
+  NSString *externalScreenClass = props[@"externalNativeScreenClass"];
   if (externalScreenClass != nil)
   {
     Class class = NSClassFromString(externalScreenClass);
@@ -482,7 +482,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
       if (obj != nil && [obj isKindOfClass:[UIViewController class]] && [obj conformsToProtocol:@protocol(RCCExternalViewControllerProtocol)])
       {
         ((id <RCCExternalViewControllerProtocol>)obj).controllerDelegate = self;
-        [obj setProps:props[@"ExternalNativeScreenProps"]];
+        [obj setProps:props[@"externalNativeScreenProps"]];
         
         UIViewController *viewController = (UIViewController*)obj;
         [self addChildViewController:viewController];
