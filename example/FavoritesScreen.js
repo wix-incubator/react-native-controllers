@@ -49,10 +49,6 @@ var FavoritesScreen = React.createClass({
               <Text style={styles.button}>Push Plain Screen</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navtransparent') }>
-              <Text style={styles.button}>Push Transparent Nav Bar Screen</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navcolors') }>
               <Text style={styles.button}>NavBar Colors</Text>
             </TouchableOpacity>
@@ -69,12 +65,16 @@ var FavoritesScreen = React.createClass({
               <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navtransparent') }>
+              <Text style={styles.button}>Transparent Nav Bar</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'sethidden') }>
-              <Text style={styles.button}>Set Navigation Bar Hidden</Text>
+              <Text style={styles.button}>Toggle Nav Bar Hidden</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'toolbarnavigation') }>
-              <Text style={styles.button}>Tool Bar Navigation</Text>
+              <Text style={styles.button}>Custom Toolbar in Nav Bar</Text>
             </TouchableOpacity>
 
             <Text style={{fontSize: 16, textAlign: 'center', marginHorizontal: 30, marginBottom: 10, marginTop: 20}}>
