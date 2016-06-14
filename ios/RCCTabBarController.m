@@ -106,6 +106,14 @@
        @{NSForegroundColorAttributeName : selectedButtonColor} forState:UIControlStateSelected];
     }
     
+    // adject text position
+    NSDictionary *tabBarTextAdjustment = tabsStyle[@"tabBarTextAjustment"];
+    if(tabBarTextAdjustment &&
+       [tabBarTextAdjustment objectForKey:@"x"] &&
+       [tabBarTextAdjustment objectForKey:@"y"]) {
+      viewController.tabBarItem.titlePositionAdjustment = UIOffsetMake([[tabBarTextAdjustment objectForKey:@"x"] integerValue], [[tabBarTextAdjustment objectForKey:@"y"] integerValue]);
+    }
+    
     // create badge
     NSObject *badge = tabItemLayout[@"props"][@"badge"];
     if (badge == nil || [badge isEqual:[NSNull null]])
