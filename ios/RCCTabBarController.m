@@ -107,7 +107,7 @@
     }
     
     // adject text position
-    NSDictionary *tabBarTextAdjustment = tabsStyle[@"tabBarTextAjustment"];
+    NSDictionary *tabBarTextAdjustment = tabsStyle[@"tabBarTextAdjustment"];
     if(tabBarTextAdjustment &&
        [tabBarTextAdjustment objectForKey:@"x"] &&
        [tabBarTextAdjustment objectForKey:@"y"]) {
