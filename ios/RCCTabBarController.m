@@ -2,6 +2,7 @@
 #import "RCCViewController.h"
 #import "RCTConvert.h"
 #import "RCCManager.h"
+#import "RCTEventDispatcher.h"
 
 @implementation RCCTabBarController
 
@@ -225,3 +226,18 @@
 }
 
 @end
+
+@implementation RCCTabBarController (UITabBarDelegate)
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+  
+  [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"tabbarControllerEventID" body:@
+   {
+     @"type": @"TabBarButtonPress",
+     @"id": @(item.tag),
+     @"label": item.title,
+   }];
+}
+
+@end
+
