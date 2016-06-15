@@ -120,6 +120,17 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
+  
+  // Set custom background color
+  id backgroundColor = navigatorStyle[@"backgroundColor"];
+  if (backgroundColor) {
+    if (backgroundColor == 0) {
+      [reactView setBackgroundColor:[UIColor clearColor]];
+    } else {
+      UIColor *bgColor = [RCTConvert UIColor:backgroundColor];
+      [reactView setBackgroundColor:bgColor];
+    }
+  }
 
   self = [super init];
   if (!self) return nil;
