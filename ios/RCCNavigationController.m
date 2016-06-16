@@ -259,6 +259,12 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
       [barButtonItem setEnabled:NO];
     }
     
+    NSNumber *disableIconTintString = button[@"disableIconTint"];
+    BOOL disableIconTint = disableIconTintString ? [disableIconTintString boolValue] : NO;
+    if (disableIconTint) {
+      [barButtonItem setImage:[barButtonItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }
+
     NSString *testID = button[@"testID"];
     if (testID)
     {

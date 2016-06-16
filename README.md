@@ -490,7 +490,8 @@ navigationController.push({
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, disables the button (shown as faded without interaction)
+    disabled: true, // optional, disables the button (shown as faded without interaction)
+    disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 });
@@ -530,7 +531,8 @@ navigationController.resetTo({
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, disables the button (shown as faded without interaction)
+    disabled: true, // optional, disables the button (shown as faded without interaction)
+    disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
   }],
   rightButtons: [] // similar format to leftButtons (optional)
 );
@@ -547,7 +549,8 @@ navigationController.setRightButtons([
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, disables the button (shown as faded without interaction)
+    disabled: true, // optional, disables the button (shown as faded without interaction)
+    disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
   },
   {
     icon: require('./img/navicon_camera.png'), // image for an icon button
@@ -555,7 +558,8 @@ navigationController.setRightButtons([
       // on press event handler
     },
     testID: "e2e_is_awesome", // optional, used to locate this view in end-to-end tests
-    disabled: true // optional, disables the button (shown as faded without interaction)
+    disabled: true, // optional, disables the button (shown as faded without interaction)
+    disableIconTint: true, // optional, by default the image colors are overridden and tinted to navBarButtonColor, set to true to keep the original image colors
   }
   ]);
 ```
