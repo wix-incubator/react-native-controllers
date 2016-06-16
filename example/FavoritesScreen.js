@@ -242,7 +242,7 @@ var FavoritesScreen = React.createClass({
           rightButtons: [
             {
               icon: require('./img/star.png'),
-              disableIconTint: 'kak',
+              disableIconTint: true,
               onPress: function() {
                 AlertIOS.alert('Button', 'You Are My Star');
               }
