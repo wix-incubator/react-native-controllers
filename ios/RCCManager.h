@@ -7,7 +7,7 @@
 + (instancetype)sharedInstance;
 + (instancetype)sharedIntance;
 
--(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL launchOptions:(NSDictionary *)launchOptions;
 -(RCTBridge*)getBridge;
 
 -(void)registerController:(UIViewController*)controller componentId:(NSString*)componentId componentType:(NSString*)componentType;
