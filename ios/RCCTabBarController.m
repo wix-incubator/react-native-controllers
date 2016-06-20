@@ -3,6 +3,7 @@
 #import "RCTConvert.h"
 #import "RCCManager.h"
 #import "RCTEventDispatcher.h"
+#import "RCCNavigationController.h"
 
 @implementation RCCTabBarController
 
@@ -223,6 +224,26 @@
     {
       completion();
     }
+}
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return [self.selectedViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  if (self.selectedViewController) {
+    return [self.selectedViewController supportedInterfaceOrientations];
+  }
+  
+  return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL)shouldAutorotate {
+  RCCNavigationController *navVC = (id)self.selectedViewController;
+  if ([navVC isKindOfClass:[RCCNavigationController class]]) {
+    return navVC.shouldAutorotate;
+  }
+  return NO;
 }
 
 @end
