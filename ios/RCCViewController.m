@@ -124,7 +124,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   // Set custom background color
   id backgroundColor = navigatorStyle[@"backgroundColor"];
   if (backgroundColor) {
-    if (backgroundColor == 0) {
+    if ([backgroundColor isEqual:@0]) {
       [reactView setBackgroundColor:[UIColor clearColor]];
     } else {
       UIColor *bgColor = [RCTConvert UIColor:backgroundColor];
