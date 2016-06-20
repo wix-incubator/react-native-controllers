@@ -259,6 +259,8 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
     }
+    
+    [controller setModalPresentationStyle:UIModalPresentationCustom];
 
     [[RCCManagerModule lastModalPresenterViewController] presentViewController:controller
                                                            animated:![animationType isEqualToString:@"none"]
