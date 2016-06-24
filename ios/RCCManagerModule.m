@@ -259,6 +259,10 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
     }
+    
+    if ([animationType isEqualToString:@"custom"]) {
+        [RCCManagerModule applyCustomTransitioningDelegateTo:controller withProps:layout[@"props"]];
+    }
 
     [[RCCManagerModule lastModalPresenterViewController] presentViewController:controller
                                                            animated:![animationType isEqualToString:@"none"]
@@ -307,6 +311,19 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
     else
     {
         [self dismissAllModalPresenters:allPresentedViewControllers resolver:resolve];
+    }
+}
+
+#pragma mark - support for custom transitioning delegates
+
++ (void)applyCustomTransitioningDelegateTo:(UIViewController *)controller withProps:(NSDictionary *)props {
+    // set a custom transitioning delegate
+    NSDictionary *passProps = props[@"passProps"];
+    NSString *delegateId = passProps[@"transitioningDelegateId"];
+    id<UIViewControllerTransitioningDelegate> delegate = [[RCCManager sharedInstance] getModalTransitioningDelegateForId:delegateId];
+    if (delegate != nil) {
+        controller.modalPresentationStyle = UIModalPresentationCustom;
+        controller.transitioningDelegate = delegate;
     }
 }
 

@@ -16,4 +16,7 @@
 
 -(void)clearModuleRegistry;
 
+- (id<UIViewControllerTransitioningDelegate>) getModalTransitioningDelegateForId:(NSString*) delegateId;
+- (void)registerModalTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)delegate forDelegateId:(NSString *) component;
+
 @end
