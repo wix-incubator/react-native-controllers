@@ -27,10 +27,11 @@
   if (!self) return nil;
 
   self.tabBar.translucent = YES; // default
-  
+
   UIColor *buttonColor = nil;
   UIColor *selectedButtonColor = nil;
   NSDictionary *tabsStyle = props[@"style"];
+
   if (tabsStyle)
   {
     NSString *tabBarButtonColor = tabsStyle[@"tabBarButtonColor"];
@@ -100,6 +101,10 @@
 
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
     viewController.tabBarItem.selectedImage = iconImageSelected;
+
+    if (!title) {
+      viewController.tabBarItem.imageInsets = UIEdgeInsetsMake(5.5, 0, -5.5, 0);
+    }
 
     if (buttonColor)
     {
