@@ -7,7 +7,7 @@
 @property (nonatomic, strong) NSMutableDictionary *modulesRegistry;
 @property (nonatomic, strong) RCTBridge *sharedBridge;
 @property (nonatomic, strong) NSURL *bundleURL;
-@property (nonatomic, strong) NSMutableDictionary<String,id<UIViewControllerTransitioningDelegate>> *componentToModalTransitioningDelegate;
+@property (nonatomic, strong) NSMutableDictionary<String,id<UIViewControllerTransitioningDelegate>> *modalTransitioningDelegateRegistry;
 @end
 
 @implementation RCCManager
@@ -210,13 +210,13 @@
 #pragma mark - custom transitioning delegates
 
 - (id<UIViewControllerTransitioningDelegate>) getModalTransitioningDelegateForId:(NSString*) delegateId {
-    return [self.componentToModalTransitioningDelegate objectForKey:delegateId];
+    return [self.modalTransitioningDelegateRegistry objectForKey:delegateId];
 }
 - (void)registerModalTransitioningDelegate:(id<UIViewControllerTransitioningDelegate>)delegate forDelegateId:(NSString *) component {
-    if (self.componentToModalTransitioningDelegate == nil) {
-        self.componentToModalTransitioningDelegate = [NSMutableDictionary dictionary];
+    if (self.modalTransitioningDelegateRegistry == nil) {
+        self.modalTransitioningDelegateRegistry = [NSMutableDictionary dictionary];
     }
-    self.componentToModalTransitioningDelegate[component] = delegate;
+    self.modalTransitioningDelegateRegistry[component] = delegate;
 }
 
 @end
