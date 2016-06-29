@@ -12,13 +12,14 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 const NSInteger BLUR_NAVBAR_TAG = 78264802;
 const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 
-@interface RCCViewController()
+@interface RCCViewController() <UIGestureRecognizerDelegate>
 @property (nonatomic) BOOL _hidesBottomBarWhenPushed;
 @property (nonatomic) BOOL _statusBarHideWithNavBar;
 @property (nonatomic) BOOL _statusBarHidden;
 @property (nonatomic) BOOL _statusBarTextColorSchemeLight;
 @property (nonatomic, strong) NSDictionary *originalNavBarImages;
 @property (nonatomic, strong) UIImageView *navBarHairlineImageView;
+@property (nonatomic, weak) id <UIGestureRecognizerDelegate> originalInteractivePopGestureDelegate;
 @end
 
 @implementation RCCViewController
@@ -358,6 +359,19 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
     {
         self.navBarHairlineImageView.hidden = NO;
     }
+  
+    //Bug fix: in case there is a interactivePopGestureRecognizer, it prevents react-native from getting touch events on the left screen area that the gesture handles
+    //overriding the delegate of the gesture prevents this from happening while keeping the gesture intact (another option was to disable it completely by demand)
+    self.originalInteractivePopGestureDelegate = nil;
+    if (self.navigationController != nil && self.navigationController.interactivePopGestureRecognizer != nil)
+    {
+      id <UIGestureRecognizerDelegate> interactivePopGestureRecognizer = self.navigationController.interactivePopGestureRecognizer.delegate;
+      if (interactivePopGestureRecognizer != nil)
+      {
+        self.originalInteractivePopGestureDelegate = interactivePopGestureRecognizer;
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+      }
+    }
 }
 
 -(void)storeOriginalNavBarImages {
@@ -379,6 +393,12 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 -(void)setStyleOnDisappear
 {
     self.navBarHairlineImageView.hidden = NO;
+  
+    if (self.navigationController != nil && self.navigationController.interactivePopGestureRecognizer != nil && self.originalInteractivePopGestureDelegate != nil)
+    {
+      self.navigationController.interactivePopGestureRecognizer.delegate = self.originalInteractivePopGestureDelegate;
+      self.originalInteractivePopGestureDelegate = nil;
+    }
 }
 
 // only styles that can't be set on willAppear should be set here
