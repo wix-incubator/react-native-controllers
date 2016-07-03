@@ -8,7 +8,7 @@
 #import "RCTConvert.h"
 #import "RCCTabBarController.h"
 #import "RCCTheSideBarManagerViewController.h"
-
+#import "RCCNotification.h"
 
 #define kSlideDownAnimationDuration 0.35
 
@@ -308,6 +308,18 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
     {
         [self dismissAllModalPresenters:allPresentedViewControllers resolver:resolve];
     }
+}
+
+RCT_EXPORT_METHOD(
+showNotification:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [RCCNotification showWithParams:params resolver:resolve rejecter:reject];
+}
+
+RCT_EXPORT_METHOD(
+dismissNotification:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [RCCNotification dismissWithParams:params resolver:resolve rejecter:reject];
 }
 
 @end
