@@ -59,6 +59,7 @@
 		CC84A19A1C1A0C4E00B3A6A2 /* RCCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCTabBarController.m; sourceTree = "<group>"; tabWidth = 2; };
 		CC84A19B1C1A0C4E00B3A6A2 /* RCCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCViewController.h; sourceTree = "<group>"; };
 		CC84A19C1C1A0C4E00B3A6A2 /* RCCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.objc; path = RCCViewController.m; sourceTree = "<group>"; tabWidth = 2; };
+		D832A4611D2924AD00494674 /* RCCExternalViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCExternalViewControllerProtocol.h; sourceTree = "<group>"; };
 		D84813171C8C5EB700051BAF /* RCCLightBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCLightBox.h; sourceTree = "<group>"; };
 		D84813181C8C5EB700051BAF /* RCCLightBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCLightBox.m; sourceTree = "<group>"; };
 		D85082BD1CBCF42400FDB961 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
@@ -216,6 +217,7 @@
 				D84813181C8C5EB700051BAF /* RCCLightBox.m */,
 				D8B0E7481CF4BC6400BAF13D /* RCCNotification.h */,
 				D8B0E7491CF4BC6400BAF13D /* RCCNotification.m */,
+				D832A4611D2924AD00494674 /* RCCExternalViewControllerProtocol.h */,
 				D8AFADBE1BEE6F3F00A4592D /* Products */,
 			);
 			sourceTree = "<group>";

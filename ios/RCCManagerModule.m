@@ -265,14 +265,25 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
                                                          completion:^(){ resolve(nil); }];
 }
 
+-(BOOL)viewControllerIsModal:(UIViewController*)viewController
+{
+    BOOL viewControllerIsModal = (viewController.presentingViewController.presentedViewController == viewController)
+                                || ((viewController.navigationController != nil) && (viewController.navigationController.presentingViewController.presentedViewController == viewController.navigationController) && (viewController == viewController.navigationController.viewControllers[0]))
+                                || ([viewController.tabBarController.presentingViewController isKindOfClass:[UITabBarController class]]);
+    return viewControllerIsModal;
+}
+
 RCT_EXPORT_METHOD(
 dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     UIViewController* vc = [RCCManagerModule lastModalPresenterViewController];
-    [[RCCManager sharedIntance] unregisterController:vc];
-    
-    [vc dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
-                                                                 completion:^(){ resolve(nil); }];
+    if ([self viewControllerIsModal:vc])
+    {
+        [[RCCManager sharedIntance] unregisterController:vc];
+        
+        [vc dismissViewControllerAnimated:![animationType isEqualToString:@"none"]
+                               completion:^(){ resolve(nil); }];
+    }
 }
 
 RCT_EXPORT_METHOD(

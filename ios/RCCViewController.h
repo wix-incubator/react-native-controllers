@@ -15,3 +15,7 @@
 - (void)setNavBarVisibilityChange:(BOOL)animated;
 
 @end
+
+@protocol RCCViewControllerDelegate <NSObject>
+-(void)setStyleOnAppearForViewController:(UIViewController*)viewController;
+@end

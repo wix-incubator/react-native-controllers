@@ -201,9 +201,16 @@ const NSInteger kLightBoxTag = 0x101010;
 
 @implementation RCCLightBox
 
++(UIWindow*)getWindow
+{
+    UIApplication *app = [UIApplication sharedApplication];
+    UIWindow *window = (app.keyWindow != nil) ? app.keyWindow : app.windows[0];
+    return window;
+}
+
 +(void)showWithParams:(NSDictionary*)params
 {
-    UIWindow *window = [[RCCManager sharedInstance] getAppWindow];
+    UIWindow *window = [RCCLightBox getWindow];
     if ([window viewWithTag:kLightBoxTag] != nil)
     {
         return;
@@ -217,7 +224,7 @@ const NSInteger kLightBoxTag = 0x101010;
 
 +(void)dismiss
 {
-    UIWindow *window = [[RCCManager sharedInstance] getAppWindow];
+    UIWindow *window = [RCCLightBox getWindow];
     RCCLightBoxView *lightBox = [window viewWithTag:kLightBoxTag];
     if (lightBox != nil)
     {

@@ -65,6 +65,10 @@ var FavoritesScreen = React.createClass({
               <Text style={styles.button}>Blur Entire NavBar (& draw under it)</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'navtransparent') }>
+              <Text style={styles.button}>Transparent Nav Bar</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'sethidden') }>
               <Text style={styles.button}>Set Navigation Bar Hidden</Text>
             </TouchableOpacity>
@@ -179,6 +183,17 @@ var FavoritesScreen = React.createClass({
           animated: true
         });
         break;
+      case 'navtransparent':
+        Controllers.NavigationControllerIOS("favorites_nav").push({
+          title: "More",
+          component: "FavoritesScreen",
+          style: {
+            navBarTransparent: true,
+            drawUnderNavBar: true,
+            navBarTranslucent: true
+          }
+          });
+        break;
       case 'navcolors':
         Controllers.NavigationControllerIOS("favorites_nav").push({
           title: "More",
@@ -223,7 +238,16 @@ var FavoritesScreen = React.createClass({
             drawUnderNavBar: true,
             navBarTranslucent: true,
             navBarNoBorder: true
-          }
+          },
+          rightButtons: [
+            {
+              icon: require('./img/star.png'),
+              disableIconTint: true,
+              onPress: function() {
+                AlertIOS.alert('Button', 'You Are My Star');
+              }
+            }
+          ]
         });
         break;
       case 'lightstatus':
@@ -348,7 +372,8 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen",
           style: {
             navBarBlur: true,
-            drawUnderNavBar: true
+            drawUnderNavBar: true,
+            navBarTransparent: false
           }
         });
         break;

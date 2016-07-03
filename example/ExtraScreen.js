@@ -86,7 +86,7 @@ var ExtraScreen = React.createClass({
 			)
 		} else if(this.state.renderOnToolBar === 'search') {
 			return (
-				<NavigationToolBarIOS key='search' style={styles.toolBarStyle}>
+				<NavigationToolBarIOS key='search' style={styles.searchBar }>
 					<View style={{flex: 1, flexDirection: 'row'}}>
 						<TextInput
 							style={styles.textInput}
@@ -112,8 +112,14 @@ var ExtraScreen = React.createClass({
 
 	onButtonClick: function(cmd) {
 		switch (cmd) {
-			case 'surprise':
+      case 'surprise':
+
 				this.setState({renderOnToolBar: (this.state.renderOnToolBar === 'search') ? 'segmented' : 'search'});
+        const isNavigationBarHidden = this.state.renderOnToolBar === 'search';
+        Controllers.NavigationControllerIOS("favorites_nav").setHidden({
+          hidden:isNavigationBarHidden,
+          animated: true //default is true
+        });
 				break;
 
 		}
@@ -155,6 +161,12 @@ var styles = StyleSheet.create({
 		height: 64,
 		position: 'absolute',
 	},
+  searchBar:{
+    top: 0,
+    width: width,
+    height: 64,
+    position: 'absolute',
+  },
 	textInput: {
 		width: width*0.87,
 		height: 28,
