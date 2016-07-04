@@ -309,7 +309,7 @@
         CGFloat damping = 1;
         if ([self.params valueForKeyPath:@"animation.damping"] != nil)
         {
-            CGFloat damping = [[self.params valueForKeyPath:@"animation.damping"] floatValue];
+            damping = [[self.params valueForKeyPath:@"animation.damping"] floatValue];
             damping = MAX(damping, 0);
             damping = MIN(damping, 1);
         }
