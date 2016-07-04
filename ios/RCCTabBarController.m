@@ -2,6 +2,8 @@
 #import "RCCViewController.h"
 #import "RCTConvert.h"
 #import "RCCManager.h"
+#import "RCTEventDispatcher.h"
+#import "RCCNavigationController.h"
 
 @implementation RCCTabBarController
 
@@ -104,6 +106,14 @@
     {
       [viewController.tabBarItem setTitleTextAttributes:
        @{NSForegroundColorAttributeName : selectedButtonColor} forState:UIControlStateSelected];
+    }
+    
+    // adject text position
+    NSDictionary *tabBarTextAdjustment = tabsStyle[@"tabBarTextAdjustment"];
+    if(tabBarTextAdjustment &&
+       [tabBarTextAdjustment objectForKey:@"x"] &&
+       [tabBarTextAdjustment objectForKey:@"y"]) {
+      viewController.tabBarItem.titlePositionAdjustment = UIOffsetMake([[tabBarTextAdjustment objectForKey:@"x"] integerValue], [[tabBarTextAdjustment objectForKey:@"y"] integerValue]);
     }
     
     // create badge
@@ -216,4 +226,39 @@
     }
 }
 
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return [self.selectedViewController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
+  if (self.selectedViewController) {
+    return [self.selectedViewController supportedInterfaceOrientations];
+  }
+  
+  return UIInterfaceOrientationMaskPortrait;
+}
+
+-(BOOL)shouldAutorotate {
+  RCCNavigationController *navVC = (id)self.selectedViewController;
+  if ([navVC isKindOfClass:[RCCNavigationController class]]) {
+    return navVC.shouldAutorotate;
+  }
+  return NO;
+}
+
 @end
+
+@implementation RCCTabBarController (UITabBarDelegate)
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+  
+  [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"tabbarControllerEventID" body:@
+   {
+     @"type": @"TabBarButtonPress",
+     @"id": @(item.tag),
+     @"label": item.title,
+   }];
+}
+
+@end
+

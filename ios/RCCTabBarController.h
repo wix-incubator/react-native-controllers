@@ -7,3 +7,9 @@
 - (void)performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams bridge:(RCTBridge *)bridge completion:(void (^)(void))completion;
 
 @end
+
+@interface RCCTabBarController (UITabBarDelegate) <UITabBarDelegate>
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item;
+
+@end
+

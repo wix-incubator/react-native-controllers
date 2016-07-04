@@ -121,11 +121,26 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
+  
+  // Set custom background color
+  id backgroundColor = navigatorStyle[@"backgroundColor"];
+  if (backgroundColor) {
+    if ([backgroundColor isEqual:@0]) {
+      [reactView setBackgroundColor:[UIColor clearColor]];
+    } else {
+      UIColor *bgColor = [RCTConvert UIColor:backgroundColor];
+      [reactView setBackgroundColor:bgColor];
+    }
+  }
 
   self = [super init];
   if (!self) return nil;
 
   [self commonInit:reactView navigatorStyle:navigatorStyle props:passProps];
+  
+  NSNumber *shouldAutoRotate = navigatorStyle[@"shouldAutoRotate"];
+  BOOL shouldAutoRotateBool = shouldAutoRotate ? [shouldAutoRotate boolValue] : NO;
+  self.shouldAutoRotate = shouldAutoRotateBool;
 
   return self;
 }
@@ -520,6 +535,21 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
       NSLog(@"addExternalVCIfNecessary: could not create class from string. Check that the proper class name wass passed in ExternalNativeScreenClass");
     }
   }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+  return (interfaceOrientation == UIInterfaceOrientationPortrait) || (interfaceOrientation == UIInterfaceOrientationIsLandscape);
+}
+
+- (BOOL)shouldAutorotate
+{
+  return self.shouldAutoRotate;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+  return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
 @end

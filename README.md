@@ -786,7 +786,8 @@ All styles are optional, this is the format of the style object:
 {
   tabBarButtonColor: '#ffff00', // change the color of the tab icons and text (also unselected)
   tabBarSelectedButtonColor: '#ff9900', // change the color of the selected tab icon and text (only selected)
-  tabBarBackgroundColor: '#551A8B' // change the background color of the tab bar
+  tabBarBackgroundColor: '#551A8B', // change the background color of the tab bar
+  tabBarTextAdjustment: { x: 0, y: 0 } // change the text x and y offset
 }
 ```
 
