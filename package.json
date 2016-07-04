@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/wix/react-native-controllers.git"
   },
-  "version": "2.0.3",
+  "version": "2.0.7",
   "description": "React Native Controllers",
   "nativePackage": true,
   "bugs": {

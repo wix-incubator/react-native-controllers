@@ -238,7 +238,16 @@ var FavoritesScreen = React.createClass({
             drawUnderNavBar: true,
             navBarTranslucent: true,
             navBarNoBorder: true
-          }
+          },
+          rightButtons: [
+            {
+              icon: require('./img/star.png'),
+              disableIconTint: true,
+              onPress: function() {
+                AlertIOS.alert('Button', 'You Are My Star');
+              }
+            }
+          ]
         });
         break;
       case 'lightstatus':

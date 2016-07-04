@@ -199,6 +199,13 @@
   return self.sharedBridge;
 }
 
+-(UIWindow*)getAppWindow
+{
+  UIApplication *app = [UIApplication sharedApplication];
+  UIWindow *window = (app.keyWindow != nil) ? app.keyWindow : app.windows[0];
+  return window;
+}
+
 #pragma mark - RCTBridgeDelegate methods
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
