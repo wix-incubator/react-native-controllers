@@ -522,4 +522,27 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   }
 }
 
+#pragma mark - NewRelic
+
+- (NSString*) customNewRelicInteractionName
+{
+  NSString *interactionName = nil;
+  
+  if (self.view != nil && [self.view isKindOfClass:[RCTRootView class]])
+  {
+    NSString *moduleName = ((RCTRootView*)self.view).moduleName;
+    if(moduleName != nil)
+    {
+      interactionName = [NSString stringWithFormat:@"RCCViewController: %@", moduleName];
+    }
+  }
+  
+  if (interactionName == nil)
+  {
+    interactionName = [NSString stringWithFormat:@"RCCViewController with title: %@", self.title];
+  }
+  
+  return interactionName;
+}
+
 @end
