@@ -152,6 +152,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.view = nil;
 }
 
 -(void)onRNReload
