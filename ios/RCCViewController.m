@@ -103,6 +103,10 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
   [mergedProps addEntriesFromDictionary:passProps];
   
+  if ([RCCManager sharedInstance].initialProps) {
+    [mergedProps addEntriesFromDictionary:[RCCManager sharedIntance].initialProps];
+  }
+  
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;
 
@@ -118,6 +122,10 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 {
   NSMutableDictionary *mergedProps = [NSMutableDictionary dictionaryWithDictionary:globalProps];
   [mergedProps addEntriesFromDictionary:passProps];
+  
+  if ([RCCManager sharedInstance].initialProps) {
+    [mergedProps addEntriesFromDictionary:[RCCManager sharedIntance].initialProps];
+  }
   
   RCTRootView *reactView = [[RCTRootView alloc] initWithBridge:bridge moduleName:component initialProperties:mergedProps];
   if (!reactView) return nil;

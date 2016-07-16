@@ -7,6 +7,7 @@
 + (instancetype)sharedInstance;
 + (instancetype)sharedIntance;
 
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL initialProps:(NSDictionary *)initialProps launchOptions:(NSDictionary *)launchOptions;
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
 -(RCTBridge*)getBridge;
 -(UIWindow*)getAppWindow;
@@ -16,5 +17,7 @@
 -(void)unregisterController:(UIViewController*)vc;
 
 -(void)clearModuleRegistry;
+
+@property (nonatomic, strong) NSDictionary *initialProps;
 
 @end

@@ -118,10 +118,16 @@
 
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL
 {
+  [self initBridgeWithBundleURL:bundleURL initialProps:nil launchOptions:nil];
+}
+
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL initialProps:(NSDictionary *)initialProps launchOptions:(NSDictionary *)launchOptions
+{
   if (self.sharedBridge) return;
   
   self.bundleURL = bundleURL;
-  self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:nil];
+  self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  self.initialProps = initialProps;
   
   [self showSplashScreen];
 }
