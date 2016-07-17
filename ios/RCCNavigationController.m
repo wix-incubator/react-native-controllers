@@ -229,13 +229,18 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   NSMutableArray *barButtonItems = [NSMutableArray new];
   for (NSDictionary *button in buttons)
   {
+    NSNumber *systemItem = button[@"systemItem"];
     NSString *title = button[@"title"];
     UIImage *iconImage = nil;
     id icon = button[@"icon"];
     if (icon) iconImage = [RCTConvert UIImage:icon];
     
     UIBarButtonItem *barButtonItem;
-    if (iconImage)
+    if (systemItem)
+    {
+      barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:systemItem.integerValue target:self action:@selector(onButtonPress:)];
+    }
+    else if (iconImage)
     {
       barButtonItem = [[UIBarButtonItem alloc] initWithImage:iconImage style:UIBarButtonItemStylePlain target:self action:@selector(onButtonPress:)];
     }
