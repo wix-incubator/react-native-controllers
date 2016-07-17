@@ -23,7 +23,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   NSString *title = props[@"title"];
   if (title) viewController.title = title;
   
-  [self setTitleIamgeForVC:viewController titleImageData:props[@"titleImage"]];
+  [self setTitleImageForVC:viewController titleImageData:props[@"titleImage"]];
   
   NSArray *leftButtons = props[@"leftButtons"];
   if (leftButtons)
@@ -84,7 +84,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     NSString *title = actionParams[@"title"];
     if (title) viewController.title = title;
     
-    [self setTitleIamgeForVC:viewController titleImageData:actionParams[@"titleImage"]];
+    [self setTitleImageForVC:viewController titleImageData:actionParams[@"titleImage"]];
     
     NSString *backButtonTitle = actionParams[@"backButtonTitle"];
     if (backButtonTitle)
@@ -152,7 +152,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
     NSString *title = actionParams[@"title"];
     if (title) viewController.title = title;
     
-    [self setTitleIamgeForVC:viewController titleImageData:actionParams[@"titleImage"]];
+    [self setTitleImageForVC:viewController titleImageData:actionParams[@"titleImage"]];
     
     NSArray *leftButtons = actionParams[@"leftButtons"];
     if (leftButtons)
@@ -193,7 +193,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   
   if ([performAction isEqualToString:@"setTitleImage"])
   {
-    [self setTitleIamgeForVC:self.topViewController titleImageData:actionParams[@"titleImage"]];
+    [self setTitleImageForVC:self.topViewController titleImageData:actionParams[@"titleImage"]];
     return;
   }
   
@@ -283,7 +283,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   }
 }
 
--(void)setTitleIamgeForVC:(UIViewController*)viewController titleImageData:(id)titleImageData
+-(void)setTitleImageForVC:(UIViewController*)viewController titleImageData:(id)titleImageData
 {
   if (!titleImageData || [titleImageData isEqual:[NSNull null]])
   {
