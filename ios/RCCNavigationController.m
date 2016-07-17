@@ -294,7 +294,10 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   UIImage *titleImage = [RCTConvert UIImage:titleImageData];
   if (titleImage)
   {
-    viewController.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 200, 40)];
+    imageView.image = titleImage;
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    viewController.navigationItem.titleView = imageView;
   }
 }
 
