@@ -373,6 +373,9 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
       }
     }
+
+    BOOL popGestureDisabledBool = [self.navigatorStyle[@"popGestureDisabled"] boolValue];
+    self.navigationController.interactivePopGestureRecognizer.enabled = !popGestureDisabledBool;
 }
 
 -(void)storeOriginalNavBarImages {
