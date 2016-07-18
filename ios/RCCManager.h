@@ -8,6 +8,7 @@
 + (instancetype)sharedIntance;
 
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL;
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL launchOptions:(NSDictionary *)launchOptions;
 -(RCTBridge*)getBridge;
 -(UIWindow*)getAppWindow;
 

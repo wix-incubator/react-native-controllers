@@ -155,7 +155,7 @@ Since `react-native-controllers` takes over the skeleton of your app, we're firs
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
   // this is your new React Native invocation
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
 
   return YES;
 }
