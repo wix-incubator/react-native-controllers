@@ -113,37 +113,51 @@ RCT_EXPORT_MODULE(RCCManager);
 {
     if (allPresentedViewControllers.count > 0)
     {
-        __block NSUInteger counter = 0;
-        for (UIViewController *viewController in allPresentedViewControllers)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^
         {
-            counter++;
-            
-            [[RCCManager sharedIntance] unregisterController:viewController];
-            if (viewController.presentedViewController != nil)
+            __block NSUInteger counter = 0;
+            for (UIViewController *viewController in allPresentedViewControllers)
             {
-                [viewController dismissViewControllerAnimated:NO completion:^()
-                 {
-                     if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
-                     {
-                         [allPresentedViewControllers removeAllObjects];
-                         
-                         if (resolve != nil)
-                         {
-                             resolve(nil);
-                         }
-                     }
-                 }];
-            }
-            else if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
-            {
-                [allPresentedViewControllers removeAllObjects];
+                counter++;
                 
-                if (resolve != nil)
+                [[RCCManager sharedIntance] unregisterController:viewController];
+                if (viewController.presentedViewController != nil)
                 {
-                    resolve(nil);
+                    dispatch_semaphore_t dismiss_sema = dispatch_semaphore_create(0);
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^
+                    {
+                        [viewController dismissViewControllerAnimated:NO completion:^()
+                         {
+                             if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+                             {
+                                 [allPresentedViewControllers removeAllObjects];
+                                 
+                                 if (resolve != nil)
+                                 {
+                                     resolve(nil);
+                                 }
+                             }
+                             dispatch_semaphore_signal(dismiss_sema);
+                         }];
+                    });
+                    
+                    dispatch_semaphore_wait(dismiss_sema, DISPATCH_TIME_FOREVER);
+                }
+                else if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+                {
+                    [allPresentedViewControllers removeAllObjects];
+                    
+                    if (resolve != nil)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            resolve(nil);
+                        });
+                    }
                 }
             }
-        }
+        });
     }
     else if (resolve != nil)
     {
