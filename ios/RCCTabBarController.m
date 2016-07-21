@@ -2,6 +2,14 @@
 #import "RCCViewController.h"
 #import "RCTConvert.h"
 #import "RCCManager.h"
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
+
+@interface RCCTabBarController() <UITabBarControllerDelegate>
+
+@property (nonatomic, weak) RCTBridge *bridge;
+
+@end
 
 @implementation RCCTabBarController
 
@@ -21,11 +29,21 @@
   return newImage;
 }
 
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+  NSDictionary *payload = @{ @"position": @([self.viewControllers indexOfObject:viewController]) };
+  
+  [self.bridge.eventDispatcher sendDeviceEventWithName:@"worksource.tabChanged"
+                                              body:payload];
+}
+
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
 {
   self = [super init];
   if (!self) return nil;
   
+  self.bridge = bridge;
+  self.delegate = self;
   self.tabBar.translucent = YES; // default
   
   UIColor *buttonColor = nil;
