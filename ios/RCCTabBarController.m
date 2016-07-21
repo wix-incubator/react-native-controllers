@@ -74,6 +74,12 @@
       UIColor *color = tabBarBackgroundColor != (id)[NSNull null] ? [RCTConvert UIColor:tabBarBackgroundColor] : nil;
       self.tabBar.barTintColor = color;
     }
+
+    NSString *tintColor = tabsStyle[@"tintColor"];
+    if (tintColor)
+    {
+      self.view.tintColor = tintColor != (id)[NSNull null] ? [RCTConvert UIColor:tintColor] : nil;
+    }
   }
 
   NSMutableArray *viewControllers = [NSMutableArray array];
