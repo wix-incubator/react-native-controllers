@@ -3,9 +3,6 @@
 #import "RCTConvert.h"
 #import "RCCManager.h"
 
-@interface RCCTabBarController() <UITabBarControllerDelegate>
-@end
-
 @implementation RCCTabBarController
 
 - (UIImage *)image:(UIImage*)image withColor:(UIColor *)color1
@@ -24,20 +21,11 @@
   return newImage;
 }
 
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
-{
-  if (viewController == tabBarController.selectedViewController) {
-    return NO;
-  }
-  return YES;
-}
-
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
 {
   self = [super init];
   if (!self) return nil;
   
-  self.delegate = self;
   self.tabBar.translucent = YES; // default
   
   UIColor *buttonColor = nil;
