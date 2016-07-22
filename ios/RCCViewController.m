@@ -218,7 +218,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   
     id shadowImage = self.navigatorStyle[@"shadowImage"];
     if (shadowImage) {
-        UIImage *img = [[RCTConvert UIImage:backgroundImage] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        UIImage *img = [[RCTConvert UIImage:shadowImage] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
         [viewController.navigationController.navigationBar setShadowImage:img];
     }
     
