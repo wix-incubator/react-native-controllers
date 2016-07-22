@@ -8,7 +8,8 @@ var {
   TabBarControllerIOS,
   NavigationControllerIOS,
   ViewControllerIOS,
-  DrawerControllerIOS
+  DrawerControllerIOS,
+  CubeBarControllerIOS,
 } = React;
 
 // require all top level react components you refer to in the layout
@@ -31,16 +32,16 @@ var MoviesApp = Controllers.createClass({
                            type="MMDrawer"
                            animationType="slide"
                            style={{contentOverlayColor:'#162D3D55'}}>
-        <TabBarControllerIOS id="main">
-          <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')} selectedIcon={require('./img/home_selected.png')}>
+        <CubeBarControllerIOS id="main">
+          <CubeBarControllerIOS.Item title="Movies" icon={require('./img/home.png')} selectedIcon={require('./img/home_selected.png')}>
             <NavigationControllerIOS
               title="Red Title"
               component="MovieListScreen"
               id="movies_nav"
               style={{navBarTextColor: '#ff0000', drawUnderNavBar: false, drawUnderTabBar: true}}
             />
-          </TabBarControllerIOS.Item>
-          <TabBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
+          </CubeBarControllerIOS.Item>
+          <CubeBarControllerIOS.Item title="Favorites" icon={require('./img/star.png')} selectedIcon={require('./img/star_selected.png')}>
             <NavigationControllerIOS
               title="Favorites"
               component="FavoritesScreen"
@@ -48,14 +49,14 @@ var MoviesApp = Controllers.createClass({
               passProps={{hidePop: true}}
               style={{drawUnderNavBar: true, navBarTranslucent: true}}
             />
-          </TabBarControllerIOS.Item>
-          <TabBarControllerIOS.Item title="Search" icon={require('./img/discover.png')} selectedIcon={require('./img/discover_selected.png')}>
+          </CubeBarControllerIOS.Item>
+          <CubeBarControllerIOS.Item title="Search" icon={require('./img/discover.png')} selectedIcon={require('./img/discover_selected.png')}>
             <ViewControllerIOS
               component="SearchScreen"
               style={{ drawUnderTabBar: true }}
             />
-          </TabBarControllerIOS.Item>
-        </TabBarControllerIOS>
+          </CubeBarControllerIOS.Item>
+        </CubeBarControllerIOS>
       </DrawerControllerIOS>
     );
   }
