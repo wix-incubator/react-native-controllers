@@ -31,7 +31,7 @@ var MoviesApp = Controllers.createClass({
                            type="MMDrawer"
                            animationType="slide"
                            style={{contentOverlayColor:'#162D3D55'}}>
-        <TabBarControllerIOS id="main">
+        <TabBarControllerIOS id="main" style={{tabBarHidden: true}}>
           <TabBarControllerIOS.Item title="Movies" icon={require('./img/home.png')} selectedIcon={require('./img/home_selected.png')}>
             <NavigationControllerIOS
               title="Red Title"
