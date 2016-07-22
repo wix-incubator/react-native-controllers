@@ -9,7 +9,6 @@
 #import "RCCTabBarController.h"
 #import "RCCTheSideBarManagerViewController.h"
 #import "RCCNotification.h"
-#import "RNCubeController.h"
 
 #define kSlideDownAnimationDuration 0.35
 
@@ -247,26 +246,6 @@ TabBarControllerIOS:(NSString*)controllerId performAction:(NSString*)performActi
     {
         [RCCManagerModule handleRCTPromiseRejectBlock:reject
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantFindTabControllerErrorCode description:@"could not find UITabBarController"]];
-        return;
-    }
-    [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedInstance] getBridge] completion:^(){ resolve(nil); }];
-}
-
-RCT_EXPORT_METHOD(
-                  CubeBarControllerIOS:(NSString*)controllerId performAction:(NSString*)performAction actionParams:(NSDictionary*)actionParams resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
-{
-    if (!controllerId || !performAction)
-    {
-        [RCCManagerModule handleRCTPromiseRejectBlock:reject
-                                                error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleMissingParamsErrorCode description:@"missing params"]];
-        return;
-    }
-    
-    RNCubeController* controller = [[RCCManager sharedInstance] getControllerWithId:controllerId componentType:@"CubeBarControllerIOS"];
-    if (!controller || ![controller isKindOfClass:[RNCubeController class]])
-    {
-        [RCCManagerModule handleRCTPromiseRejectBlock:reject
-                                                error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantFindTabControllerErrorCode description:@"could not find RNCubeController"]];
         return;
     }
     [controller performAction:performAction actionParams:actionParams bridge:[[RCCManager sharedInstance] getBridge] completion:^(){ resolve(nil); }];

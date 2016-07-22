@@ -106,10 +106,7 @@ var MovieListScreen = React.createClass({
                     There's a right and a left side menu in this example. Control the side menu animation using the options below:
                 </Text>
 
-                <TouchableOpacity onPress={ ()=>    Controllers.CubeBarControllerIOS("main").switchTo({
-                  tabIndex: 1
-                })}>
-                  
+                <TouchableOpacity onPress={ this.onButtonClick.bind(this, Constants.MMDRAWER_DOOR) } >
                     <Text style={styles.button}>Door</Text>
                 </TouchableOpacity>
 
