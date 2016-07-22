@@ -7,6 +7,7 @@
 #import "RCCManager.h"
 #import "RCTConvert.h"
 #import "RCCExternalViewControllerProtocol.h"
+#import "RNCubeController.h"
 
 const NSInteger BLUR_STATUS_TAG = 78264801;
 const NSInteger BLUR_NAVBAR_TAG = 78264802;
@@ -68,6 +69,12 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
         controller = [[RCCTabBarController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
     }
     
+  // cube bar controller
+  if ([type isEqualToString:@"CubeBarControllerIOS"])
+  {
+    controller = [[RNCubeController alloc] initWithProps:props children:children globalProps:globalProps bridge:bridge];
+  }
+  
     // side menu controller
     if ([type isEqualToString:@"DrawerControllerIOS"])
     {

@@ -109,6 +109,7 @@ var Controllers = {
 
       ControllerRegistry: Controllers.ControllerRegistry,
       TabBarControllerIOS: {name: 'TabBarControllerIOS', Item: {name: 'TabBarControllerIOS.Item'}},
+      CubeBarControllerIOS: {name: 'CubeBarControllerIOS', Item: {name: 'CubeBarControllerIOS.Item'}},
       NavigationControllerIOS: {name: 'NavigationControllerIOS'},
       ViewControllerIOS: {name: 'ViewControllerIOS'},
       DrawerControllerIOS: {name: 'DrawerControllerIOS'},
@@ -233,7 +234,15 @@ var Controllers = {
       }
     };
   },
-
+  
+  CubeBarControllerIOS: function (id) {
+    return {
+      switchTo: function (params) {
+        return RCCManager.CubeBarControllerIOS(id, "switchTo", params);
+      }
+    };
+  },
+  
   Modal: {
     showLightBox: function(params) {
       params['style'] = Object.assign({}, params['style']);

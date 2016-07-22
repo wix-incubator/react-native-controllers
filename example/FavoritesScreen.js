@@ -45,7 +45,9 @@ var FavoritesScreen = React.createClass({
               </TouchableOpacity>
             }
 
-            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'plain') }>
+            <TouchableOpacity onPress={ ()=>    Controllers.CubeBarControllerIOS("main").switchTo({
+              tabIndex: 0
+            }) }>
               <Text style={styles.button}>Push Plain Screen</Text>
             </TouchableOpacity>
 
