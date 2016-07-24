@@ -24,6 +24,11 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 
 @implementation RCCViewController
 
+- (NSUInteger) supportedInterfaceOrientations
+{
+  return self.navigatorStyle[@"portraitOnly"] ? UIInterfaceOrientationMaskPortrait : UIInterfaceOrientationMaskAll;
+}
+
 -(UIImageView *)navBarHairlineImageView {
     if (!_navBarHairlineImageView) {
         _navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];

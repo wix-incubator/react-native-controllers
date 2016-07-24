@@ -4,10 +4,27 @@
 #import "RCTEventDispatcher.h"
 #import "RCTConvert.h"
 
+@interface RCCNavigationController()
+{
+  BOOL _portraitOnly;
+}
+
+@end
+
 @implementation RCCNavigationController
 
 NSString const *CALLBACK_ASSOCIATED_KEY = @"RCCNavigationController.CALLBACK_ASSOCIATED_KEY";
 NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSOCIATED_ID";
+
+- (BOOL) shouldAutorotate
+{
+  return !_portraitOnly;
+}
+
+- (UIInterfaceOrientation) preferredInterfaceOrientationForPresentation
+{
+  return _portraitOnly ? UIInterfaceOrientationPortrait : [super preferredInterfaceOrientationForPresentation];
+}
 
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
 {
@@ -16,6 +33,8 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   
   NSDictionary *passProps = props[@"passProps"];
   NSDictionary *navigatorStyle = props[@"style"];
+  
+  _portraitOnly = !!navigatorStyle[@"portraitOnly"];
   
   RCCViewController *viewController = [[RCCViewController alloc] initWithComponent:component passProps:passProps navigatorStyle:navigatorStyle globalProps:globalProps bridge:bridge];
   if (!viewController) return nil;
