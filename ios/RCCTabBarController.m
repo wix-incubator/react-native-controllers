@@ -91,8 +91,17 @@
     id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
     if (selectedIcon) iconImageSelected = [RCTConvert UIImage:selectedIcon];
 
-    viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
-    viewController.tabBarItem.selectedImage = iconImageSelected;
+    if (title) {
+      viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
+      viewController.tabBarItem.selectedImage = iconImageSelected;
+    } else {
+      UITabBarItem *tabItem = [[UITabBarItem alloc] init];
+      viewController.tabBarItem = tabItem;
+      tabItem.image = iconImage;
+      tabItem.tag = 0;
+      tabItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+      viewController.tabBarItem.selectedImage = iconImageSelected;
+    }
     
     if (buttonColor)
     {
