@@ -29,10 +29,15 @@
   return newImage;
 }
 
+- (void) changeTab:(NSDictionary *)payload
+{
+  [self.bridge.eventDispatcher sendDeviceEventWithName:@"worksource.tabChanged" body:payload];
+}
+
 - (void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
   NSDictionary *payload = @{ @"position": @([self.viewControllers indexOfObject:viewController]) };
-  [self.bridge.eventDispatcher sendDeviceEventWithName:@"worksource.tabChanged" body:payload];
+  [self performSelector:@selector(changeTab:) withObject:payload afterDelay:0.5];
 }
 
 - (instancetype)initWithProps:(NSDictionary *)props children:(NSArray *)children globalProps:(NSDictionary*)globalProps bridge:(RCTBridge *)bridge
