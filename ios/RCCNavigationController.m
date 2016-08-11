@@ -3,6 +3,7 @@
 #import "RCCManager.h"
 #import "RCTEventDispatcher.h"
 #import "RCTConvert.h"
+#import <objc/runtime.h>
 
 @implementation RCCNavigationController
 
