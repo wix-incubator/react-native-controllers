@@ -170,13 +170,35 @@ RCT_EXPORT_MODULE(RCCManager);
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
+    if ([[RCCManager sharedInstance] getBridge].loading) {
+        [self deferSetRootControllerWhileBridgeLoading:layout animationType:animationType globalProps:globalProps];
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self performSetRootController:layout animationType:animationType globalProps:globalProps];
+   });
+}
+
+/**
+ * on RN31 there's a timing issue, we must wait for the bridge to finish loading
+ */
+-(void)deferSetRootControllerWhileBridgeLoading:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0001 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setRootController:layout animationType:animationType globalProps:globalProps];
+    });
+}
+
+-(void)performSetRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps
+{
     // first clear the registry to remove any refernece to the previous controllers
     [[RCCManager sharedInstance] clearModuleRegistry];
     
     // create the new controller
     UIViewController *controller = [RCCViewController controllerWithLayout:layout globalProps:globalProps bridge:[[RCCManager sharedInstance] getBridge]];
     if (controller == nil) return;
-
+    
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     BOOL animated = !((appDelegate.window.rootViewController == nil) || ([animationType isEqualToString:@"none"]));
     
@@ -196,19 +218,19 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
     
     // dismiss the modal controllers without animation just so they can be released
     [self dismissAllControllers:@"none" resolver:^(id result)
-    {
-        // set the new controller as the root
-        appDelegate.window.rootViewController = controller;
-        [appDelegate.window makeKeyAndVisible];
-        [presentedViewController dismissViewControllerAnimated:NO completion:nil];
-        
-        if (animated)
-        {
-            // move the snaphot to the new root and animate it
-            [appDelegate.window.rootViewController.view addSubview:snapshot];
-            [self animateSnapshot:snapshot animationType:animationType resolver:nil];
-        }
-    } rejecter:nil];
+     {
+         // set the new controller as the root
+         appDelegate.window.rootViewController = controller;
+         [appDelegate.window makeKeyAndVisible];
+         [presentedViewController dismissViewControllerAnimated:NO completion:nil];
+         
+         if (animated)
+         {
+             // move the snaphot to the new root and animate it
+             [appDelegate.window.rootViewController.view addSubview:snapshot];
+             [self animateSnapshot:snapshot animationType:animationType resolver:nil];
+         }
+     } rejecter:nil];
 }
 
 RCT_EXPORT_METHOD(
