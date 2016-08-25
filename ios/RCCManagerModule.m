@@ -325,6 +325,12 @@ dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)reso
 RCT_EXPORT_METHOD(
 dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
+    if([UIApplication sharedApplication].delegate.window.rootViewController.presentedViewController == nil)
+    {//if there are no modal - do nothing
+        resolve(nil);
+        return;
+    }
+    
     NSMutableArray *allPresentedViewControllers = [NSMutableArray array];
     [RCCManagerModule modalPresenterViewControllers:allPresentedViewControllers];
     
