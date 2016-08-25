@@ -188,7 +188,7 @@ NSString const *CALLBACK_ASSOCIATED_ID = @"RCCNavigationController.CALLBACK_ASSO
   if ([performAction isEqualToString:@"setTitle"])
   {
     NSString *title = actionParams[@"title"];
-    if (title) self.topViewController.title = title;
+    if (title) self.topViewController.navigationItem.title = title;
     return;
   }
   
