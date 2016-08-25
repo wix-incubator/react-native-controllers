@@ -49,6 +49,7 @@ CGFloat const MMDrawerOvershootLinearRangePercentage = 0.75f;
 /** The percent of the possible overshoot width to use as the actual overshoot percentage. */
 CGFloat const MMDrawerOvershootPercentage = 0.1f;
 
+typedef void (^MMDrawerGestureStartedBlock)(MMDrawerController * drawerController, UIGestureRecognizer * gesture);
 typedef BOOL (^MMDrawerGestureShouldRecognizeTouchBlock)(MMDrawerController * drawerController, UIGestureRecognizer * gesture, UITouch * touch);
 typedef void (^MMDrawerGestureCompletionBlock)(MMDrawerController * drawerController, UIGestureRecognizer * gesture);
 
@@ -163,6 +164,7 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 @property (nonatomic, assign) CGRect startingPanRect;
 @property (nonatomic, copy) MMDrawerControllerDrawerVisualStateBlock drawerVisualState;
 @property (nonatomic, copy) MMDrawerGestureShouldRecognizeTouchBlock gestureShouldRecognizeTouch;
+@property (nonatomic, copy) MMDrawerGestureCompletionBlock gestureStart;
 @property (nonatomic, copy) MMDrawerGestureCompletionBlock gestureCompletion;
 @property (nonatomic, assign, getter = isAnimatingDrawer) BOOL animatingDrawer;
 
@@ -726,6 +728,11 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
     [self setGestureCompletion:gestureCompletionBlock];
 }
 
+#pragma mark - Setting the Gesture Start Block
+-(void)setGestureStartBlock:(void (^)(MMDrawerController *, UIGestureRecognizer *))gestureStartBlock{
+    [self setGestureStart:gestureStartBlock];
+}
+
 #pragma mark - Subclass Methods
 -(BOOL)shouldAutomaticallyForwardAppearanceMethods{
     return NO;
@@ -1090,6 +1097,9 @@ static NSString *MMDrawerOpenSideKey = @"MMDrawerOpenSide";
 -(void)panGestureCallback:(UIPanGestureRecognizer *)panGesture{
     switch (panGesture.state) {
         case UIGestureRecognizerStateBegan:{
+            if(self.gestureStart){
+                self.gestureStart(self, panGesture);
+            }
             if(self.animatingDrawer){
                 [panGesture setEnabled:NO];
                 break;

@@ -3,7 +3,7 @@
 #import "MMExampleDrawerVisualStateManager.h"
 #import "RCCDrawerHelper.h"
 #import "RCTConvert.h"
-
+#import "RCCManagerModule.h"
 
 #define RCCDRAWERCONTROLLER_ANIMATION_DURATION 0.33f
 
@@ -60,6 +60,10 @@
         }
     }];
     
+    [self setGestureStartBlock:^(MMDrawerController *drawerController, UIGestureRecognizer *gesture) {
+        [RCCManagerModule cancelAllRCCViewControllerReactTouches];
+     }];
+                                               
     self.view.backgroundColor = [UIColor clearColor];
     
     if (!self) return nil;

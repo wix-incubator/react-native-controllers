@@ -85,6 +85,11 @@ RCT_EXPORT_MODULE(RCCManager);
     reject([NSString stringWithFormat: @"%lu", (long)error.code], error.localizedDescription, error);
 }
 
++(void)cancelAllRCCViewControllerReactTouches
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCCViewControllerCancelReactTouchesNotification object:nil];
+}
+
 -(void)animateSnapshot:(UIView*)snapshot animationType:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve
 {
     [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^()
@@ -362,6 +367,12 @@ RCT_EXPORT_METHOD(
 dismissNotification:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     [RCCNotification dismissWithParams:params resolver:resolve rejecter:reject];
+}
+
+RCT_EXPORT_METHOD(
+cancelAllReactTouches)
+{
+    [RCCManagerModule cancelAllRCCViewControllerReactTouches];
 }
 
 @end

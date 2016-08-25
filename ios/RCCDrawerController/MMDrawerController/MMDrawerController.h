@@ -450,6 +450,19 @@ typedef void (^MMDrawerControllerDrawerVisualStateBlock)(MMDrawerController * dr
 -(void)setGestureCompletionBlock:(void(^)(MMDrawerController * drawerController, UIGestureRecognizer * gesture))gestureCompletionBlock;
 
 ///---------------------------------------
+/// @name Gesture Start Handling
+///---------------------------------------
+
+/**
+ Sets a callback to be called when a gesture starts
+ 
+ This block is called when a gesture action has started.
+ 
+ @param gestureCompletionBlock A block object to be called that allows the implementer be notified when a gesture action has started.
+ */
+-(void)setGestureStartBlock:(void (^)(MMDrawerController *, UIGestureRecognizer *))gestureStartBlock;
+
+///---------------------------------------
 /// @name Custom Gesture Handler
 ///---------------------------------------
 
