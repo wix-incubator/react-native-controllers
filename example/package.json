@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start"
+    "start": "watchman watch-del-all && adb reverse tcp:8081 tcp:8081 && node node_modules/react-native/local-cli/cli start --reset-cache"
   },
   "dependencies": {
     "react-native": "0.31.0",
     "react": "15.2.1",
-    "react-native-controllers": "latest"    
+    "react-native-controllers": "file:../"
   }
 }
