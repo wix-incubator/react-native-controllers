@@ -8,7 +8,7 @@
 #import "RCTConvert.h"
 #import "RCCTabBarController.h"
 #import "RCCTheSideBarManagerViewController.h"
-
+#import "RCCNotification.h"
 
 #define kSlideDownAnimationDuration 0.35
 
@@ -85,6 +85,11 @@ RCT_EXPORT_MODULE(RCCManager);
     reject([NSString stringWithFormat: @"%lu", (long)error.code], error.localizedDescription, error);
 }
 
++(void)cancelAllRCCViewControllerReactTouches
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:RCCViewControllerCancelReactTouchesNotification object:nil];
+}
+
 -(void)animateSnapshot:(UIView*)snapshot animationType:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve
 {
     [UIView animateWithDuration:kSlideDownAnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^()
@@ -113,37 +118,51 @@ RCT_EXPORT_MODULE(RCCManager);
 {
     if (allPresentedViewControllers.count > 0)
     {
-        __block NSUInteger counter = 0;
-        for (UIViewController *viewController in allPresentedViewControllers)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^
         {
-            counter++;
-            
-            [[RCCManager sharedIntance] unregisterController:viewController];
-            if (viewController.presentedViewController != nil)
+            __block NSUInteger counter = 0;
+            for (UIViewController *viewController in allPresentedViewControllers)
             {
-                [viewController dismissViewControllerAnimated:NO completion:^()
-                 {
-                     if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
-                     {
-                         [allPresentedViewControllers removeAllObjects];
-                         
-                         if (resolve != nil)
-                         {
-                             resolve(nil);
-                         }
-                     }
-                 }];
-            }
-            else if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
-            {
-                [allPresentedViewControllers removeAllObjects];
+                counter++;
                 
-                if (resolve != nil)
+                [[RCCManager sharedIntance] unregisterController:viewController];
+                if (viewController.presentedViewController != nil)
                 {
-                    resolve(nil);
+                    dispatch_semaphore_t dismiss_sema = dispatch_semaphore_create(0);
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^
+                    {
+                        [viewController dismissViewControllerAnimated:NO completion:^()
+                         {
+                             if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+                             {
+                                 [allPresentedViewControllers removeAllObjects];
+                                 
+                                 if (resolve != nil)
+                                 {
+                                     resolve(nil);
+                                 }
+                             }
+                             dispatch_semaphore_signal(dismiss_sema);
+                         }];
+                    });
+                    
+                    dispatch_semaphore_wait(dismiss_sema, DISPATCH_TIME_FOREVER);
+                }
+                else if (counter == allPresentedViewControllers.count && allPresentedViewControllers.count > 0)
+                {
+                    [allPresentedViewControllers removeAllObjects];
+                    
+                    if (resolve != nil)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^
+                        {
+                            resolve(nil);
+                        });
+                    }
                 }
             }
-        }
+        });
     }
     else if (resolve != nil)
     {
@@ -156,13 +175,35 @@ RCT_EXPORT_MODULE(RCCManager);
 RCT_EXPORT_METHOD(
 setRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps)
 {
+    if ([[RCCManager sharedInstance] getBridge].loading) {
+        [self deferSetRootControllerWhileBridgeLoading:layout animationType:animationType globalProps:globalProps];
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self performSetRootController:layout animationType:animationType globalProps:globalProps];
+   });
+}
+
+/**
+ * on RN31 there's a timing issue, we must wait for the bridge to finish loading
+ */
+-(void)deferSetRootControllerWhileBridgeLoading:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0001 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setRootController:layout animationType:animationType globalProps:globalProps];
+    });
+}
+
+-(void)performSetRootController:(NSDictionary*)layout animationType:(NSString*)animationType globalProps:(NSDictionary*)globalProps
+{
     // first clear the registry to remove any refernece to the previous controllers
     [[RCCManager sharedInstance] clearModuleRegistry];
     
     // create the new controller
     UIViewController *controller = [RCCViewController controllerWithLayout:layout globalProps:globalProps bridge:[[RCCManager sharedInstance] getBridge]];
     if (controller == nil) return;
-
+    
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     BOOL animated = !((appDelegate.window.rootViewController == nil) || ([animationType isEqualToString:@"none"]));
     
@@ -182,19 +223,19 @@ setRootController:(NSDictionary*)layout animationType:(NSString*)animationType g
     
     // dismiss the modal controllers without animation just so they can be released
     [self dismissAllControllers:@"none" resolver:^(id result)
-    {
-        // set the new controller as the root
-        appDelegate.window.rootViewController = controller;
-        [appDelegate.window makeKeyAndVisible];
-        [presentedViewController dismissViewControllerAnimated:NO completion:nil];
-        
-        if (animated)
-        {
-            // move the snaphot to the new root and animate it
-            [appDelegate.window.rootViewController.view addSubview:snapshot];
-            [self animateSnapshot:snapshot animationType:animationType resolver:nil];
-        }
-    } rejecter:nil];
+     {
+         // set the new controller as the root
+         appDelegate.window.rootViewController = controller;
+         [appDelegate.window makeKeyAndVisible];
+         [presentedViewController dismissViewControllerAnimated:NO completion:nil];
+         
+         if (animated)
+         {
+             // move the snaphot to the new root and animate it
+             [appDelegate.window.rootViewController.view addSubview:snapshot];
+             [self animateSnapshot:snapshot animationType:animationType resolver:nil];
+         }
+     } rejecter:nil];
 }
 
 RCT_EXPORT_METHOD(
@@ -289,6 +330,12 @@ dismissController:(NSString*)animationType resolver:(RCTPromiseResolveBlock)reso
 RCT_EXPORT_METHOD(
 dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
+    if([UIApplication sharedApplication].delegate.window.rootViewController.presentedViewController == nil)
+    {//if there are no modal - do nothing
+        resolve(nil);
+        return;
+    }
+    
     NSMutableArray *allPresentedViewControllers = [NSMutableArray array];
     [RCCManagerModule modalPresenterViewControllers:allPresentedViewControllers];
     
@@ -308,6 +355,24 @@ dismissAllControllers:(NSString*)animationType resolver:(RCTPromiseResolveBlock)
     {
         [self dismissAllModalPresenters:allPresentedViewControllers resolver:resolve];
     }
+}
+
+RCT_EXPORT_METHOD(
+showNotification:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [RCCNotification showWithParams:params resolver:resolve rejecter:reject];
+}
+
+RCT_EXPORT_METHOD(
+dismissNotification:(NSDictionary*)params resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    [RCCNotification dismissWithParams:params resolver:resolve rejecter:reject];
+}
+
+RCT_EXPORT_METHOD(
+cancelAllReactTouches)
+{
+    [RCCManagerModule cancelAllRCCViewControllerReactTouches];
 }
 
 @end

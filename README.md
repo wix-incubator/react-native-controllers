@@ -1,5 +1,7 @@
 # React Native Controllers
 
+>Important: Please review the following issue before using this project: [React Native Controllers Evolution] (https://github.com/wix/react-native-controllers/issues/87)
+
 `react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) npm extension package for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI components without compromising on the native experience. Key benefits:
 
 * Truly native navigation (instead of the JS-based [`Navigator`](https://facebook.github.io/react-native/docs/navigator-comparison.html) or the [deprecated `NavigatorIOS`](https://facebook.github.io/react-native/docs/navigatorios.html))
@@ -155,7 +157,7 @@ Since `react-native-controllers` takes over the skeleton of your app, we're firs
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
   // this is your new React Native invocation
-  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
 
   return YES;
 }

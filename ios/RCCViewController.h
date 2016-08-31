@@ -1,6 +1,8 @@
 #import <UIKit/UIKit.h>
 #import "RCTBridge.h"
 
+extern NSString* const RCCViewControllerCancelReactTouchesNotification;
+
 @interface RCCViewController : UIViewController
 
 @property (nonatomic) NSMutableDictionary *navigatorStyle;

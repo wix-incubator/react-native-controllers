@@ -118,10 +118,15 @@
 
 -(void)initBridgeWithBundleURL:(NSURL *)bundleURL
 {
+  [self initBridgeWithBundleURL :bundleURL launchOptions:nil];
+}
+
+-(void)initBridgeWithBundleURL:(NSURL *)bundleURL launchOptions:(NSDictionary *)launchOptions
+{
   if (self.sharedBridge) return;
-  
+
   self.bundleURL = bundleURL;
-  self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:nil];
+  self.sharedBridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   
   [self showSplashScreen];
 }
@@ -197,6 +202,13 @@
 -(RCTBridge*)getBridge
 {
   return self.sharedBridge;
+}
+
+-(UIWindow*)getAppWindow
+{
+  UIApplication *app = [UIApplication sharedApplication];
+  UIWindow *window = (app.keyWindow != nil) ? app.keyWindow : app.windows[0];
+  return window;
 }
 
 #pragma mark - RCTBridgeDelegate methods
