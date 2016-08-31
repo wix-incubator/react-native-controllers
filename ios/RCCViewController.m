@@ -381,6 +381,13 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
         self.navigationController.interactivePopGestureRecognizer.delegate = self;
       }
     }
+  
+    NSString *backgroundColor = self.navigatorStyle[@"backgroundColor"];
+    if (backgroundColor)
+    {
+      UIColor *color = backgroundColor != (id)[NSNull null] ? [RCTConvert UIColor:backgroundColor] : nil;
+      viewController.view.backgroundColor = color;
+    }  
 }
 
 -(void)storeOriginalNavBarImages {
