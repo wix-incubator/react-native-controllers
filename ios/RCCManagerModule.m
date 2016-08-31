@@ -25,6 +25,23 @@ RCT_ENUM_CONVERTER(RCCManagerModuleErrorCode,
                    (@{@"RCCManagerModuleCantCreateControllerErrorCode": @(RCCManagerModuleCantCreateControllerErrorCode),
                       @"RCCManagerModuleCantFindTabControllerErrorCode": @(RCCManagerModuleCantFindTabControllerErrorCode),
                       }), RCCManagerModuleCantCreateControllerErrorCode, integerValue)
+
+@end
+
+@implementation RCTConvert (UIModalPresentationStyle)
+
+RCT_ENUM_CONVERTER(UIModalPresentationStyle,
+                   (@{@"fullScreen": @(UIModalPresentationFullScreen),
+                      @"pageSheet": @(UIModalPresentationPageSheet),
+                      @"formSheet": @(UIModalPresentationFormSheet),
+                      @"currentContext": @(UIModalPresentationCurrentContext),
+                      @"custom": @(UIModalPresentationCustom),
+                      @"overFullScreen": @(UIModalPresentationOverFullScreen),
+                      @"overCurrentContext": @(UIModalPresentationOverCurrentContext),
+                      @"popover": @(UIModalPresentationPopover),
+                      @"none": @(UIModalPresentationNone)
+                      }), UIModalPresentationFullScreen, integerValue)
+
 @end
 
 @implementation RCCManagerModule
@@ -35,10 +52,20 @@ RCT_EXPORT_MODULE(RCCManager);
 
 - (NSDictionary *)constantsToExport
 {
+    
     return @{
              //Error codes
              @"RCCManagerModuleCantCreateControllerErrorCode" : @(RCCManagerModuleCantCreateControllerErrorCode),
              @"RCCManagerModuleCantFindTabControllerErrorCode" : @(RCCManagerModuleCantFindTabControllerErrorCode),
+             @"PresentFullScreen": @"fullScreen",
+             @"PresentPageSheet": @"pageSheet",
+             @"PresentFormSheet": @"formSheet",
+             @"PresentCurrentContext": @"currentContext",
+             @"PresentCustom": @"custom",
+             @"PresentOverFullScreen": @"overFullScreen",
+             @"PresentOverCurrentContext": @"overCurrentContext",
+             @"PresentPopover": @"popover",
+             @"PresentNone": @"none"
              };
 }
 
@@ -299,6 +326,17 @@ showController:(NSDictionary*)layout animationType:(NSString*)animationType glob
         [RCCManagerModule handleRCTPromiseRejectBlock:reject
                                                 error:[RCCManagerModule rccErrorWithCode:RCCManagerModuleCantCreateControllerErrorCode description:@"could not create controller"]];
         return;
+    }
+    
+    if (layout[@"props"] && [layout[@"props"] isKindOfClass:[NSDictionary class]] && layout[@"props"][@"style"] && [layout[@"props"][@"style"] isKindOfClass: [NSDictionary class]]) {
+        
+        NSDictionary *style = layout[@"props"][@"style"];
+        if (style[@"modalPresentationStyle"] && [style[@"modalPresentationStyle"] isKindOfClass:[NSString class]]) {
+            
+            NSString *presentationStyle = style[@"modalPresentationStyle"];
+            UIModalPresentationStyle modalPresentationStyle = [RCTConvert UIModalPresentationStyle:presentationStyle];
+            controller.modalPresentationStyle = modalPresentationStyle;
+        }
     }
 
     [[RCCManagerModule lastModalPresenterViewController] presentViewController:controller
