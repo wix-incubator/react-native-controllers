@@ -137,7 +137,7 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
   self.view = reactView;
   
   self.edgesForExtendedLayout = UIRectEdgeNone; // default
-  self.automaticallyAdjustsScrollViewInsets = NO; // default
+  self.automaticallyAdjustsScrollViewInsets = false; // default
   
   self.navigatorStyle = [NSMutableDictionary dictionaryWithDictionary:navigatorStyle];
   
@@ -357,7 +357,10 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
     {
         viewController.edgesForExtendedLayout &= ~UIRectEdgeBottom;
     }
-    
+  
+    NSNumber *autoAdjustsScrollViewInsets = self.navigatorStyle[@"autoAdjustScrollViewInsets"];
+    viewController.automaticallyAdjustsScrollViewInsets = autoAdjustsScrollViewInsets ? [autoAdjustsScrollViewInsets boolValue] : false;
+  
     NSNumber *removeNavBarBorder = self.navigatorStyle[@"navBarNoBorder"];
     BOOL removeNavBarBorderBool = removeNavBarBorder ? [removeNavBarBorder boolValue] : NO;
     if(removeNavBarBorderBool)
@@ -414,37 +417,13 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 - (void)setStyleOnInit
 {
     NSNumber *tabBarHidden = self.navigatorStyle[@"tabBarHidden"];
-    BOOL tabBarHiddenBool = tabBarHidden ? [tabBarHidden boolValue] : NO;
-    if (tabBarHiddenBool)
-    {
-        self._hidesBottomBarWhenPushed = YES;
-    }
-    else
-    {
-        self._hidesBottomBarWhenPushed = NO;
-    }
+    self._hidesBottomBarWhenPushed = tabBarHidden ? [tabBarHidden boolValue] : false;
     
     NSNumber *statusBarHideWithNavBar = self.navigatorStyle[@"statusBarHideWithNavBar"];
-    BOOL statusBarHideWithNavBarBool = statusBarHideWithNavBar ? [statusBarHideWithNavBar boolValue] : NO;
-    if (statusBarHideWithNavBarBool)
-    {
-        self._statusBarHideWithNavBar = YES;
-    }
-    else
-    {
-        self._statusBarHideWithNavBar = NO;
-    }
+    self._statusBarHideWithNavBar = statusBarHideWithNavBar ? [statusBarHideWithNavBar boolValue] : false;
     
     NSNumber *statusBarHidden = self.navigatorStyle[@"statusBarHidden"];
-    BOOL statusBarHiddenBool = statusBarHidden ? [statusBarHidden boolValue] : NO;
-    if (statusBarHiddenBool)
-    {
-        self._statusBarHidden = YES;
-    }
-    else
-    {
-        self._statusBarHidden = NO;
-    }
+    self._statusBarHidden = statusBarHidden ? [statusBarHidden boolValue] : false;
 }
 
 - (BOOL)hidesBottomBarWhenPushed
