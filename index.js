@@ -161,6 +161,13 @@ var Controllers = {
         RCCManager.NavigationControllerIOS(id, "popToRoot", params);
       },
       setTitle: function (params) {
+        if (params['style']) {
+          params['style'] = Object.assign({}, params['style']);
+          _processProperties(params['style']);
+        }
+        if (params['titleImage']) {
+          params['titleImage'] = resolveAssetSource(params['titleImage']);
+        }
         RCCManager.NavigationControllerIOS(id, "setTitle", params);
       },
       resetTo: function (params) {

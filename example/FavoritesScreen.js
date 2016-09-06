@@ -160,9 +160,29 @@ var FavoritesScreen = React.createClass({
             </TouchableOpacity>
 
             <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'titleImage') }>
-              <Text style={styles.button}>Title Image</Text>
+              <Text style={styles.button}>Push With Title Image</Text>
             </TouchableOpacity>
-
+  
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setTitle') }>
+              <Text style={styles.button}>Set Title</Text>
+            </TouchableOpacity>
+  
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setTitleImage') }>
+              <Text style={styles.button}>Set Image Title</Text>
+            </TouchableOpacity>
+      
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setTitleAndSubtitle') }>
+              <Text style={styles.button}>Set Title With Subtitle</Text>
+            </TouchableOpacity>
+  
+            <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setSubtitle') }>
+              <Text style={styles.button}>Set Subtitle</Text>
+            </TouchableOpacity>
+  
+        <TouchableOpacity onPress={ this.onButtonClick.bind(this, 'setStyleTitleAndSubtitle') }>
+          <Text style={styles.button}>Set Style Title & Subtitle</Text>
+        </TouchableOpacity>
+  
             <Image style={{width: undefined, height: 100}} source={require('./img/colors.png')} />
 
           </ScrollView>
@@ -493,6 +513,46 @@ var FavoritesScreen = React.createClass({
           component: "FavoritesScreen"
         });
         break;
+      case 'setTitleImage':
+        Controllers.NavigationControllerIOS("favorites_nav").setTitle({
+          title: "Favorites",
+          titleImage: require('./img/turtle.png'),
+          component: "FavoritesScreen"
+        });
+        break;
+      case 'setTitle':
+        Controllers.NavigationControllerIOS("favorites_nav").setTitle({
+          title: "Favorites",
+          component: "FavoritesScreen"
+        });
+        break;
+      case 'setTitleAndSubtitle':
+        Controllers.NavigationControllerIOS("favorites_nav").setTitle({
+          title: "Favorites",
+          subtitle: "Subtitle",
+          component: "FavoritesScreen"
+        });
+        break;
+      case 'setSubtitle':
+        Controllers.NavigationControllerIOS("favorites_nav").setTitle({
+          subtitle: "Subtitle",
+          component: "FavoritesScreen"
+        });
+        break;
+      case 'setStyleTitleAndSubtitle':
+        Controllers.NavigationControllerIOS("favorites_nav").setTitle({
+          title: "Favorites",
+          subtitle: "Subtitle",
+          component: "FavoritesScreen",
+          style: {
+            navBarTitleFontSize: 20,
+            navBarSubtitleFontSize: 15,
+            navBarSubtitleTextColor: '#00ff00',
+            navBarTextColor: '#0000ff'
+          }
+          
+        });
+        break;setStyleTitleAndSubtitle
     }
   },
 
