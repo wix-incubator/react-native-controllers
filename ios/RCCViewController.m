@@ -160,13 +160,15 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
 
 -(void)onRNReload
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self.view];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.view = nil;
 }
 
 -(void)onCancelReactTouches
 {
-  [(RCTRootView*)self.view cancelTouches];
+  if ([self.view isKindOfClass:[RCTRootView class]]){
+    [(RCTRootView*)self.view cancelTouches];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated
