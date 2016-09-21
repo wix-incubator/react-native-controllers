@@ -1,6 +1,9 @@
 # React Native Controllers
 
->Important: Please review the following issue before using this project: [React Native Controllers Evolution] (https://github.com/wix/react-native-controllers/issues/87)
+####Important: 
+This project was deprecated and merged into [react-native-navigation](https://github.com/wix/react-native-navigation). For more info please view [React Native Controllers Evolution] (https://github.com/wix/react-native-controllers/issues/87)
+
+---
 
 `react-native-controllers` is a [React Native](https://facebook.github.io/react-native/) npm extension package for iOS which provides a completely native skeleton for iOS apps, allowing you to easily wrap core native UI components without compromising on the native experience. Key benefits:
 
