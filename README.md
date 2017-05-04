@@ -1,7 +1,7 @@
 # React Native Controllers
 
 >**Important:**
-This project was deprecated and merged into [react-native-navigation](https://github.com/wix/react-native-navigation). For more info please view [React Native Controllers Evolution] (https://github.com/wix/react-native-controllers/issues/87)
+This project was deprecated and merged into [react-native-navigation](https://github.com/wix/react-native-navigation). For more info please view [React Native Controllers Evolution](https://github.com/wix/react-native-controllers/issues/87)
 
 ---
 
