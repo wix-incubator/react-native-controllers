@@ -216,6 +216,22 @@ const NSInteger TRANSPARENT_NAVBAR_TAG = 78264803;
         [viewController.navigationController.navigationBar setTitleTextAttributes:nil];
     }
     
+    id backgroundImage = self.navigatorStyle[@"backgroundImage"];
+    if (backgroundImage) {
+        UIImage *img = [[RCTConvert UIImage:backgroundImage] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+
+        [viewController.navigationController.navigationBar setBackgroundImage:img forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+        [viewController.navigationController.navigationBar setBackgroundImage:img forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompact];
+        [viewController.navigationController.navigationBar setBackgroundImage:img forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefaultPrompt];
+        [viewController.navigationController.navigationBar setBackgroundImage:img forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsCompactPrompt];
+    }
+  
+    id shadowImage = self.navigatorStyle[@"shadowImage"];
+    if (shadowImage) {
+        UIImage *img = [[RCTConvert UIImage:shadowImage] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+        [viewController.navigationController.navigationBar setShadowImage:img];
+    }
+    
     NSString *navBarButtonColor = self.navigatorStyle[@"navBarButtonColor"];
     if (navBarButtonColor)
     {
