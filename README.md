@@ -608,7 +608,8 @@ All styles are optional, this is the format of the style object:
   tabBarHidden: false, // make the screen content hide the tab bar (remembered across pushes)
   statusBarHideWithNavBar: false // hide the status bar if the nav bar is also hidden, useful for navBarHidden:true
   statusBarHidden: false, // make the status bar hidden regardless of nav bar state
-  statusBarTextColorScheme: 'dark' // text color of status bar, 'dark' / 'light' (remembered across pushes)
+  statusBarTextColorScheme: 'dark', // text color of status bar, 'dark' / 'light' (remembered across pushes)
+  autoAdjustScrollViewInsets: true, // make the screen adjust any scroll view insets to account for the tab bar translucency
 }
 ```
 
