@@ -90,10 +90,12 @@
     UIImage *iconImageSelected = nil;
     id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
     if (selectedIcon) iconImageSelected = [RCTConvert UIImage:selectedIcon];
+    UIEdgeInsets imageInsets = title.length ? UIEdgeInsetsZero : (UIEdgeInsets){6, 0, -6, 0};
 
     viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:iconImage tag:0];
     viewController.tabBarItem.accessibilityIdentifier = tabItemLayout[@"props"][@"testID"];
     viewController.tabBarItem.selectedImage = iconImageSelected;
+    viewController.tabBarItem.imageInsets = imageInsets;
     
     if (buttonColor)
     {
