@@ -56,6 +56,11 @@
       UIColor *color = tabBarBackgroundColor != (id)[NSNull null] ? [RCTConvert UIColor:tabBarBackgroundColor] : nil;
       self.tabBar.barTintColor = color;
     }
+    
+    BOOL tabBarHidden = [tabsStyle[@"tabBarHidden"] boolValue];
+    if (tabBarHidden){
+      self.tabBar.hidden = true;
+    }
   }
 
   NSMutableArray *viewControllers = [NSMutableArray array];
